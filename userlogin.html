@@ -4,12 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-Smart Classroom Login
-</title>
+<title>Smart Classroom Login</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -41,8 +38,7 @@ Login Sistem Kawalan Lampu
 <input 
 id="email"
 type="email"
-placeholder="Contoh: admin@gmail.com"
-autocomplete="off">
+placeholder="Contoh: admin@gmail.com">
 
 
 
@@ -54,14 +50,13 @@ autocomplete="off">
 <input 
 id="password"
 type="password"
-placeholder="Masukkan password"
-autocomplete="off">
+placeholder="Masukkan password">
 
 
 
 <button 
 class="login-btn"
-onclick="login()">
+id="loginBtn">
 
 LOGIN
 
@@ -72,7 +67,6 @@ LOGIN
 <p id="message"></p>
 
 
-
 </div>
 
 
@@ -81,6 +75,8 @@ LOGIN
 
 <script type="module">
 
+
+// FIREBASE IMPORT
 
 import { initializeApp } from 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -96,8 +92,9 @@ signInWithEmailAndPassword
 
 
 
-const firebaseConfig = {
+// FIREBASE CONFIG
 
+const firebaseConfig = {
 
 apiKey: "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
 
@@ -111,15 +108,15 @@ messagingSenderId: "1031651524426",
 
 appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
-
 };
 
 
 
 
 
-const app = initializeApp(firebaseConfig);
+// START FIREBASE
 
+const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
@@ -128,16 +125,23 @@ const auth = getAuth(app);
 
 
 
-window.login = function(){
+// BUTTON LOGIN
+
+document
+.getElementById("loginBtn")
+.addEventListener("click", function(){
 
 
 
-let email = document
+let email =
+document
 .getElementById("email")
 .value;
 
 
-let password = document
+
+let password =
+document
 .getElementById("password")
 .value;
 
@@ -145,11 +149,12 @@ let password = document
 
 
 
-if(email=="" || password==""){
+if(email==="" || password===""){
 
 
-document.getElementById("message").innerHTML =
-
+document
+.getElementById("message")
+.innerHTML =
 "⚠️ Sila isi email dan password";
 
 
@@ -157,7 +162,6 @@ return;
 
 
 }
-
 
 
 
@@ -176,9 +180,7 @@ password
 
 
 
-
-
-// Simpan pengguna untuk history
+// SIMPAN USER
 
 localStorage.setItem(
 
@@ -188,7 +190,7 @@ JSON.stringify({
 
 username: email,
 
-role:"admin"
+role: "admin"
 
 })
 
@@ -198,8 +200,9 @@ role:"admin"
 
 
 
-document.getElementById("message").innerHTML =
-
+document
+.getElementById("message")
+.innerHTML =
 "✅ Login Berjaya";
 
 
@@ -207,16 +210,15 @@ document.getElementById("message").innerHTML =
 
 
 
+// REDIRECT
 
-setTimeout(()=>{
+setTimeout(function(){
 
 
-window.location.href="index.html";
+window.location.href = "index.html";
 
 
 },500);
-
-
 
 
 
@@ -229,18 +231,19 @@ window.location.href="index.html";
 
 
 
-
 .catch((error)=>{
 
 
+console.log(error.code);
 
-console.log(error);
+console.log(error.message);
 
 
 
-document.getElementById("message").innerHTML =
-
-"❌ Email atau Password salah";
+document
+.getElementById("message")
+.innerHTML =
+"❌ Login gagal : " + error.code;
 
 
 
@@ -248,8 +251,7 @@ document.getElementById("message").innerHTML =
 
 
 
-}
-
+});
 
 
 
