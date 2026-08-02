@@ -1,15 +1,13 @@
 // =====================================================
 // SMART CLASSROOM CONTROL SYSTEM
-// script.js
+// script.js FULL
 //
 // Fungsi:
-// - Kawal Lampu
-// - ESP32
+// - Kawal Lampu ESP32
 // - Timer
-// - History pengguna
-// - Log aktiviti
+// - History Email User
+// - Log Aktiviti
 // =====================================================
-
 
 
 let timer;
@@ -22,7 +20,6 @@ localStorage.getItem("lampTime")
 let running = false;
 
 
-
 // ESP32 IP
 
 const ESP32_IP = "192.168.4.1";
@@ -31,36 +28,25 @@ const ESP32_IP = "192.168.4.1";
 
 
 
-
 // =====================================================
-// TIMER DISPLAY
+// TIMER
 // =====================================================
 
 
 function updateTimerDisplay(){
 
 
-
 let hour = Math.floor(seconds / 3600);
 
-
-let minute = Math.floor(
-(seconds % 3600) / 60
-);
-
+let minute = Math.floor((seconds % 3600) / 60);
 
 let second = seconds % 60;
 
 
 
-
-
 hour = hour < 10 ? "0"+hour : hour;
-
 minute = minute < 10 ? "0"+minute : minute;
-
 second = second < 10 ? "0"+second : second;
-
 
 
 
@@ -69,11 +55,8 @@ hour+":"+minute+":"+second;
 
 
 
-
-
 let timerBox =
 document.getElementById("timer");
-
 
 
 if(timerBox){
@@ -89,7 +72,6 @@ let dashTimer =
 document.getElementById("dashTimer");
 
 
-
 if(dashTimer){
 
 dashTimer.innerHTML=result;
@@ -97,7 +79,6 @@ dashTimer.innerHTML=result;
 }
 
 
-
 }
 
 
@@ -107,42 +88,25 @@ dashTimer.innerHTML=result;
 
 
 
-
-// =====================================================
-// START TIMER
-// =====================================================
-
-
 function startTimer(){
-
 
 
 if(!running){
 
 
-
 running=true;
 
 
-
-timer=setInterval(function(){
-
+timer=setInterval(()=>{
 
 
 seconds++;
 
 
-
 localStorage.setItem(
-
 "lampTime",
-
 seconds
-
 );
-
-
-
 
 
 updateTimerDisplay();
@@ -152,9 +116,31 @@ updateTimerDisplay();
 },1000);
 
 
+}
+
 
 }
 
+
+
+
+
+
+
+
+// =====================================================
+// USER INFO
+// =====================================================
+
+
+function getUser(){
+
+
+return JSON.parse(
+
+localStorage.getItem("loginUser")
+
+);
 
 
 }
@@ -176,37 +162,17 @@ function lampOn(){
 
 
 
-// ESP32
-
-
 fetch(
 "http://"+ESP32_IP+"/lamp/on"
 )
 
 
-.then(response=>response.text())
 
+.then(res=>res.text())
 
-.then(data=>{
+.then(data=>console.log(data))
 
-
-console.log(data);
-
-
-})
-
-
-.catch(error=>{
-
-
-console.log(
-"ESP32 tidak disambung"
-);
-
-
-});
-
-
+.catch(()=>console.log("ESP32 Offline"));
 
 
 
@@ -214,42 +180,30 @@ console.log(
 
 
 let lamp =
-document.getElementById(
-"lampStatus"
-);
-
+document.getElementById("lampStatus");
 
 
 if(lamp){
-
 
 lamp.innerHTML="ON";
 
 lamp.style.color="green";
 
-
 }
-
-
 
 
 
 
 
 let dashLamp =
-document.getElementById(
-"dashLamp"
-);
-
+document.getElementById("dashLamp");
 
 
 if(dashLamp){
 
-
 dashLamp.innerHTML="ON";
 
 dashLamp.style.color="green";
-
 
 }
 
@@ -257,17 +211,10 @@ dashLamp.style.color="green";
 
 
 
-
 localStorage.setItem(
-
 "lampStatus",
-
 "ON"
-
 );
-
-
-
 
 
 
@@ -276,16 +223,10 @@ localStorage.setItem(
 let start = new Date();
 
 
-
 localStorage.setItem(
-
 "startTime",
-
 start
-
 );
-
-
 
 
 
@@ -293,13 +234,9 @@ start
 
 
 addLog(
-
 "💡 Lampu ON",
-
-"Berjaya"
-
+"ON"
 );
-
 
 
 
@@ -309,8 +246,6 @@ startTimer();
 
 
 }
-
-
 
 
 
@@ -335,28 +270,11 @@ fetch(
 
 
 
-.then(response=>response.text())
+.then(res=>res.text())
 
+.then(data=>console.log(data))
 
-.then(data=>{
-
-
-console.log(data);
-
-
-})
-
-
-
-.catch(error=>{
-
-
-console.log(
-"ESP32 tidak disambung"
-);
-
-
-});
+.catch(()=>console.log("ESP32 Offline"));
 
 
 
@@ -365,42 +283,37 @@ console.log(
 
 
 let lamp =
-document.getElementById(
-"lampStatus"
-);
+document.getElementById("lampStatus");
 
 
 
 if(lamp){
 
-
 lamp.innerHTML="OFF";
 
 lamp.style.color="red";
 
-
 }
+
+
 
 
 
 
 
 let dashLamp =
-document.getElementById(
-"dashLamp"
-);
+document.getElementById("dashLamp");
 
 
 
 if(dashLamp){
 
-
 dashLamp.innerHTML="OFF";
 
 dashLamp.style.color="red";
 
-
 }
+
 
 
 
@@ -408,11 +321,8 @@ dashLamp.style.color="red";
 
 
 localStorage.setItem(
-
 "lampStatus",
-
 "OFF"
-
 );
 
 
@@ -430,10 +340,7 @@ running=false;
 
 
 
-
-
 saveHistory();
-
 
 
 
@@ -443,11 +350,8 @@ seconds=0;
 
 
 localStorage.setItem(
-
 "lampTime",
-
 0
-
 );
 
 
@@ -459,13 +363,13 @@ updateTimerDisplay();
 
 
 
+
 addLog(
-
 "💡 Lampu OFF",
-
-"Berjaya"
-
+"OFF"
 );
+
+
 
 
 
@@ -479,8 +383,9 @@ addLog(
 
 
 
+
 // =====================================================
-// SIMPAN HISTORY DENGAN USER
+// SAVE HISTORY
 // =====================================================
 
 
@@ -490,14 +395,8 @@ function saveHistory(){
 
 let start =
 new Date(
-
-localStorage.getItem(
-"startTime"
-)
-
+localStorage.getItem("startTime")
 );
-
-
 
 
 
@@ -508,12 +407,9 @@ new Date();
 
 
 
-
 let total =
 Math.floor(
-
 (end-start)/1000
-
 );
 
 
@@ -526,11 +422,7 @@ Math.floor(total/3600);
 
 
 let minute =
-Math.floor(
-
-(total%3600)/60
-
-);
+Math.floor((total%3600)/60);
 
 
 
@@ -541,21 +433,11 @@ total%60;
 
 
 
-hour =
-hour<10?
-"0"+hour:hour;
+hour = hour<10 ? "0"+hour : hour;
 
+minute = minute<10 ? "0"+minute : minute;
 
-
-minute =
-minute<10?
-"0"+minute:minute;
-
-
-
-second =
-second<10?
-"0"+second:second;
+second = second<10 ? "0"+second : second;
 
 
 
@@ -563,15 +445,8 @@ second<10?
 
 
 
-let user =
-JSON.parse(
 
-localStorage.getItem(
-"loginUser"
-)
-
-);
-
+let user = getUser();
 
 
 
@@ -580,11 +455,7 @@ localStorage.getItem(
 
 let history =
 JSON.parse(
-
-localStorage.getItem(
-"history"
-)
-
+localStorage.getItem("history")
 )||[];
 
 
@@ -597,10 +468,10 @@ history.unshift({
 
 
 
-user:
+email:
 
-user?
-user.username:
+user ?
+user.email :
 "Unknown",
 
 
@@ -608,9 +479,10 @@ user.username:
 
 role:
 
-user?
-user.role:
+user ?
+user.role :
 "user",
+
 
 
 
@@ -619,9 +491,7 @@ user.role:
 date:
 
 start.getDate()+"/"+
-
 (start.getMonth()+1)+"/"+
-
 start.getFullYear(),
 
 
@@ -629,26 +499,19 @@ start.getFullYear(),
 
 
 
-start:
+time:
 
 start.getHours()+":"+
-
 (start.getMinutes()<10?"0":"")+
-
 start.getMinutes(),
 
 
 
 
 
+action:
 
-end:
-
-end.getHours()+":"+
-
-(end.getMinutes()<10?"0":"")+
-
-end.getMinutes(),
+"💡 Lampu OFF",
 
 
 
@@ -660,7 +523,9 @@ hour+":"+minute+":"+second
 
 
 
+
 });
+
 
 
 
@@ -678,6 +543,8 @@ JSON.stringify(history)
 
 
 
+
+
 }
 
 
@@ -689,7 +556,7 @@ JSON.stringify(history)
 
 
 // =====================================================
-// LOG AKTIVITI
+// LOG AKTIVITI DASHBOARD
 // =====================================================
 
 
@@ -697,14 +564,7 @@ function addLog(activity,status){
 
 
 
-let user =
-JSON.parse(
-
-localStorage.getItem(
-"loginUser"
-)
-
-);
+let user=getUser();
 
 
 
@@ -712,29 +572,21 @@ localStorage.getItem(
 
 let logs =
 JSON.parse(
-
-localStorage.getItem(
-"logs"
-)
-
+localStorage.getItem("logs")
 )||[];
 
 
 
 
 
-let now =
-new Date();
-
+let now=new Date();
 
 
 
 
 let time =
 now.getHours()+":"+
-
 (now.getMinutes()<10?"0":"")+
-
 now.getMinutes();
 
 
@@ -753,9 +605,10 @@ time:time,
 
 user:
 
-user?
-user.username:
+user ?
+user.email :
 "Unknown",
+
 
 
 
@@ -774,15 +627,12 @@ status:status
 
 
 
-
-
 if(logs.length>10){
-
 
 logs.pop();
 
-
 }
+
 
 
 
@@ -799,6 +649,8 @@ JSON.stringify(logs)
 
 
 
+
+
 }
 
 
@@ -810,7 +662,7 @@ JSON.stringify(logs)
 
 
 // =====================================================
-// LOAD PAGE
+// LOAD
 // =====================================================
 
 
@@ -823,32 +675,18 @@ updateTimerDisplay();
 
 
 
-
-
 let status =
-localStorage.getItem(
-"lampStatus"
-);
-
-
+localStorage.getItem("lampStatus");
 
 
 
 let lamp =
-document.getElementById(
-"lampStatus"
-);
-
-
+document.getElementById("lampStatus");
 
 
 
 let dashLamp =
-document.getElementById(
-"dashLamp"
-);
-
-
+document.getElementById("dashLamp");
 
 
 
@@ -860,25 +698,19 @@ if(status=="ON"){
 
 if(lamp){
 
-
 lamp.innerHTML="ON";
 
 lamp.style.color="green";
-
 
 }
 
 
 
-
-
 if(dashLamp){
-
 
 dashLamp.innerHTML="ON";
 
 dashLamp.style.color="green";
-
 
 }
 
@@ -890,33 +722,25 @@ startTimer();
 
 }
 
-
-
 else{
 
 
 
 if(lamp){
 
-
 lamp.innerHTML="OFF";
 
 lamp.style.color="red";
-
 
 }
 
 
 
-
-
 if(dashLamp){
-
 
 dashLamp.innerHTML="OFF";
 
 dashLamp.style.color="red";
-
 
 }
 
