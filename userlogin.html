@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Smart Classroom Login
+</title>
+
+
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+
+
+
+<body class="login-body">
+
+
+
+
+
+<div class="login-card">
+
+
+
+<h1>
+
+🏫 SmartClass
+
+</h1>
+
+
+
+<p>
+
+Login Sistem Kawalan Lampu
+
+</p>
+
+
+
+
+
+<input id="username"
+
+placeholder="Nama Pengguna">
+
+
+
+
+
+<input id="password"
+
+type="password"
+
+placeholder="Password">
+
+
+
+
+
+
+<button class="login-btn"
+
+onclick="login()">
+
+LOGIN
+
+</button>
+
+
+
+
+
+<p id="message"></p>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script src="users.js"></script>
+
+
+
+
+
+<script>
+
+
+function login(){
+
+
+
+let username = document.getElementById(
+
+"username"
+
+).value;
+
+
+
+let password = document.getElementById(
+
+"password"
+
+).value;
+
+
+
+
+
+
+let users = JSON.parse(
+
+localStorage.getItem("users")
+
+);
+
+
+
+
+
+
+let user = users.find(function(data){
+
+
+
+return data.username==username &&
+
+data.password==password;
+
+
+
+});
+
+
+
+
+
+
+
+if(user){
+
+
+
+localStorage.setItem(
+
+"loginUser",
+
+JSON.stringify(user)
+
+);
+
+
+
+
+
+
+if(user.role=="admin"){
+
+
+window.location="dashboard.html";
+
+
+}
+
+else{
+
+
+window.location="index.html";
+
+
+}
+
+
+
+
+}
+
+
+
+else{
+
+
+document.getElementById(
+
+"message"
+
+).innerHTML=
+
+"❌ Username atau password salah";
+
+
+}
+
+
+
+
+}
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+
+
+</html>

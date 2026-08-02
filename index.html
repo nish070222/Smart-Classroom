@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Smart Classroom Light Control
+</title>
+
+
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+
+
+
+
+<body>
+
+
+
+
+<script src="auth.js"></script>
+
+
+
+
+
+<!-- SIDEBAR -->
+
+
+<div class="sidebar">
+
+
+<h2>
+🏫 SmartClass
+</h2>
+
+
+
+<a href="index.html">
+
+💡 Light Control
+
+</a>
+
+
+
+<a href="dashboard.html" id="dashboardMenu">
+
+📊 Dashboard
+
+</a>
+
+
+
+<a href="history.html">
+
+📅 History
+
+</a>
+
+
+
+<a href="manageusers.html" id="manageMenu">
+
+👥 Manage User
+
+</a>
+
+
+
+
+
+<div class="side-user">
+
+
+<p id="userName">
+
+</p>
+
+
+</div>
+
+
+
+
+
+<a href="#" onclick="logout()">
+
+🚪 Logout
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- MAIN -->
+
+
+<div class="main">
+
+
+
+<h1>
+
+Smart Classroom Control System
+
+</h1>
+
+
+
+
+<p id="welcome">
+
+Welcome
+
+</p>
+
+
+
+
+
+
+
+<div class="clock">
+
+
+🕒 Masa Sekarang
+
+
+<h2 id="time">
+
+00:00:00
+
+</h2>
+
+
+
+
+📅 Tarikh
+
+
+<p id="date">
+
+-
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+
+💡 Lampu Makmal Tutorial
+
+</h2>
+
+
+
+<p>
+
+Status Lampu:
+
+</p>
+
+
+
+<h1 id="lampStatus">
+
+OFF
+
+</h1>
+
+
+
+
+<button class="on"
+
+onclick="lampOn()">
+
+ON
+
+</button>
+
+
+
+
+
+<button class="off"
+
+onclick="lampOff()">
+
+OFF
+
+</button>
+
+
+
+
+
+
+
+
+<div class="timer-box">
+
+
+<h2>
+
+⏱ Tempoh Lampu Hidup
+
+</h2>
+
+
+<h1 id="timer">
+
+00:00:00
+
+</h1>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="info">
+
+
+<h2>
+
+📌 Status Sistem
+
+</h2>
+
+
+
+<p>
+
+ESP32:
+
+<span class="online">
+
+🟢 ONLINE
+
+</span>
+
+</p>
+
+
+
+<p>
+
+📍 Lokasi:
+
+Makmal Tutorial
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script src="script.js"></script>
+
+<script src="logout.js"></script>
+
+
+
+
+
+
+
+
+<script>
+
+
+// ======================
+// PAPAR USER
+// ======================
+
+
+
+let user = JSON.parse(
+
+localStorage.getItem("loginUser")
+
+);
+
+
+
+
+
+document.getElementById(
+
+"userName"
+
+).innerHTML =
+
+
+"👤 "+user.username;
+
+
+
+
+document.getElementById(
+
+"welcome"
+
+).innerHTML =
+
+
+"Welcome, "+user.username;
+
+
+
+
+
+
+
+// ======================
+// HIDE ADMIN MENU
+// ======================
+
+
+if(user.role!="admin"){
+
+
+
+document.getElementById(
+
+"dashboardMenu"
+
+).style.display="none";
+
+
+
+
+document.getElementById(
+
+"manageMenu"
+
+).style.display="none";
+
+
+}
+
+
+
+
+
+
+
+
+
+// ======================
+// CLOCK
+// ======================
+
+
+function updateClock(){
+
+
+
+let now=new Date();
+
+
+
+let h=now.getHours();
+
+let m=now.getMinutes();
+
+let s=now.getSeconds();
+
+
+
+h=h<10?"0"+h:h;
+
+m=m<10?"0"+m:m;
+
+s=s<10?"0"+s:s;
+
+
+
+
+document.getElementById(
+
+"time"
+
+).innerHTML=
+
+h+":"+m+":"+s;
+
+
+
+
+
+
+let d=now.getDate();
+
+let mo=now.getMonth()+1;
+
+let y=now.getFullYear();
+
+
+
+
+document.getElementById(
+
+"date"
+
+).innerHTML=
+
+d+"/"+mo+"/"+y;
+
+
+
+}
+
+
+
+
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>

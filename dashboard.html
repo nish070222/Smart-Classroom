@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Smart Classroom Dashboard
+</title>
+
+
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+
+
+
+<body>
+
+
+
+
+<script src="auth.js"></script>
+
+
+
+
+<script>
+
+
+// ======================
+// ADMIN CHECK
+// ======================
+
+
+let loginUser = JSON.parse(
+
+localStorage.getItem("loginUser")
+
+);
+
+
+
+if(!loginUser || loginUser.role!="admin"){
+
+
+window.location="index.html";
+
+
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+<!-- SIDEBAR -->
+
+
+<div class="sidebar">
+
+
+<h2>
+
+🏫 SmartClass
+
+</h2>
+
+
+
+
+<a href="index.html">
+
+💡 Light Control
+
+</a>
+
+
+
+
+<a href="dashboard.html">
+
+📊 Dashboard
+
+</a>
+
+
+
+
+<a href="history.html">
+
+📅 History
+
+</a>
+
+
+
+
+<a href="manageusers.html">
+
+👥 Manage User
+
+</a>
+
+
+
+
+
+<div class="side-user">
+
+
+<p id="adminName">
+
+</p>
+
+
+</div>
+
+
+
+
+
+<a href="#" onclick="logout()">
+
+🚪 Logout
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- MAIN -->
+
+
+<div class="dashboard">
+
+
+
+
+
+<h1>
+
+🏫 Smart Classroom Dashboard
+
+</h1>
+
+
+
+
+<p>
+
+Monitoring Sistem Admin
+
+</p>
+
+
+
+
+
+
+
+
+
+<div class="dashboard-card">
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+
+⏱ Masa Lampu Hidup
+
+</h2>
+
+
+<h1 id="dashTimer">
+
+00:00:00
+
+</h1>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+
+💡 Status Lampu
+
+</h2>
+
+
+<h1 id="dashLamp">
+
+OFF
+
+</h1>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+
+📡 ESP32
+
+</h2>
+
+
+<h1 class="online">
+
+ONLINE
+
+</h1>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+
+📍 Lokasi
+
+</h2>
+
+
+<h3>
+
+Makmal Tutorial
+
+</h3>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="log">
+
+
+<h2>
+
+📋 Log Aktiviti
+
+</h2>
+
+
+
+
+<table>
+
+
+
+<tr>
+
+
+<th>
+
+Masa
+
+</th>
+
+
+<th>
+
+Aktiviti
+
+</th>
+
+
+<th>
+
+Status
+
+</th>
+
+
+</tr>
+
+
+
+
+<tbody id="activityLog">
+
+</tbody>
+
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script src="script.js"></script>
+
+<script src="logout.js"></script>
+
+
+
+
+
+
+
+
+<script>
+
+
+
+// PAPAR NAMA ADMIN
+
+
+document.getElementById(
+
+"adminName"
+
+).innerHTML=
+
+
+"👤 "+loginUser.username;
+
+
+
+
+
+
+
+
+
+// STATUS LAMP
+
+
+let status = localStorage.getItem(
+
+"lampStatus"
+
+);
+
+
+
+
+let lamp = document.getElementById(
+
+"dashLamp"
+
+);
+
+
+
+
+
+if(status=="ON"){
+
+
+lamp.innerHTML="ON";
+
+lamp.style.color="green";
+
+
+}
+
+else{
+
+
+lamp.innerHTML="OFF";
+
+lamp.style.color="red";
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// LOG AKTIVITI
+
+
+let logs = JSON.parse(
+
+localStorage.getItem("logs")
+
+)||[];
+
+
+
+
+
+let table=document.getElementById(
+
+"activityLog"
+
+);
+
+
+
+
+
+
+logs.forEach(function(log){
+
+
+
+table.innerHTML += `
+
+
+<tr>
+
+<td>
+
+${log.time}
+
+</td>
+
+
+<td>
+
+${log.activity}
+
+</td>
+
+
+<td>
+
+${log.status}
+
+</td>
+
+
+</tr>
+
+
+`;
+
+
+
+});
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>

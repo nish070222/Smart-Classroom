@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Smart Classroom History
+</title>
+
+
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+
+
+
+
+<body>
+
+
+
+<script src="auth.js"></script>
+
+
+
+
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+
+<h2>
+🏫 SmartClass
+</h2>
+
+
+
+
+
+<a href="index.html">
+
+💡 Light Control
+
+</a>
+
+
+
+
+
+<a href="dashboard.html" id="dashboardMenu">
+
+📊 Dashboard
+
+</a>
+
+
+
+
+
+<a href="history.html">
+
+📅 History
+
+</a>
+
+
+
+
+
+<a href="manageusers.html" id="manageMenu">
+
+👥 Manage User
+
+</a>
+
+
+
+
+
+
+<div class="side-user">
+
+<p id="userName"></p>
+
+</div>
+
+
+
+
+
+
+<a href="#" onclick="logout()">
+
+🚪 Logout
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- CONTENT -->
+
+
+<div class="main">
+
+
+
+
+
+
+<h1>
+
+📅 Rekod Penggunaan Lampu
+
+</h1>
+
+
+
+
+
+<p id="welcome">
+
+</p>
+
+
+
+
+
+
+
+
+
+
+<div class="log">
+
+
+
+<h2>
+
+📋 History Lampu
+
+</h2>
+
+
+
+
+
+
+
+<table>
+
+
+
+<tr>
+
+
+<th>
+
+Pengguna
+
+</th>
+
+
+
+<th>
+
+Role
+
+</th>
+
+
+
+<th>
+
+Tarikh
+
+</th>
+
+
+
+<th>
+
+Masa Mula
+
+</th>
+
+
+
+<th>
+
+Masa Tamat
+
+</th>
+
+
+
+<th>
+
+Tempoh
+
+</th>
+
+
+
+<th>
+
+Tindakan
+
+</th>
+
+
+
+</tr>
+
+
+
+
+
+
+
+<tbody id="historyTable">
+
+
+</tbody>
+
+
+
+
+
+
+</table>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script src="logout.js"></script>
+
+
+
+
+
+
+
+
+<script>
+
+
+
+// ==========================
+// USER CHECK
+// ==========================
+
+
+let user = JSON.parse(
+
+localStorage.getItem("loginUser")
+
+);
+
+
+
+
+
+if(!user){
+
+
+window.location="userlogin.html";
+
+
+}
+
+
+
+
+
+
+
+document.getElementById(
+
+"userName"
+
+).innerHTML =
+
+
+"👤 "+user.username;
+
+
+
+
+
+
+document.getElementById(
+
+"welcome"
+
+).innerHTML =
+
+
+"Smart Classroom Control System";
+
+
+
+
+
+
+
+
+
+
+
+// ==========================
+// ROLE MENU
+// ==========================
+
+
+
+if(user.role!="admin"){
+
+
+
+document.getElementById(
+
+"dashboardMenu"
+
+).style.display="none";
+
+
+
+
+document.getElementById(
+
+"manageMenu"
+
+).style.display="none";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// ==========================
+// PAPAR HISTORY
+// ==========================
+
+
+
+let history = JSON.parse(
+
+localStorage.getItem("history")
+
+)||[];
+
+
+
+
+
+let table = document.getElementById(
+
+"historyTable"
+
+);
+
+
+
+
+
+
+
+
+
+if(history.length==0){
+
+
+
+table.innerHTML = `
+
+
+<tr>
+
+<td colspan="7">
+
+Tiada rekod penggunaan lampu
+
+</td>
+
+</tr>
+
+
+`;
+
+
+
+}
+
+else{
+
+
+
+
+
+
+history.forEach(function(data,index){
+
+
+
+
+
+
+
+table.innerHTML += `
+
+
+
+<tr>
+
+
+
+<td>
+
+👤 ${data.user || "Data Lama"}
+
+</td>
+
+
+
+
+<td>
+
+${data.role || "-"}
+
+</td>
+
+
+
+
+<td>
+
+${data.date || "-"}
+
+</td>
+
+
+
+
+<td>
+
+${data.start || "-"}
+
+</td>
+
+
+
+
+<td>
+
+${data.end || "-"}
+
+</td>
+
+
+
+
+<td>
+
+${data.duration || "-"}
+
+</td>
+
+
+
+
+<td>
+
+
+
+<button 
+
+class="delete-btn"
+
+onclick="deleteHistory(${index})">
+
+
+🗑 Delete
+
+
+</button>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+`;
+
+
+
+
+
+
+
+});
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ==========================
+// DELETE HISTORY
+// ==========================
+
+
+
+function deleteHistory(index){
+
+
+
+let history = JSON.parse(
+
+localStorage.getItem("history")
+
+)||[];
+
+
+
+
+
+history.splice(index,1);
+
+
+
+
+
+
+localStorage.setItem(
+
+"history",
+
+JSON.stringify(history)
+
+);
+
+
+
+
+
+
+location.reload();
+
+
+
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+</body>
+
+</html>
