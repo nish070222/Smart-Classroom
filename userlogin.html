@@ -37,11 +37,12 @@ Login Sistem Kawalan Lampu
 📧 Masukkan Email (Gmail)
 </h3>
 
-<input id="email"
 
+<input 
+id="email"
 type="email"
-
-placeholder="Contoh: admin@gmail.com">
+placeholder="Contoh: admin@gmail.com"
+autocomplete="off">
 
 
 
@@ -49,16 +50,17 @@ placeholder="Contoh: admin@gmail.com">
 🔒 Masukkan Password
 </h3>
 
-<input id="password"
 
+<input 
+id="password"
 type="password"
+placeholder="Masukkan password"
+autocomplete="off">
 
-placeholder="Masukkan password">
 
 
-
-<button class="login-btn"
-
+<button 
+class="login-btn"
 onclick="login()">
 
 LOGIN
@@ -72,6 +74,7 @@ LOGIN
 
 
 </div>
+
 
 
 
@@ -95,6 +98,7 @@ signInWithEmailAndPassword
 
 const firebaseConfig = {
 
+
 apiKey: "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
 
 authDomain: "smart-classroom-351a3.firebaseapp.com",
@@ -107,7 +111,9 @@ messagingSenderId: "1031651524426",
 
 appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
+
 };
+
 
 
 
@@ -126,16 +132,43 @@ window.login = function(){
 
 
 
-let email = document.getElementById("email").value;
+let email = document
+.getElementById("email")
+.value;
 
 
-let password = document.getElementById("password").value;
+let password = document
+.getElementById("password")
+.value;
 
 
 
 
 
-signInWithEmailAndPassword(auth,email,password)
+if(email=="" || password==""){
+
+
+document.getElementById("message").innerHTML =
+
+"⚠️ Sila isi email dan password";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+signInWithEmailAndPassword(
+auth,
+email,
+password
+)
 
 
 
@@ -143,11 +176,21 @@ signInWithEmailAndPassword(auth,email,password)
 
 
 
+
+
+// Simpan pengguna untuk history
+
 localStorage.setItem(
 
 "loginUser",
 
-JSON.stringify(userCredential.user)
+JSON.stringify({
+
+username: email,
+
+role:"admin"
+
+})
 
 );
 
@@ -163,13 +206,19 @@ document.getElementById("message").innerHTML =
 
 
 
+
+
 setTimeout(()=>{
 
 
-window.location="index.html";
+window.location.href="index.html";
 
 
-},800);
+},500);
+
+
+
+
 
 
 
@@ -179,12 +228,20 @@ window.location="index.html";
 
 
 
-.catch(()=>{
+
+
+.catch((error)=>{
+
+
+
+console.log(error);
+
 
 
 document.getElementById("message").innerHTML =
 
 "❌ Email atau Password salah";
+
 
 
 });
@@ -195,7 +252,9 @@ document.getElementById("message").innerHTML =
 
 
 
+
 </script>
+
 
 
 </body>
