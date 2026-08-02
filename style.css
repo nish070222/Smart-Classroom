@@ -1,12 +1,10 @@
 /* =====================================================
    SMART CLASSROOM CONTROL SYSTEM
-   FULL STYLE.CSS VERSION
+   STYLE.CSS PART 1
 ===================================================== */
 
 
-/* ==========================
-   GOOGLE FONT
-========================== */
+/* GOOGLE FONT */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -15,8 +13,11 @@
 *{
 
     margin:0;
+
     padding:0;
+
     box-sizing:border-box;
+
     font-family:'Poppins',sans-serif;
 
 }
@@ -37,9 +38,9 @@ body{
 
 
 
-/* ==========================
-   LOGIN PAGE
-========================== */
+/* =====================================================
+   LOGIN
+===================================================== */
 
 
 .login-body{
@@ -53,6 +54,7 @@ body{
     align-items:center;
 
 }
+
 
 
 
@@ -75,6 +77,7 @@ body{
 
 
 
+
 .login-card h1{
 
     color:#2563eb;
@@ -82,6 +85,7 @@ body{
     margin-bottom:10px;
 
 }
+
 
 
 
@@ -95,9 +99,9 @@ body{
 
 
 
+
 .login-card input,
 .login-card select{
-
 
     width:100%;
 
@@ -113,16 +117,6 @@ body{
 
 
 
-.login-card input:focus{
-
-    border-color:#2563eb;
-
-    outline:none;
-
-}
-
-
-
 .login-btn{
 
     width:100%;
@@ -132,6 +126,12 @@ body{
     background:#2563eb;
 
     color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
 
 }
 
@@ -145,17 +145,11 @@ body{
 
 
 
-#error{
-
-    color:red;
-
-}
 
 
-
-/* ==========================
+/* =====================================================
    SIDEBAR
-========================== */
+===================================================== */
 
 
 .sidebar{
@@ -176,6 +170,7 @@ body{
 
 
 
+
 .sidebar h2{
 
     text-align:center;
@@ -183,6 +178,7 @@ body{
     margin-bottom:30px;
 
 }
+
 
 
 
@@ -224,9 +220,13 @@ body{
 
 
 
-/* ==========================
+
+
+
+
+/* =====================================================
    MAIN
-========================== */
+===================================================== */
 
 
 .main{
@@ -249,6 +249,7 @@ body{
 
 
 
+
 .main h1{
 
     text-align:center;
@@ -261,39 +262,27 @@ body{
 
 
 
-.main p{
-
-    color:#64748b;
-
-}
-
-
-
-/* ==========================
-   WELCOME
-========================== */
-
 
 #welcome{
 
     margin-top:10px;
 
-    font-size:17px;
-
     font-weight:600;
-
-    text-align:center;
 
 }
 
 
 
-/* ==========================
+
+
+
+/* =====================================================
    CLOCK
-========================== */
+===================================================== */
 
 
 .clock{
+
 
     background:white;
 
@@ -307,17 +296,13 @@ body{
 
     text-align:center;
 
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
     box-shadow:
 
     0 10px 25px rgba(0,0,0,.1);
 
+
 }
+
 
 
 
@@ -327,15 +312,14 @@ body{
 
     font-size:42px;
 
-    margin:15px 0;
+    margin:15px;
 
 }
 
 
 
-.clock #date{
 
-    color:#1e293b;
+.clock #date{
 
     font-size:20px;
 
@@ -345,12 +329,17 @@ body{
 
 
 
-/* ==========================
-   LIGHT CARD
-========================== */
+
+
+
+
+/* =====================================================
+   LIGHT CONTROL
+===================================================== */
 
 
 .card{
+
 
     background:white;
 
@@ -368,28 +357,14 @@ body{
 
     0 15px 30px rgba(0,0,0,.1);
 
-}
-
-
-
-.card:hover,
-.clock:hover{
-
-    transform:translateY(-5px);
 
 }
 
-
-
-.card h2{
-
-    color:#1e293b;
-
-}
 
 
 
 #lampStatus{
+
 
     font-size:50px;
 
@@ -399,16 +374,14 @@ body{
 
     margin:20px;
 
+
 }
 
 
 
-/* ==========================
-   BUTTON
-========================== */
-
 
 button{
+
 
     width:130px;
 
@@ -426,6 +399,7 @@ button{
 
     font-weight:600;
 
+
 }
 
 
@@ -438,17 +412,19 @@ button{
 
 
 
-.on:hover{
 
-    background:#15803d;
+.off{
+
+    background:#ef4444;
 
 }
 
 
 
-.off{
 
-    background:#ef4444;
+.on:hover{
+
+    background:#15803d;
 
 }
 
@@ -461,13 +437,13 @@ button{
 }
 
 
-
-/* ==========================
+/* =====================================================
    TIMER
-========================== */
+===================================================== */
 
 
 .timer-box{
+
 
     margin-top:20px;
 
@@ -477,22 +453,30 @@ button{
 
     border-radius:15px;
 
+
 }
 
 
 
 .timer-box h1{
 
+
     color:#2563eb;
+
 
 }
 
-/* ==========================
+
+
+
+
+/* =====================================================
    INFO BOX
-========================== */
+===================================================== */
 
 
 .info{
+
 
     background:white;
 
@@ -510,26 +494,34 @@ button{
 
     0 10px 25px rgba(0,0,0,.1);
 
+
 }
 
 
 
 .online{
 
+
     color:#22c55e;
 
     font-weight:bold;
+
 
 }
 
 
 
-/* ==========================
+
+
+
+
+/* =====================================================
    DASHBOARD
-========================== */
+===================================================== */
 
 
 .dashboard{
+
 
     min-height:100vh;
 
@@ -543,27 +535,26 @@ button{
 
     align-items:center;
 
+
 }
+
+
 
 
 
 .dashboard h1{
 
+
     color:#1e3a8a;
 
-}
-
-
-
-.user{
-
-    margin:15px;
 
 }
+
 
 
 
 .dashboard-card{
+
 
     display:flex;
 
@@ -573,11 +564,17 @@ button{
 
     flex-wrap:wrap;
 
+    margin-top:30px;
+
+
 }
 
 
 
+
+
 .box{
+
 
     background:white;
 
@@ -595,34 +592,54 @@ button{
 
     0 10px 25px rgba(0,0,0,.1);
 
+    transition:.3s;
+
+
 }
+
+
 
 
 
 .box:hover{
 
+
     transform:translateY(-8px);
 
+
 }
+
 
 
 
 .box h2{
 
+
     color:#1e293b;
+
+    font-size:20px;
+
 
 }
 
 
 
 
+.box h1{
 
-/* ==========================
-   HISTORY
-========================== */
+
+    margin-top:20px;
+
+}
+
+
+/* =====================================================
+   HISTORY PAGE
+===================================================== */
 
 
 .history-nav{
+
 
     display:flex;
 
@@ -632,51 +649,80 @@ button{
 
     margin:20px;
 
+
 }
 
 
 
-.log{
+
+
+.history-table-card{
+
 
     background:white;
 
     width:90%;
 
-    max-width:900px;
+    max-width:1000px;
 
     padding:30px;
 
+    margin:20px auto;
+
     border-radius:20px;
 
-    margin:20px auto;
 
     box-shadow:
 
     0 10px 25px rgba(0,0,0,.15);
 
+
+    overflow-x:auto;
+
+
 }
 
 
 
-.log h2{
+
+
+
+.history-table-card h2{
+
 
     text-align:center;
 
+    color:#1e293b;
+
+    margin-bottom:20px;
+
+
 }
 
 
 
-table{
+
+
+
+.history-table-card table{
+
 
     width:100%;
 
+    min-width:850px;
+
     border-collapse:collapse;
+
 
 }
 
 
 
-th{
+
+
+
+.history-table-card th{
+
 
     background:#2563eb;
 
@@ -684,11 +730,19 @@ th{
 
     padding:15px;
 
+    text-align:center;
+
+
 }
 
 
 
-td{
+
+
+
+
+.history-table-card td{
+
 
     padding:15px;
 
@@ -696,11 +750,37 @@ td{
 
     border-bottom:1px solid #ddd;
 
+    white-space:nowrap;
+
+
 }
 
 
 
+
+
+
+
+.history-table-card tr:hover{
+
+
+    background:#f8fafc;
+
+
+}
+
+
+
+
+
+
+
+
+/* DELETE BUTTON */
+
+
 .delete-btn{
+
 
     background:#ef4444;
 
@@ -708,19 +788,31 @@ td{
 
     height:35px;
 
+
 }
+
 
 
 
 .delete-btn:hover{
 
+
     background:#b91c1c;
+
 
 }
 
 
 
+
+
+
+
+/* EDIT BUTTON */
+
+
 .edit-btn{
+
 
     background:#f59e0b;
 
@@ -728,66 +820,266 @@ td{
 
     height:35px;
 
+
 }
 
 
 
-/* ==========================
-   MANAGE USER
-========================== */
 
 
-.user-form{
+
+/* HOVER EFFECT */
+
+
+.history-table-card,
+.card,
+.clock,
+.box{
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+
+.history-table-card:hover{
+
+
+    transform:translateY(-5px);
+
+
+}
+
+
+/* =====================================================
+   MANAGE USER PAGE
+===================================================== */
+
+
+.manage-main{
+
+
+    margin-left:230px;
+
+    min-height:100vh;
+
+    padding:30px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+
+}
+
+
+
+
+.manage-main h1{
+
+
+    color:#1e293b;
+
+    margin-bottom:10px;
+
+
+}
+
+
+
+
+.manage-main p{
+
+
+    color:#64748b;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   STAT CARD
+========================= */
+
+
+.stats{
+
+
+    display:flex;
+
+    gap:25px;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    margin:25px 0;
+
+
+}
+
+
+
+
+
+.stat-card{
+
+
+    background:white;
+
+    width:220px;
+
+    padding:25px;
+
+    border-radius:20px;
 
     text-align:center;
 
+
+    box-shadow:
+
+    0 10px 25px rgba(0,0,0,.1);
+
+
+    transition:.3s;
+
+
 }
 
 
 
-.user-form input,
-.user-form select{
 
-    width:250px;
 
-    padding:12px;
+.stat-card:hover{
+
+
+    transform:translateY(-5px);
+
+
+}
+
+
+
+
+
+.stat-card h3{
+
+
+    color:#475569;
+
+
+}
+
+
+
+
+
+.stat-card h1{
+
+
+    color:#2563eb;
+
+    font-size:40px;
+
+
+}
+
+
+
+
+
+
+/* =========================
+   ADD USER CARD
+========================= */
+
+
+.user-card{
+
+
+    background:white;
+
+    width:600px;
+
+    padding:35px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+
+    box-shadow:
+
+    0 10px 25px rgba(0,0,0,.15);
+
+
+}
+
+
+
+
+
+
+
+.user-card h2{
+
+
+    margin-bottom:20px;
+
+    color:#1e293b;
+
+
+}
+
+
+
+
+
+
+
+.form-group{
+
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+
+}
+
+
+
+
+
+
+.form-group input,
+.form-group select{
+
+
+    width:80%;
+
+    padding:13px;
 
     margin:10px;
 
-    border-radius:10px;
-
-    border:1px solid #ccc;
-
-}
-
-
-
-
-
-/* ==========================
-   GLOBAL INPUT
-========================== */
-
-
-input,
-select{
-
-    padding:12px;
 
     border-radius:12px;
 
     border:1px solid #cbd5e1;
 
-    outline:none;
-
-}
-
-
-
-input:focus,
-select:focus{
-
-    border-color:#2563eb;
 
 }
 
@@ -795,133 +1087,296 @@ select:focus{
 
 
 
-/* ==========================
-   RESPONSIVE TABLET
-========================== */
+
+.form-group button{
 
 
-@media(max-width:768px){
+    background:#22c55e;
 
+    width:150px;
+
+
+}
+
+
+
+
+
+.form-group button:hover{
+
+
+    background:#15803d;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   SEARCH
+========================= */
+
+
+.search-box{
+
+
+    margin:25px;
+
+    width:600px;
+
+    text-align:center;
+
+
+}
+
+
+
+
+.search-box input{
+
+
+    width:100%;
+
+    padding:14px;
+
+
+}
+
+
+
+
+
+
+/* =========================
+   USER TABLE
+========================= */
+
+
+.user-table-card{
+
+
+    background:white;
+
+    width:90%;
+
+    max-width:1000px;
+
+    padding:30px;
+
+    border-radius:20px;
+
+
+    box-shadow:
+
+    0 10px 25px rgba(0,0,0,.15);
+
+
+    overflow-x:auto;
+
+
+}
+
+
+
+
+
+
+.user-table-card h2{
+
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+
+
+.user-table-card table{
+
+
+    width:100%;
+
+    border-collapse:collapse;
+
+
+}
+
+
+
+
+
+
+.user-table-card th{
+
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:15px;
+
+
+}
+
+
+
+
+
+
+
+.user-table-card td{
+
+
+    padding:15px;
+
+    text-align:center;
+
+    border-bottom:1px solid #ddd;
+
+
+}
+
+
+
+
+
+
+.user-table-card tr:hover{
+
+
+    background:#f8fafc;
+
+
+}
+
+
+/* =====================================================
+   RESPONSIVE DESIGN
+===================================================== */
+
+
+
+@media(max-width:900px){
+
+
+
+/* SIDEBAR */
 
 
 .sidebar{
+
 
     width:180px;
 
     padding:15px;
 
+
 }
 
 
 
 .sidebar h2{
 
+
     font-size:18px;
 
+
 }
+
 
 
 
 .sidebar a{
 
-    font-size:13px;
 
-    padding:12px 8px;
+    font-size:14px;
+
+    padding:12px;
+
 
 }
 
 
 
-.main{
+
+
+
+
+/* MAIN */
+
+
+.main,
+.dashboard,
+.manage-main{
+
 
     margin-left:180px;
 
     padding:20px;
 
-}
-
-
-
-.dashboard{
-
-    margin-left:180px;
 
 }
 
 
 
-.main h1{
-
-    font-size:24px;
-
-}
 
 
 
-.clock,
+
 .card,
+.clock,
 .info{
+
 
     width:95%;
 
-}
-
-
-
-.clock h2#time{
-
-    font-size:32px;
 
 }
 
 
 
-.card{
 
-    padding:25px;
+
+
+
+.dashboard-card{
+
+
+    gap:15px;
+
 
 }
 
 
-
-#lampStatus{
-
-    font-size:40px;
-
-}
-
-
-
-button{
-
-    width:110px;
-
-}
 
 
 
 .box{
 
+
     width:200px;
 
-}
-
-
-
-.log{
-
-    overflow-x:auto;
 
 }
 
 
 
-.log table{
 
-    min-width:650px;
 
-}
 
+
+.user-card{
+
+
+    width:90%;
 
 
 }
@@ -930,98 +1385,315 @@ button{
 
 
 
-/* ==========================
-   SMALL PHONE
-========================== */
+.search-box{
 
 
-@media(max-width:480px){
+    width:90%;
+
+
+}
+
+
+
+
+
+
+}
+
+
+
+
+/* =====================================================
+   PHONE
+===================================================== */
+
+
+@media(max-width:600px){
+
+
+
+body{
+
+
+    overflow-x:hidden;
+
+
+}
+
+
+
 
 
 
 .sidebar{
 
-    width:150px;
+
+    width:140px;
+
+    padding:10px;
+
 
 }
+
+
 
 
 
 .sidebar h2{
 
-    font-size:15px;
+
+    font-size:14px;
+
 
 }
+
+
+
 
 
 
 .sidebar a{
 
+
     font-size:11px;
 
-}
+    padding:10px 5px;
 
-
-
-.main{
-
-    margin-left:150px;
 
 }
 
 
 
-.dashboard{
 
-    margin-left:150px;
+
+
+.main,
+.dashboard,
+.manage-main{
+
+
+    margin-left:140px;
+
+    padding:15px;
+
 
 }
+
+
+
+
+
+
+.main h1{
+
+
+    font-size:22px;
+
+
+}
+
+
+
 
 
 
 .clock h2#time{
 
+
     font-size:28px;
 
+
 }
+
+
+
 
 
 
 .clock #date{
 
-    font-size:16px;
+
+    font-size:15px;
+
 
 }
+
+
+
 
 
 
 .card{
 
-    width:95%;
+
+    padding:20px;
+
 
 }
+
+
+
+
+
+
+#lampStatus{
+
+
+    font-size:40px;
+
+
+}
+
+
+
 
 
 
 button{
 
-    width:90px;
+
+    width:100px;
+
+    height:40px;
+
 
 }
+
+
+
 
 
 
 .box{
 
+
     width:160px;
+
+    height:auto;
+
 
 }
 
 
 
-.login-card{
+
+
+
+.dashboard-card{
+
+
+    flex-direction:column;
+
+    align-items:center;
+
+
+}
+
+
+
+
+
+
+.stats{
+
+
+    flex-direction:column;
+
+    align-items:center;
+
+
+}
+
+
+
+
+
+
+.stat-card{
+
 
     width:90%;
+
+
+}
+
+
+
+
+
+
+.user-card{
+
+
+    width:95%;
+
+
+}
+
+
+
+
+
+
+.form-group input,
+.form-group select{
+
+
+    width:95%;
+
+
+}
+
+
+
+
+
+
+.user-table-card{
+
+
+    width:95%;
+
+    padding:15px;
+
+
+}
+
+
+
+
+
+.history-table-card{
+
+
+    width:95%;
+
+    padding:15px;
+
+
+}
+
+
+
+.history-table-card table{
+
+
+    min-width:850px;
+
+
+}
+
+
+
+
+
+.login-card{
+
+
+    width:90%;
+
+    padding:25px;
+
 
 }
 
