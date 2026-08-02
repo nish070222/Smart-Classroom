@@ -183,20 +183,13 @@ password
 // SIMPAN USER
 
 localStorage.setItem(
-
 "loginUser",
-
 JSON.stringify({
-
-username: email,
-
-role: "admin"
-
+email:userCredential.user.email,
+uid:userCredential.user.uid,
+role:"admin"
 })
-
 );
-
-
 
 
 
