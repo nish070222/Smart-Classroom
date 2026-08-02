@@ -31,6 +31,7 @@ Smart Classroom Dashboard
 
 
 
+
 <script>
 
 
@@ -44,6 +45,7 @@ let loginUser = JSON.parse(
 localStorage.getItem("loginUser")
 
 );
+
 
 
 
@@ -65,16 +67,17 @@ window.location="index.html";
 
 
 
+
+
 <!-- SIDEBAR -->
 
 
 <div class="sidebar">
 
 
+
 <h2>
-
 🏫 SmartClass
-
 </h2>
 
 
@@ -117,6 +120,7 @@ window.location="index.html";
 
 
 
+
 <div class="side-user">
 
 
@@ -126,6 +130,8 @@ window.location="index.html";
 
 
 </div>
+
+
 
 
 
@@ -158,11 +164,13 @@ window.location="index.html";
 
 
 
+
 <h1>
 
 🏫 Smart Classroom Dashboard
 
 </h1>
+
 
 
 
@@ -187,6 +195,7 @@ Monitoring Sistem Admin
 
 
 
+
 <div class="box">
 
 
@@ -205,6 +214,9 @@ Monitoring Sistem Admin
 
 
 </div>
+
+
+
 
 
 
@@ -238,6 +250,7 @@ OFF
 
 
 
+
 <div class="box">
 
 
@@ -256,6 +269,8 @@ ONLINE
 
 
 </div>
+
+
 
 
 
@@ -296,6 +311,10 @@ Makmal Tutorial
 
 
 
+
+
+
+
 <div class="log">
 
 
@@ -304,6 +323,8 @@ Makmal Tutorial
 📋 Log Aktiviti
 
 </h2>
+
+
 
 
 
@@ -318,6 +339,13 @@ Makmal Tutorial
 <th>
 
 Masa
+
+</th>
+
+
+<th>
+
+Pengguna
 
 </th>
 
@@ -341,9 +369,13 @@ Status
 
 
 
+
+
 <tbody id="activityLog">
 
 </tbody>
+
+
 
 
 
@@ -351,7 +383,11 @@ Status
 
 
 
+
+
 </div>
+
+
 
 
 
@@ -380,31 +416,43 @@ Status
 
 
 
+
 <script>
 
 
 
-// PAPAR NAMA ADMIN
+
+// ======================
+// PAPAR EMAIL ADMIN
+// ======================
+
 
 
 document.getElementById(
 
 "adminName"
 
-).innerHTML=
+).innerHTML =
 
 
-"👤 "+loginUser.username;
+"👤 " + 
 
-
-
-
-
+(loginUser.email || "Admin");
 
 
 
 
+
+
+
+
+
+
+
+// ======================
 // STATUS LAMP
+// ======================
+
 
 
 let status = localStorage.getItem(
@@ -412,6 +460,7 @@ let status = localStorage.getItem(
 "lampStatus"
 
 );
+
 
 
 
@@ -426,12 +475,16 @@ let lamp = document.getElementById(
 
 
 
+
 if(status=="ON"){
+
 
 
 lamp.innerHTML="ON";
 
+
 lamp.style.color="green";
+
 
 
 }
@@ -439,9 +492,12 @@ lamp.style.color="green";
 else{
 
 
+
 lamp.innerHTML="OFF";
 
+
 lamp.style.color="red";
+
 
 
 }
@@ -456,7 +512,11 @@ lamp.style.color="red";
 
 
 
+
+// ======================
 // LOG AKTIVITI
+// ======================
+
 
 
 let logs = JSON.parse(
@@ -469,7 +529,8 @@ localStorage.getItem("logs")
 
 
 
-let table=document.getElementById(
+
+let table = document.getElementById(
 
 "activityLog"
 
@@ -480,20 +541,39 @@ let table=document.getElementById(
 
 
 
+
+
 logs.forEach(function(log){
+
+
 
 
 
 table.innerHTML += `
 
 
+
 <tr>
+
+
 
 <td>
 
 ${log.time}
 
 </td>
+
+
+
+
+<td>
+
+${log.user}
+
+</td>
+
+
+
 
 
 <td>
@@ -503,6 +583,9 @@ ${log.activity}
 </td>
 
 
+
+
+
 <td>
 
 ${log.status}
@@ -510,10 +593,14 @@ ${log.status}
 </td>
 
 
+
+
 </tr>
 
 
+
 `;
+
 
 
 
@@ -522,7 +609,14 @@ ${log.status}
 
 
 
+
+
+
+
 </script>
+
+
+
 
 
 
