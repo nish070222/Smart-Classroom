@@ -1,133 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
-
 
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>
-Manage User
+SmartClass Manage User
 </title>
 
 
 <link rel="stylesheet" href="style.css">
 
+<link rel="stylesheet" href="manageusers.css">
+
 
 </head>
-
-
 
 
 <body>
 
 
 
-
-<script src="auth.js"></script>
-
-
-
-
-
-<script>
-
-
-// ======================
-// ADMIN ONLY
-// ======================
-
-
-let loginUser = JSON.parse(
-
-localStorage.getItem("loginUser")
-
-);
-
-
-
-if(!loginUser || loginUser.role!="admin"){
-
-
-window.location="index.html";
-
-
-}
-
-
-</script>
-
-
-
-
-
-
-
-
+<!-- SIDEBAR -->
 
 <div class="sidebar">
 
 
 <h2>
-
 🏫 SmartClass
-
 </h2>
 
 
-
-
 <a href="index.html">
-
 💡 Light Control
-
 </a>
-
-
 
 
 <a href="dashboard.html">
-
 📊 Dashboard
-
 </a>
-
-
 
 
 <a href="history.html">
-
 📅 History
-
 </a>
 
 
-
-
-<a href="manageusers.html">
-
+<a href="manageusers.html" class="active">
 👥 Manage User
-
 </a>
-
 
 
 
 
 <div class="side-user">
 
-
 <p id="adminName">
-
 </p>
 
-
 </div>
-
 
 
 
@@ -139,6 +73,89 @@ window.location="index.html";
 </a>
 
 
+</div>
+
+
+
+
+
+
+
+
+<!-- MAIN CONTENT -->
+
+
+<div class="main manage-main">
+
+
+
+<h1>
+👥 Pengurusan Pengguna
+</h1>
+
+
+<p>
+Manage account Smart Classroom
+</p>
+
+
+
+
+
+
+
+<!-- STAT CARD -->
+
+
+<div class="stats">
+
+
+
+<div class="stat-card">
+
+<h3>
+👥 Total User
+</h3>
+
+<h1 id="totalUser">
+0
+</h1>
+
+</div>
+
+
+
+
+
+<div class="stat-card">
+
+<h3>
+👑 Admin
+</h3>
+
+<h1 id="totalAdmin">
+0
+</h1>
+
+</div>
+
+
+
+
+
+<div class="stat-card">
+
+<h3>
+🙋 User
+</h3>
+
+<h1 id="totalNormal">
+0
+</h1>
+
+</div>
+
+
 
 </div>
 
@@ -150,47 +167,25 @@ window.location="index.html";
 
 
 
-<div class="main">
+<!-- ADD USER -->
 
 
-
-
-
-
-<h1>
-
-👥 Pengurusan Pengguna
-
-</h1>
-
-
-
-
-
-<div class="card">
-
+<div class="user-card">
 
 
 <h2>
-
 ➕ Tambah User
-
 </h2>
 
 
 
-
-<input id="username"
-
-placeholder="Username">
+<div class="form-group">
 
 
-
-<input id="password"
-
-placeholder="Password">
-
-
+<input 
+id="email"
+type="email"
+placeholder="Masukkan Email User">
 
 
 
@@ -198,16 +193,12 @@ placeholder="Password">
 
 
 <option value="user">
-
 User
-
 </option>
 
 
 <option value="admin">
-
 Admin
-
 </option>
 
 
@@ -215,19 +206,36 @@ Admin
 
 
 
-
-<br>
-
-
-
-<button class="on"
-
-onclick="addUser()">
+<button onclick="addUser()">
 
 Tambah
 
 </button>
 
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- SEARCH -->
+
+
+<div class="search-box">
+
+
+<input 
+id="search"
+placeholder="🔍 Cari email pengguna..."
+onkeyup="searchUser()">
 
 
 
@@ -241,16 +249,15 @@ Tambah
 
 
 
-<div class="log">
+<!-- TABLE -->
+
+
+<div class="user-table-card">
 
 
 <h2>
-
-📋 Senarai User
-
+📋 Senarai Pengguna
 </h2>
-
-
 
 
 
@@ -258,43 +265,34 @@ Tambah
 <table>
 
 
+<thead>
+
+
 <tr>
 
-
 <th>
-
-Username
-
+Email
 </th>
 
 
 <th>
-
-Password
-
-</th>
-
-
-<th>
-
 Role
-
 </th>
 
 
 <th>
-
 Tindakan
-
 </th>
 
 
 </tr>
 
 
+</thead>
 
 
-<tbody id="userTable">
+
+<tbody id="userList">
 
 </tbody>
 
@@ -310,9 +308,6 @@ Tindakan
 
 
 
-</div>
-
-
 
 
 
@@ -324,432 +319,11 @@ Tindakan
 
 
 
-
-
-
-
-
-<script>
-
-
-
-document.getElementById(
-
-"adminName"
-
-).innerHTML =
-
-
-"👤 "+loginUser.username;
-
-
-
-
-
-
-
-
-
-function displayUsers(){
-
-
-
-let users = JSON.parse(
-
-localStorage.getItem("users")
-
-)||[];
-
-
-
-
-
-let table=document.getElementById(
-
-"userTable"
-
-);
-
-
-
-
-
-table.innerHTML="";
-
-
-
-
-
-
-
-users.forEach(function(user,index){
-
-
-
-table.innerHTML +=`
-
-
-
-<tr>
-
-
-<td>
-
-${user.username}
-
-</td>
-
-
-
-<td>
-
-${user.password}
-
-</td>
-
-
-
-<td>
-
-${user.role}
-
-</td>
-
-
-
-
-<td>
-
-
-
-<button class="edit-btn"
-
-onclick="editUser(${index})">
-
-
-✏ Edit
-
-
-</button>
-
-
-
-
-<button class="delete-btn"
-
-onclick="deleteUser(${index})">
-
-
-🗑 Delete
-
-
-</button>
-
-
-
-</td>
-
-
-
-</tr>
-
-
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function addUser(){
-
-
-
-let username=document.getElementById(
-
-"username"
-
-).value;
-
-
-
-let password=document.getElementById(
-
-"password"
-
-).value;
-
-
-
-let role=document.getElementById(
-
-"role"
-
-).value;
-
-
-
-
-
-
-if(username=="" || password==""){
-
-
-alert("Sila isi semua maklumat");
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-let users=JSON.parse(
-
-localStorage.getItem("users")
-
-)||[];
-
-
-
-
-
-
-users.push({
-
-
-username:username,
-
-
-password:password,
-
-
-role:role
-
-
-});
-
-
-
-
-
-
-localStorage.setItem(
-
-"users",
-
-JSON.stringify(users)
-
-);
-
-
-
-
-
-alert("User berjaya ditambah");
-
-
-
-
-
-displayUsers();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function editUser(index){
-
-
-
-let users=JSON.parse(
-
-localStorage.getItem("users")
-
-);
-
-
-
-
-
-let username=prompt(
-
-"Username baru",
-
-users[index].username
-
-);
-
-
-
-
-
-let password=prompt(
-
-"Password baru",
-
-users[index].password
-
-);
-
-
-
-
-
-let role=prompt(
-
-"Role admin/user",
-
-users[index].role
-
-);
-
-
-
-
-
-
-users[index]={
-
-
-username:username,
-
-
-password:password,
-
-
-role:role
-
-
-};
-
-
-
-
-
-
-localStorage.setItem(
-
-"users",
-
-JSON.stringify(users)
-
-);
-
-
-
-
-
-displayUsers();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function deleteUser(index){
-
-
-
-let users=JSON.parse(
-
-localStorage.getItem("users")
-
-);
-
-
-
-
-
-
-if(users[index].username=="admin"){
-
-
-alert("Admin utama tidak boleh dipadam");
-
-
-return;
-
-
-}
-
-
-
-
-
-users.splice(index,1);
-
-
-
-
-
-localStorage.setItem(
-
-"users",
-
-JSON.stringify(users)
-
-);
-
-
-
-
-
-displayUsers();
-
-
-
-}
-
-
-
-
-
-
-
-
-displayUsers();
-
-
-
-</script>
-
-
+<script type="module" src="manageusers.js"></script>
 
 
 
 </body>
+
 
 </html>
