@@ -115,7 +115,7 @@ Smart Classroom History
 
 
 
-<!-- CONTENT -->
+<!-- MAIN CONTENT -->
 
 
 <div class="main">
@@ -147,7 +147,10 @@ Smart Classroom History
 
 
 
-<div class="history-table-card"></div>
+<div class="history-table-card">
+
+
+
 
 
 <h2>
@@ -162,65 +165,55 @@ Smart Classroom History
 
 
 
+
 <table>
 
+
+
+<thead>
 
 
 <tr>
 
 
 <th>
-
 Pengguna
-
 </th>
 
 
 
 <th>
-
 Role
-
 </th>
 
 
 
 <th>
-
 Tarikh
-
 </th>
 
 
 
 <th>
-
 Masa Mula
-
 </th>
 
 
 
 <th>
-
 Masa Tamat
-
 </th>
 
 
 
 <th>
-
 Tempoh
-
 </th>
 
 
 
 <th>
-
 Tindakan
-
 </th>
 
 
@@ -228,6 +221,7 @@ Tindakan
 </tr>
 
 
+</thead>
 
 
 
@@ -244,6 +238,7 @@ Tindakan
 
 
 </table>
+
 
 
 
@@ -269,6 +264,7 @@ Tindakan
 
 
 <script src="logout.js"></script>
+
 
 
 
@@ -310,6 +306,9 @@ window.location="userlogin.html";
 
 
 
+// PAPAR USER
+
+
 document.getElementById(
 
 "userName"
@@ -317,7 +316,9 @@ document.getElementById(
 ).innerHTML =
 
 
-"👤 "+user.username;
+"👤 "+(user.email || user.username);
+
+
 
 
 
@@ -332,7 +333,6 @@ document.getElementById(
 
 
 "Smart Classroom Control System";
-
 
 
 
@@ -362,6 +362,7 @@ document.getElementById(
 
 
 
+
 document.getElementById(
 
 "manageMenu"
@@ -382,9 +383,8 @@ document.getElementById(
 
 
 
-
 // ==========================
-// PAPAR HISTORY
+// DISPLAY HISTORY
 // ==========================
 
 
@@ -394,6 +394,7 @@ let history = JSON.parse(
 localStorage.getItem("history")
 
 )||[];
+
 
 
 
@@ -443,10 +444,7 @@ else{
 
 
 
-
 history.forEach(function(data,index){
-
-
 
 
 
@@ -462,18 +460,20 @@ table.innerHTML += `
 
 <td>
 
-👤 ${data.user || "Data Lama"}
+👤 ${data.user || "Unknown"}
 
 </td>
+
 
 
 
 
 <td>
 
-${data.role || "-"}
+${data.role || "user"}
 
 </td>
+
 
 
 
@@ -487,11 +487,13 @@ ${data.date || "-"}
 
 
 
+
 <td>
 
 ${data.start || "-"}
 
 </td>
+
 
 
 
@@ -505,6 +507,7 @@ ${data.end || "-"}
 
 
 
+
 <td>
 
 ${data.duration || "-"}
@@ -514,8 +517,8 @@ ${data.duration || "-"}
 
 
 
-<td>
 
+<td>
 
 
 <button 
@@ -546,16 +549,11 @@ onclick="deleteHistory(${index})">
 
 
 
-
-
 });
 
 
 
-
-
 }
-
 
 
 
@@ -573,7 +571,6 @@ onclick="deleteHistory(${index})">
 // ==========================
 
 
-
 function deleteHistory(index){
 
 
@@ -583,6 +580,7 @@ let history = JSON.parse(
 localStorage.getItem("history")
 
 )||[];
+
 
 
 
@@ -616,9 +614,10 @@ location.reload();
 
 
 
+
+
+
 </script>
-
-
 
 
 

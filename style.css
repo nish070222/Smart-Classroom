@@ -1,10 +1,12 @@
 /* =====================================================
    SMART CLASSROOM CONTROL SYSTEM
-   STYLE.CSS PART 1
+   FULL STYLE.CSS VERSION
 ===================================================== */
 
 
-/* GOOGLE FONT */
+/* ==========================
+   GOOGLE FONT
+========================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -13,11 +15,8 @@
 *{
 
     margin:0;
-
     padding:0;
-
     box-sizing:border-box;
-
     font-family:'Poppins',sans-serif;
 
 }
@@ -38,9 +37,9 @@ body{
 
 
 
-/* =====================================================
-   LOGIN
-===================================================== */
+/* ==========================
+   LOGIN PAGE
+========================== */
 
 
 .login-body{
@@ -54,7 +53,6 @@ body{
     align-items:center;
 
 }
-
 
 
 
@@ -77,7 +75,6 @@ body{
 
 
 
-
 .login-card h1{
 
     color:#2563eb;
@@ -85,7 +82,6 @@ body{
     margin-bottom:10px;
 
 }
-
 
 
 
@@ -99,9 +95,9 @@ body{
 
 
 
-
 .login-card input,
 .login-card select{
+
 
     width:100%;
 
@@ -117,6 +113,16 @@ body{
 
 
 
+.login-card input:focus{
+
+    border-color:#2563eb;
+
+    outline:none;
+
+}
+
+
+
 .login-btn{
 
     width:100%;
@@ -126,12 +132,6 @@ body{
     background:#2563eb;
 
     color:white;
-
-    border:none;
-
-    border-radius:12px;
-
-    cursor:pointer;
 
 }
 
@@ -145,11 +145,17 @@ body{
 
 
 
+#error{
+
+    color:red;
+
+}
 
 
-/* =====================================================
+
+/* ==========================
    SIDEBAR
-===================================================== */
+========================== */
 
 
 .sidebar{
@@ -170,7 +176,6 @@ body{
 
 
 
-
 .sidebar h2{
 
     text-align:center;
@@ -178,7 +183,6 @@ body{
     margin-bottom:30px;
 
 }
-
 
 
 
@@ -220,13 +224,9 @@ body{
 
 
 
-
-
-
-
-/* =====================================================
+/* ==========================
    MAIN
-===================================================== */
+========================== */
 
 
 .main{
@@ -249,7 +249,6 @@ body{
 
 
 
-
 .main h1{
 
     text-align:center;
@@ -262,27 +261,39 @@ body{
 
 
 
+.main p{
 
-#welcome{
-
-    margin-top:10px;
-
-    font-weight:600;
+    color:#64748b;
 
 }
 
 
 
+/* ==========================
+   WELCOME
+========================== */
+
+
+#welcome{
+
+    margin-top:10px;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    text-align:center;
+
+}
 
 
 
-/* =====================================================
+/* ==========================
    CLOCK
-===================================================== */
+========================== */
 
 
 .clock{
-
 
     background:white;
 
@@ -296,13 +307,17 @@ body{
 
     text-align:center;
 
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
     box-shadow:
 
     0 10px 25px rgba(0,0,0,.1);
 
-
 }
-
 
 
 
@@ -312,14 +327,15 @@ body{
 
     font-size:42px;
 
-    margin:15px;
+    margin:15px 0;
 
 }
 
 
 
-
 .clock #date{
+
+    color:#1e293b;
 
     font-size:20px;
 
@@ -329,17 +345,12 @@ body{
 
 
 
-
-
-
-
-/* =====================================================
-   LIGHT CONTROL
-===================================================== */
+/* ==========================
+   LIGHT CARD
+========================== */
 
 
 .card{
-
 
     background:white;
 
@@ -357,14 +368,28 @@ body{
 
     0 15px 30px rgba(0,0,0,.1);
 
+}
+
+
+
+.card:hover,
+.clock:hover{
+
+    transform:translateY(-5px);
 
 }
 
 
 
+.card h2{
+
+    color:#1e293b;
+
+}
+
+
 
 #lampStatus{
-
 
     font-size:50px;
 
@@ -374,14 +399,16 @@ body{
 
     margin:20px;
 
-
 }
 
 
 
+/* ==========================
+   BUTTON
+========================== */
+
 
 button{
-
 
     width:130px;
 
@@ -399,7 +426,6 @@ button{
 
     font-weight:600;
 
-
 }
 
 
@@ -412,19 +438,17 @@ button{
 
 
 
+.on:hover{
 
-.off{
-
-    background:#ef4444;
+    background:#15803d;
 
 }
 
 
 
+.off{
 
-.on:hover{
-
-    background:#15803d;
+    background:#ef4444;
 
 }
 
@@ -437,13 +461,13 @@ button{
 }
 
 
-/* =====================================================
+
+/* ==========================
    TIMER
-===================================================== */
+========================== */
 
 
 .timer-box{
-
 
     margin-top:20px;
 
@@ -453,30 +477,22 @@ button{
 
     border-radius:15px;
 
-
 }
 
 
 
 .timer-box h1{
 
-
     color:#2563eb;
-
 
 }
 
-
-
-
-
-/* =====================================================
+/* ==========================
    INFO BOX
-===================================================== */
+========================== */
 
 
 .info{
-
 
     background:white;
 
@@ -494,34 +510,26 @@ button{
 
     0 10px 25px rgba(0,0,0,.1);
 
-
 }
 
 
 
 .online{
 
-
     color:#22c55e;
 
     font-weight:bold;
-
 
 }
 
 
 
-
-
-
-
-/* =====================================================
+/* ==========================
    DASHBOARD
-===================================================== */
+========================== */
 
 
 .dashboard{
-
 
     min-height:100vh;
 
@@ -535,26 +543,27 @@ button{
 
     align-items:center;
 
-
 }
-
-
 
 
 
 .dashboard h1{
 
-
     color:#1e3a8a;
-
 
 }
 
 
 
+.user{
+
+    margin:15px;
+
+}
+
+
 
 .dashboard-card{
-
 
     display:flex;
 
@@ -564,17 +573,11 @@ button{
 
     flex-wrap:wrap;
 
-    margin-top:30px;
-
-
 }
 
 
 
-
-
 .box{
-
 
     background:white;
 
@@ -592,54 +595,34 @@ button{
 
     0 10px 25px rgba(0,0,0,.1);
 
-    transition:.3s;
-
-
 }
-
-
 
 
 
 .box:hover{
 
-
     transform:translateY(-8px);
 
-
 }
-
 
 
 
 .box h2{
 
-
     color:#1e293b;
 
-    font-size:20px;
-
-
 }
 
 
 
 
-.box h1{
 
-
-    margin-top:20px;
-
-}
-
-
-/* =====================================================
-   HISTORY PAGE
-===================================================== */
+/* ==========================
+   HISTORY
+========================== */
 
 
 .history-nav{
-
 
     display:flex;
 
@@ -649,80 +632,51 @@ button{
 
     margin:20px;
 
-
 }
 
 
 
-
-
-.history-table-card{
-
+.log{
 
     background:white;
 
     width:90%;
 
-    max-width:1000px;
+    max-width:900px;
 
     padding:30px;
 
-    margin:20px auto;
-
     border-radius:20px;
 
+    margin:20px auto;
 
     box-shadow:
 
     0 10px 25px rgba(0,0,0,.15);
 
-
-    overflow-x:auto;
-
-
 }
 
 
 
-
-
-
-.history-table-card h2{
-
+.log h2{
 
     text-align:center;
 
-    color:#1e293b;
-
-    margin-bottom:20px;
-
-
 }
 
 
 
-
-
-
-.history-table-card table{
-
+table{
 
     width:100%;
 
-    min-width:850px;
-
     border-collapse:collapse;
-
 
 }
 
 
 
-
-
-
-.history-table-card th{
-
+th{
 
     background:#2563eb;
 
@@ -730,19 +684,11 @@ button{
 
     padding:15px;
 
-    text-align:center;
-
-
 }
 
 
 
-
-
-
-
-.history-table-card td{
-
+td{
 
     padding:15px;
 
@@ -750,37 +696,11 @@ button{
 
     border-bottom:1px solid #ddd;
 
-    white-space:nowrap;
-
-
 }
 
-
-
-
-
-
-
-.history-table-card tr:hover{
-
-
-    background:#f8fafc;
-
-
-}
-
-
-
-
-
-
-
-
-/* DELETE BUTTON */
 
 
 .delete-btn{
-
 
     background:#ef4444;
 
@@ -788,31 +708,19 @@ button{
 
     height:35px;
 
-
 }
-
 
 
 
 .delete-btn:hover{
 
-
     background:#b91c1c;
-
 
 }
 
 
 
-
-
-
-
-/* EDIT BUTTON */
-
-
 .edit-btn{
-
 
     background:#f59e0b;
 
@@ -820,266 +728,66 @@ button{
 
     height:35px;
 
-
 }
 
 
 
+/* ==========================
+   MANAGE USER
+========================== */
 
 
-
-/* HOVER EFFECT */
-
-
-.history-table-card,
-.card,
-.clock,
-.box{
-
-
-    transition:.3s;
-
-
-}
-
-
-
-
-
-.history-table-card:hover{
-
-
-    transform:translateY(-5px);
-
-
-}
-
-
-/* =====================================================
-   MANAGE USER PAGE
-===================================================== */
-
-
-.manage-main{
-
-
-    margin-left:230px;
-
-    min-height:100vh;
-
-    padding:30px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-
-}
-
-
-
-
-.manage-main h1{
-
-
-    color:#1e293b;
-
-    margin-bottom:10px;
-
-
-}
-
-
-
-
-.manage-main p{
-
-
-    color:#64748b;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-   STAT CARD
-========================= */
-
-
-.stats{
-
-
-    display:flex;
-
-    gap:25px;
-
-    justify-content:center;
-
-    flex-wrap:wrap;
-
-    margin:25px 0;
-
-
-}
-
-
-
-
-
-.stat-card{
-
-
-    background:white;
-
-    width:220px;
-
-    padding:25px;
-
-    border-radius:20px;
+.user-form{
 
     text-align:center;
 
-
-    box-shadow:
-
-    0 10px 25px rgba(0,0,0,.1);
-
-
-    transition:.3s;
-
-
 }
 
 
 
+.user-form input,
+.user-form select{
 
+    width:250px;
 
-.stat-card:hover{
-
-
-    transform:translateY(-5px);
-
-
-}
-
-
-
-
-
-.stat-card h3{
-
-
-    color:#475569;
-
-
-}
-
-
-
-
-
-.stat-card h1{
-
-
-    color:#2563eb;
-
-    font-size:40px;
-
-
-}
-
-
-
-
-
-
-/* =========================
-   ADD USER CARD
-========================= */
-
-
-.user-card{
-
-
-    background:white;
-
-    width:600px;
-
-    padding:35px;
-
-    border-radius:20px;
-
-    text-align:center;
-
-
-    box-shadow:
-
-    0 10px 25px rgba(0,0,0,.15);
-
-
-}
-
-
-
-
-
-
-
-.user-card h2{
-
-
-    margin-bottom:20px;
-
-    color:#1e293b;
-
-
-}
-
-
-
-
-
-
-
-.form-group{
-
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-
-}
-
-
-
-
-
-
-.form-group input,
-.form-group select{
-
-
-    width:80%;
-
-    padding:13px;
+    padding:12px;
 
     margin:10px;
 
+    border-radius:10px;
+
+    border:1px solid #ccc;
+
+}
+
+
+
+
+
+/* ==========================
+   GLOBAL INPUT
+========================== */
+
+
+input,
+select{
+
+    padding:12px;
 
     border-radius:12px;
 
     border:1px solid #cbd5e1;
 
+    outline:none;
+
+}
+
+
+
+input:focus,
+select:focus{
+
+    border-color:#2563eb;
 
 }
 
@@ -1087,77 +795,246 @@ button{
 
 
 
+/* ==========================
+   RESPONSIVE TABLET
+========================== */
 
-.form-group button{
+
+@media(max-width:768px){
 
 
-    background:#22c55e;
+
+.sidebar{
+
+    width:180px;
+
+    padding:15px;
+
+}
+
+
+
+.sidebar h2{
+
+    font-size:18px;
+
+}
+
+
+
+.sidebar a{
+
+    font-size:13px;
+
+    padding:12px 8px;
+
+}
+
+
+
+.main{
+
+    margin-left:180px;
+
+    padding:20px;
+
+}
+
+
+
+.dashboard{
+
+    margin-left:180px;
+
+}
+
+
+
+.main h1{
+
+    font-size:24px;
+
+}
+
+
+
+.clock,
+.card,
+.info{
+
+    width:95%;
+
+}
+
+
+
+.clock h2#time{
+
+    font-size:32px;
+
+}
+
+
+
+.card{
+
+    padding:25px;
+
+}
+
+
+
+#lampStatus{
+
+    font-size:40px;
+
+}
+
+
+
+button{
+
+    width:110px;
+
+}
+
+
+
+.box{
+
+    width:200px;
+
+}
+
+
+
+.log{
+
+    overflow-x:auto;
+
+}
+
+
+
+.log table{
+
+    min-width:650px;
+
+}
+
+
+
+}
+
+
+
+
+
+/* ==========================
+   SMALL PHONE
+========================== */
+
+
+@media(max-width:480px){
+
+
+
+.sidebar{
 
     width:150px;
 
+}
+
+
+
+.sidebar h2{
+
+    font-size:15px;
 
 }
 
 
 
+.sidebar a{
 
-
-.form-group button:hover{
-
-
-    background:#15803d;
-
+    font-size:11px;
 
 }
 
 
 
+.main{
 
-
-
-
-/* =========================
-   SEARCH
-========================= */
-
-
-.search-box{
-
-
-    margin:25px;
-
-    width:600px;
-
-    text-align:center;
-
+    margin-left:150px;
 
 }
 
 
 
+.dashboard{
 
-.search-box input{
-
-
-    width:100%;
-
-    padding:14px;
-
+    margin-left:150px;
 
 }
 
 
 
+.clock h2#time{
+
+    font-size:28px;
+
+}
 
 
 
-/* =========================
-   USER TABLE
-========================= */
+.clock #date{
+
+    font-size:16px;
+
+}
 
 
-.user-table-card{
 
+.card{
+
+    width:95%;
+
+}
+
+
+
+button{
+
+    width:90px;
+
+}
+
+
+
+.box{
+
+    width:160px;
+
+}
+
+
+
+.login-card{
+
+    width:90%;
+
+}
+
+
+
+}
+
+/* ==========================
+   HISTORY TABLE FIX
+========================== */
+
+
+.history-table-card{
 
     background:white;
 
@@ -1169,53 +1046,31 @@ button{
 
     border-radius:20px;
 
+    margin:20px auto;
 
     box-shadow:
-
     0 10px 25px rgba(0,0,0,.15);
-
 
     overflow-x:auto;
 
-
 }
 
 
 
 
-
-
-.user-table-card h2{
-
-
-    text-align:center;
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-
-
-.user-table-card table{
-
+.history-table-card table{
 
     width:100%;
 
-    border-collapse:collapse;
+    min-width:800px;
 
+    border-collapse:collapse;
 
 }
 
 
 
-
-
-
-.user-table-card th{
-
+.history-table-card th{
 
     background:#2563eb;
 
@@ -1223,453 +1078,66 @@ button{
 
     padding:15px;
 
+    text-align:center;
 
 }
 
 
 
+.history-table-card td{
 
-
-
-
-.user-table-card td{
-
-
-    padding:15px;
+    padding:12px;
 
     text-align:center;
 
     border-bottom:1px solid #ddd;
 
+    white-space:nowrap;
 
 }
 
 
 
 
+.history-table-card tr:hover{
+
+    background:#f1f5f9;
+
+}
 
 
-.user-table-card tr:hover{
 
 
-    background:#f8fafc;
+.history-table-card button{
 
+    margin:5px;
 
 }
 
 
 /* =====================================================
-   RESPONSIVE DESIGN
+   HISTORY FIX ONLY
 ===================================================== */
-
-
-
-@media(max-width:900px){
-
-
-
-/* SIDEBAR */
-
-
-.sidebar{
-
-
-    width:180px;
-
-    padding:15px;
-
-
-}
-
-
-
-.sidebar h2{
-
-
-    font-size:18px;
-
-
-}
-
-
-
-
-.sidebar a{
-
-
-    font-size:14px;
-
-    padding:12px;
-
-
-}
-
-
-
-
-
-
-
-/* MAIN */
-
-
-.main,
-.dashboard,
-.manage-main{
-
-
-    margin-left:180px;
-
-    padding:20px;
-
-
-}
-
-
-
-
-
-
-
-.card,
-.clock,
-.info{
-
-
-    width:95%;
-
-
-}
-
-
-
-
-
-
-
-.dashboard-card{
-
-
-    gap:15px;
-
-
-}
-
-
-
-
-
-.box{
-
-
-    width:200px;
-
-
-}
-
-
-
-
-
-
-
-.user-card{
-
-
-    width:90%;
-
-
-}
-
-
-
-
-
-.search-box{
-
-
-    width:90%;
-
-
-}
-
-
-
-
-
-
-}
-
-
-
-
-/* =====================================================
-   PHONE
-===================================================== */
-
-
-@media(max-width:600px){
-
-
-
-body{
-
-
-    overflow-x:hidden;
-
-
-}
-
-
-
-
-
-
-.sidebar{
-
-
-    width:140px;
-
-    padding:10px;
-
-
-}
-
-
-
-
-
-.sidebar h2{
-
-
-    font-size:14px;
-
-
-}
-
-
-
-
-
-
-.sidebar a{
-
-
-    font-size:11px;
-
-    padding:10px 5px;
-
-
-}
-
-
-
-
-
-
-.main,
-.dashboard,
-.manage-main{
-
-
-    margin-left:140px;
-
-    padding:15px;
-
-
-}
-
-
-
-
-
-
-.main h1{
-
-
-    font-size:22px;
-
-
-}
-
-
-
-
-
-
-.clock h2#time{
-
-
-    font-size:28px;
-
-
-}
-
-
-
-
-
-
-.clock #date{
-
-
-    font-size:15px;
-
-
-}
-
-
-
-
-
-
-.card{
-
-
-    padding:20px;
-
-
-}
-
-
-
-
-
-
-#lampStatus{
-
-
-    font-size:40px;
-
-
-}
-
-
-
-
-
-
-button{
-
-
-    width:100px;
-
-    height:40px;
-
-
-}
-
-
-
-
-
-
-.box{
-
-
-    width:160px;
-
-    height:auto;
-
-
-}
-
-
-
-
-
-
-.dashboard-card{
-
-
-    flex-direction:column;
-
-    align-items:center;
-
-
-}
-
-
-
-
-
-
-.stats{
-
-
-    flex-direction:column;
-
-    align-items:center;
-
-
-}
-
-
-
-
-
-
-.stat-card{
-
-
-    width:90%;
-
-
-}
-
-
-
-
-
-
-.user-card{
-
-
-    width:95%;
-
-
-}
-
-
-
-
-
-
-.form-group input,
-.form-group select{
-
-
-    width:95%;
-
-
-}
-
-
-
-
-
-
-.user-table-card{
-
-
-    width:95%;
-
-    padding:15px;
-
-
-}
-
-
-
 
 
 .history-table-card{
 
+    background:white;
 
-    width:95%;
+    width:90%;
 
-    padding:15px;
+    max-width:900px;
 
+    padding:30px;
+
+    border-radius:20px;
+
+    margin:20px auto;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.15);
+
+    overflow-x:auto;
 
 }
 
@@ -1677,26 +1145,64 @@ button{
 
 .history-table-card table{
 
+    width:100%;
 
-    min-width:850px;
+    border-collapse:collapse;
 
+}
+
+
+
+.history-table-card th{
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:15px;
 
 }
 
 
 
+.history-table-card td{
 
+    padding:15px;
 
-.login-card{
+    text-align:center;
 
-
-    width:90%;
-
-    padding:25px;
-
+    border-bottom:1px solid #ddd;
 
 }
 
 
+
+.history-table-card tr:hover{
+
+    background:#f1f5f9;
+
+}
+
+
+
+.history-table-card .delete-btn{
+
+    background:#ef4444;
+
+    width:90px;
+
+    height:35px;
+
+}
+
+
+
+.history-table-card .edit-btn{
+
+    background:#f59e0b;
+
+    width:90px;
+
+    height:35px;
 
 }
