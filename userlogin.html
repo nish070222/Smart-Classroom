@@ -33,11 +33,11 @@ Login Sistem Kawalan Lampu
 
 
 
-<input id="username"
+<input id="email"
 
 type="email"
 
-placeholder="Email">
+placeholder="Email (Gmail)">
 
 
 
@@ -70,11 +70,8 @@ LOGIN
 
 
 
-
 <script type="module">
 
-
-// Firebase Import
 
 import { initializeApp } from 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -89,8 +86,6 @@ signInWithEmailAndPassword
 
 
 
-
-// Firebase Configuration
 
 const firebaseConfig = {
 
@@ -111,9 +106,6 @@ appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
 
 
-
-// Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
 
 
@@ -128,7 +120,7 @@ window.login = function(){
 
 
 
-let email = document.getElementById("username").value;
+let email = document.getElementById("email").value;
 
 
 let password = document.getElementById("password").value;
@@ -145,15 +137,11 @@ signInWithEmailAndPassword(auth,email,password)
 
 
 
-let user = userCredential.user;
-
-
-
 localStorage.setItem(
 
 "loginUser",
 
-JSON.stringify(user)
+JSON.stringify(userCredential.user)
 
 );
 
@@ -172,11 +160,10 @@ document.getElementById("message").innerHTML =
 setTimeout(()=>{
 
 
-window.location="dashboard.html";
+window.location="index.html";
 
 
-},1000);
-
+},800);
 
 
 
@@ -186,12 +173,12 @@ window.location="dashboard.html";
 
 
 
-.catch((error)=>{
+.catch(()=>{
 
 
 document.getElementById("message").innerHTML =
 
-"❌ Email atau password salah";
+"❌ Email atau Password salah";
 
 
 });
@@ -203,7 +190,6 @@ document.getElementById("message").innerHTML =
 
 
 </script>
-
 
 
 </body>
