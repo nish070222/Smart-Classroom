@@ -1,13 +1,12 @@
 // =====================================
 // SMART CLASSROOM
 // MANAGE USER SYSTEM
-// FIRESTORE VERSION
+// FIREBASE AUTH + FIRESTORE
 // =====================================
 
 
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
 import {
@@ -28,11 +27,19 @@ updateDoc
 
 }
 
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+
+import {
+
+getAuth,
+
+createUserWithEmailAndPassword
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
@@ -64,12 +71,13 @@ appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
 
 
-
 const app = initializeApp(firebaseConfig);
 
 
 const db = getFirestore(app);
 
+
+const auth = getAuth(app);
 
 
 
@@ -81,16 +89,12 @@ let allUsers=[];
 
 
 
-
-
-
 // =============================
 // CHECK ADMIN
 // =============================
 
 
-
-const loginUser = JSON.parse(
+let loginUser = JSON.parse(
 
 localStorage.getItem("loginUser")
 
@@ -98,51 +102,47 @@ localStorage.getItem("loginUser")
 
 
 
-
-
 if(!loginUser || loginUser.role!="admin"){
 
 
-window.location.href="index.html";
+window.location="index.html";
 
 
 }
 
 
 
-
-
-
-
 document.getElementById("adminName").innerHTML =
+
 "👤 "+loginUser.email;
 
 
 
 
 
-// =============================
-// LOAD USERS
-// =============================
 
+
+
+
+// =============================
+// LOAD USER
+// =============================
 
 
 async function loadUsers(){
 
 
-
-const table = document.getElementById("userList");
+let table = document.getElementById("userList");
 
 
 table.innerHTML="";
-
 
 
 allUsers=[];
 
 
 
-const snapshot = await getDocs(
+let snapshot = await getDocs(
 
 collection(db,"users")
 
@@ -151,12 +151,9 @@ collection(db,"users")
 
 
 
-
-
 let admin=0;
 
-let user=0;
-
+let normal=0;
 
 
 
@@ -180,16 +177,18 @@ id:item.id,
 
 
 
+
 if(data.role=="admin"){
 
 admin++;
 
-}else{
-
-user++;
-
 }
 
+else{
+
+normal++;
+
+}
 
 
 
@@ -216,13 +215,11 @@ data.role=="admin"
 
 
 
-table.innerHTML +=
+table.innerHTML += `
 
-
-
-`
 
 <tr>
+
 
 <td>
 
@@ -238,8 +235,8 @@ ${badge}
 </td>
 
 
-<td>
 
+<td>
 
 
 <button class="edit-btn"
@@ -249,7 +246,6 @@ onclick="editRole('${item.id}','${data.role}')">
 ✏️ Edit
 
 </button>
-
 
 
 
@@ -266,16 +262,16 @@ onclick="deleteUser('${item.id}')">
 </td>
 
 
+
 </tr>
+
 
 `;
 
 
 
 
-
 });
-
 
 
 
@@ -290,11 +286,12 @@ admin;
 
 
 document.getElementById("totalNormal").innerHTML =
-user;
+normal;
 
 
 
 }
+
 
 
 
@@ -308,29 +305,64 @@ user;
 // =============================
 
 
-
 window.addUser = async function(){
 
-let email =
-document.getElementById("email").value;
 
 
-let role =
-document.getElementById("role").value;
+let email = document.getElementById("email").value;
+
+
+let password = document.getElementById("password").value;
+
+
+let role = document.getElementById("role").value;
 
 
 
-if(email==""){
 
-alert("Masukkan email");
+
+if(email=="" || password==""){
+
+
+alert("Sila isi email dan password");
+
 
 return;
+
 
 }
 
 
 
+
 try{
+
+
+
+// CREATE FIREBASE ACCOUNT
+
+
+let userCredential = await createUserWithEmailAndPassword(
+
+auth,
+
+email,
+
+password
+
+);
+
+
+
+let uid = userCredential.user.uid;
+
+
+
+
+
+
+
+// SAVE FIRESTORE DATA
 
 
 await addDoc(
@@ -339,11 +371,18 @@ collection(db,"users"),
 
 {
 
+
+uid:uid,
+
+
 email:email,
+
 
 role:role,
 
+
 createdAt:new Date()
+
 
 }
 
@@ -351,16 +390,36 @@ createdAt:new Date()
 
 
 
-alert("User berjaya masuk Firestore");
+
+
+
+alert("User berjaya didaftarkan");
+
+
+
+
+
+document.getElementById("email").value="";
+
+
+document.getElementById("password").value="";
+
+
+
 
 
 loadUsers();
 
 
 
+
+
 }
 
+
+
 catch(error){
+
 
 
 console.log(error);
@@ -369,10 +428,18 @@ console.log(error);
 alert(error.message);
 
 
+
 }
 
 
+
 }
+
+
+
+
+
+
 
 
 
@@ -381,14 +448,13 @@ alert(error.message);
 // =============================
 
 
-
 window.editRole = async function(id,role){
 
 
 
 let newRole = prompt(
 
-"Tukar role (admin/user)",
+"Masukkan role baru (admin/user)",
 
 role
 
@@ -396,14 +462,7 @@ role
 
 
 
-
-
-if(
-newRole!="admin"
-&&
-newRole!="user"
-
-){
+if(newRole!="admin" && newRole!="user"){
 
 
 alert("Role tidak sah");
@@ -424,9 +483,7 @@ doc(db,"users",id),
 
 {
 
-
 role:newRole
-
 
 }
 
@@ -435,9 +492,7 @@ role:newRole
 
 
 
-
-
-alert("Role berjaya dikemaskini");
+alert("Role berjaya ditukar");
 
 
 
@@ -460,18 +515,15 @@ loadUsers();
 // =============================
 
 
-
 window.deleteUser = async function(id){
 
 
 
 let confirmDelete = confirm(
 
-"Anda pasti mahu padam user ini?"
+"Pasti mahu delete user ini?"
 
 );
-
-
 
 
 
@@ -487,9 +539,7 @@ doc(db,"users",id)
 
 
 
-
 alert("User dipadam");
-
 
 
 loadUsers();
@@ -511,27 +561,30 @@ loadUsers();
 
 
 // =============================
-// SEARCH
+// SEARCH USER
 // =============================
-
 
 
 window.searchUser=function(){
 
 
 
-let value =
+let value = document
 
-document.getElementById("search").value.toLowerCase();
+.getElementById("search")
+
+.value
+
+.toLowerCase();
 
 
 
-let table =
-document.getElementById("userList");
 
+let table=document.getElementById("userList");
 
 
 table.innerHTML="";
+
 
 
 
@@ -541,12 +594,15 @@ allUsers
 .filter(user=>
 
 user.email
+
 .toLowerCase()
+
 .includes(value)
 
 )
 
 .forEach(user=>{
+
 
 
 let badge =
@@ -568,10 +624,8 @@ user.role=="admin"
 
 
 
-table.innerHTML +=
+table.innerHTML +=`
 
-
-`
 
 <tr>
 
@@ -580,6 +634,7 @@ table.innerHTML +=
 
 
 <td>${badge}</td>
+
 
 
 <td>
@@ -595,6 +650,7 @@ onclick="editRole('${user.id}','${user.role}')">
 
 
 
+
 <button class="delete-btn"
 
 onclick="deleteUser('${user.id}')">
@@ -606,6 +662,7 @@ onclick="deleteUser('${user.id}')">
 
 
 </td>
+
 
 
 </tr>
@@ -627,9 +684,7 @@ onclick="deleteUser('${user.id}')">
 
 
 
-
-
-// START
+// START SYSTEM
 
 
 loadUsers();
