@@ -1,377 +1,314 @@
-// =====================================================
-// SMART CLASSROOM
-// manageusers.js
-//
-// Firebase:
-// - Create user
-// - Save Firestore users
-// - Display users
-// - Delete user
-// =====================================================
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
 
+<meta charset="UTF-8">
 
-// FIREBASE IMPORT
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>
+SmartClass Manage User
+</title>
 
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+<link rel="stylesheet" href="style.css">
 
-import {
+<link rel="stylesheet" href="manageusers.css">
 
-getFirestore,
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc
 
-}
+</head>
 
-from
 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<body>
 
 
 
-import {
+<!-- SIDEBAR -->
 
-getAuth,
-createUserWithEmailAndPassword
+<div class="sidebar">
 
-}
 
-from
+<h2>
+🏫 SmartClass
+</h2>
 
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+<a href="index.html">
+💡 Light Control
+</a>
 
 
+<a href="dashboard.html">
+📊 Dashboard
+</a>
 
 
+<a href="history.html">
+📅 History
+</a>
 
 
-// FIREBASE CONFIG
+<a href="manageusers.html" class="active">
+👥 Manage User
+</a>
 
 
-const firebaseConfig = {
 
 
-apiKey: "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
+<div class="side-user">
 
-authDomain: "smart-classroom-351a3.firebaseapp.com",
+<p id="adminName">
+</p>
 
-projectId: "smart-classroom-351a3",
+</div>
 
-storageBucket: "smart-classroom-351a3.firebasestorage.app",
 
-messagingSenderId: "1031651524426",
 
-appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
+<a href="#" onclick="logout()">
 
-};
+🚪 Logout
 
+</a>
 
 
+</div>
 
 
 
 
-// INITIALIZE FIREBASE
 
 
-const app = initializeApp(firebaseConfig);
 
 
-const db = getFirestore(app);
+<!-- MAIN CONTENT -->
 
 
-const auth = getAuth(app);
+<div class="main manage-main">
 
 
 
+<h1>
+👥 Pengurusan Pengguna
+</h1>
 
 
+<p>
+Manage account Smart Classroom
+</p>
 
 
 
 
-// =====================================================
-// TAMBAH USER
-// =====================================================
 
 
 
-window.addUser = async function(){
+<!-- STAT CARD -->
 
 
+<div class="stats">
 
-let email =
-document.getElementById("email").value;
 
 
+<div class="stat-card">
 
-let password =
-document.getElementById("password").value;
+<h3>
+👥 Total User
+</h3>
 
+<h1 id="totalUser">
+0
+</h1>
 
+</div>
 
-let role =
-document.getElementById("role").value;
 
 
 
 
+<div class="stat-card">
 
+<h3>
+👑 Admin
+</h3>
 
+<h1 id="totalAdmin">
+0
+</h1>
 
-if(email==="" || password===""){
+</div>
 
 
-alert("⚠️ Sila isi email dan password");
 
 
-return;
 
+<div class="stat-card">
 
-}
+<h3>
+🙋 User
+</h3>
 
+<h1 id="totalNormal">
+0
+</h1>
 
+</div>
 
 
 
+</div>
 
 
-try{
 
 
 
-// CREATE ACCOUNT FIREBASE AUTH
 
 
-let userCredential =
-await createUserWithEmailAndPassword(
 
-auth,
 
-email,
+<!-- ADD USER -->
 
-password
 
-);
+<div class="user-card">
 
 
+<h2>
+➕ Tambah User
+</h2>
 
 
 
+<div class="form-group">
 
-// SIMPAN DATA FIRESTORE
+<input 
+id="email"
+type="email"
+placeholder="Masukkan Email User"
+autocomplete="off">
 
 
-await addDoc(
+<input 
+id="password"
+type="password"
+placeholder="Masukkan Password User"
+autocomplete="new-password">
 
-collection(db,"users"),
+<select id="role">
 
-{
 
+<option value="user">
+User
+</option>
 
-uid:userCredential.user.uid,
 
+<option value="admin">
+Admin
+</option>
 
-email:email,
 
+</select>
 
-role:role
 
 
-}
+<button onclick="addUser()">
 
-);
-
-
-
-
-
-
-
-
-alert("✅ User berjaya ditambah");
-
-
-
-
-
-
-
-// kosongkan form
-
-
-document.getElementById("email").value="";
-
-
-document.getElementById("password").value="";
-
-
-
-
-
-loadUsers();
-
-
-
-
-}
-
-catch(error){
-
-
-
-alert(
-"❌ "+error.message
-);
-
-
-
-}
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-// =====================================================
-// PAPAR USER
-// =====================================================
-
-
-
-async function loadUsers(){
-
-
-
-let table =
-document.getElementById("userList");
-
-
-
-if(!table)return;
-
-
-
-
-
-table.innerHTML="";
-
-
-
-
-
-
-
-let snapshot =
-await getDocs(
-
-collection(db,"users")
-
-);
-
-
-
-
-
-
-
-snapshot.forEach((item)=>{
-
-
-
-let user=item.data();
-
-
-
-
-
-
-
-table.innerHTML += `
-
-
-
-<tr>
-
-
-
-<td>
-
-${user.email}
-
-</td>
-
-
-
-
-<td>
-
-${user.role}
-
-</td>
-
-
-
-
-<td>
-
-
-
-<button
-
-class="delete-btn"
-
-onclick="deleteUser('${item.id}')">
-
-
-🗑 Delete
-
+Tambah
 
 </button>
 
 
+</div>
 
-</td>
 
+</div>
+
+
+
+
+
+
+
+
+
+<!-- SEARCH -->
+
+
+<div class="search-box">
+
+
+<input 
+id="search"
+placeholder="🔍 Cari email pengguna..."
+onkeyup="searchUser()">
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- TABLE -->
+
+
+<div class="user-table-card">
+
+
+<h2>
+📋 Senarai Pengguna
+</h2>
+
+
+
+
+<table>
+
+
+<thead>
+
+
+<tr>
+
+<th>
+Email
+</th>
+
+
+<th>
+Role
+</th>
+
+
+<th>
+Tindakan
+</th>
 
 
 </tr>
 
 
+</thead>
 
-`;
 
 
+<tbody id="userList">
 
+</tbody>
 
 
-});
 
+</table>
 
 
 
+</div>
 
-}
 
 
 
@@ -383,69 +320,15 @@ onclick="deleteUser('${item.id}')">
 
 
 
-// =====================================================
-// DELETE USER
-// =====================================================
+<script src="logout.js"></script>
 
 
 
-window.deleteUser = async function(id){
+<script type="module" src="manageusers.js"></script>
 
 
 
-let confirmDelete =
-confirm(
-"Padam pengguna ini?"
-);
+</body>
 
 
-
-
-
-if(!confirmDelete)return;
-
-
-
-
-
-
-
-await deleteDoc(
-
-doc(db,"users",id)
-
-);
-
-
-
-
-
-
-
-alert("✅ User dipadam");
-
-
-
-
-
-
-loadUsers();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// START LOAD
-
-
-loadUsers();
+</html>
