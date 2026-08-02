@@ -5,11 +5,14 @@
 // Fungsi:
 // - Semak user login
 // - Halang akses tanpa login
+// - Simpan status pengguna
 // =====================================
 
 
 
-let loginUser = JSON.parse(
+// Ambil data pengguna
+
+const loginUser = JSON.parse(
 
 localStorage.getItem("loginUser")
 
@@ -18,33 +21,61 @@ localStorage.getItem("loginUser")
 
 
 
-// Kalau belum login
+// Check pengguna login
 
 if(!loginUser){
 
 
-window.location="userlogin.html";
+window.location.href = "userlogin.html";
 
 
 }
 
-// ===================================
-// SMART CLASSROOM AUTH CHECK
-// ===================================
-
-
-let loginUser = JSON.parse(
-
-localStorage.getItem("loginUser")
-
-);
 
 
 
-if(!loginUser){
+// Papar nama pengguna jika ada
+
+window.addEventListener("load",()=>{
 
 
-window.location="userlogin.html";
+
+let userName = document.getElementById("userName");
+
+let welcome = document.getElementById("welcome");
+
+
+
+
+if(loginUser){
+
+
+
+if(userName){
+
+
+userName.innerHTML =
+"👤 " + loginUser.username;
 
 
 }
+
+
+
+
+if(welcome){
+
+
+welcome.innerHTML =
+"Welcome, " + loginUser.username;
+
+
+}
+
+
+
+}
+
+
+
+});
