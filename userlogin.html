@@ -4,11 +4,16 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Smart Classroom Login</title>
+<title>
+Smart Classroom Login
+</title>
+
 
 <link rel="stylesheet" href="style.css">
+
 
 </head>
 
@@ -16,12 +21,15 @@
 <body class="login-body">
 
 
+
 <div class="login-card">
+
 
 
 <h1>
 🏫 SmartClass
 </h1>
+
 
 
 <p>
@@ -30,8 +38,10 @@ Login Sistem Kawalan Lampu
 
 
 
+
+
 <h3>
-📧 Masukkan Email (Gmail)
+📧 Masukkan Email
 </h3>
 
 
@@ -39,6 +49,9 @@ Login Sistem Kawalan Lampu
 id="email"
 type="email"
 placeholder="Contoh: admin@gmail.com">
+
+
+
 
 
 
@@ -54,6 +67,9 @@ placeholder="Masukkan password">
 
 
 
+
+
+
 <button 
 class="login-btn"
 id="loginBtn">
@@ -64,7 +80,9 @@ LOGIN
 
 
 
+
 <p id="message"></p>
+
 
 
 </div>
@@ -73,28 +91,75 @@ LOGIN
 
 
 
+
+
+
+
 <script type="module">
 
 
-// FIREBASE IMPORT
 
-import { initializeApp } from 
+// ==========================
+// FIREBASE IMPORT
+// ==========================
+
+
+import { initializeApp } 
+
+from
+
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
-import { 
+
+import {
+
 getAuth,
-signInWithEmailAndPassword 
-} from 
+
+signInWithEmailAndPassword
+
+}
+
+from
+
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
 
+import {
 
+getFirestore,
+
+collection,
+
+query,
+
+where,
+
+getDocs
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+
+
+
+
+
+// ==========================
 // FIREBASE CONFIG
+// ==========================
+
 
 const firebaseConfig = {
+
 
 apiKey: "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
 
@@ -108,7 +173,9 @@ messagingSenderId: "1031651524426",
 
 appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
+
 };
+
 
 
 
@@ -116,45 +183,64 @@ appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
 // START FIREBASE
 
+
 const app = initializeApp(firebaseConfig);
+
 
 const auth = getAuth(app);
 
 
+const db = getFirestore(app);
 
 
 
 
-// BUTTON LOGIN
+
+
+
+
+
+// ==========================
+// LOGIN BUTTON
+// ==========================
+
 
 document
+
 .getElementById("loginBtn")
-.addEventListener("click", function(){
+
+.addEventListener("click",async function(){
+
+
 
 
 
 let email =
-document
-.getElementById("email")
-.value;
+
+document.getElementById("email").value;
+
 
 
 
 let password =
+
+document.getElementById("password").value;
+
+
+
+
+
+
+
+if(email=="" || password==""){
+
+
 document
-.getElementById("password")
-.value;
 
-
-
-
-
-if(email==="" || password===""){
-
-
-document
 .getElementById("message")
+
 .innerHTML =
+
 "⚠️ Sila isi email dan password";
 
 
@@ -168,34 +254,127 @@ return;
 
 
 
-signInWithEmailAndPassword(
+
+
+try{
+
+
+
+
+
+// LOGIN FIREBASE AUTH
+
+
+let userCredential =
+
+await signInWithEmailAndPassword(
+
 auth,
+
 email,
+
 password
-)
 
-
-
-.then((userCredential)=>{
-
-
-
-// SIMPAN USER
-
-localStorage.setItem(
-"loginUser",
-JSON.stringify({
-email:userCredential.user.email,
-uid:userCredential.user.uid,
-role:"admin"
-})
 );
 
 
 
+
+
+let user = userCredential.user;
+
+
+
+
+
+
+// DEFAULT ROLE
+
+let role="user";
+
+
+
+
+
+
+// CARI ROLE FIRESTORE
+
+
+let q = query(
+
+collection(db,"users"),
+
+where(
+
+"uid",
+
+"==",
+
+user.uid
+
+)
+
+);
+
+
+
+
+
+
+
+let snapshot = await getDocs(q);
+
+
+
+
+
+snapshot.forEach((doc)=>{
+
+
+role = doc.data().role;
+
+
+});
+
+
+
+
+
+
+
+
+
+// SIMPAN LOGIN USER
+
+
+localStorage.setItem(
+
+"loginUser",
+
+JSON.stringify({
+
+email:user.email,
+
+uid:user.uid,
+
+role:role
+
+})
+
+);
+
+
+
+
+
+
+
 document
+
 .getElementById("message")
+
 .innerHTML =
+
 "✅ Login Berjaya";
 
 
@@ -203,40 +382,46 @@ document
 
 
 
-// REDIRECT
-
-setTimeout(function(){
 
 
-window.location.href = "index.html";
+setTimeout(()=>{
 
 
-},500);
+window.location.href="index.html";
 
 
-
-
-
-})
+},700);
 
 
 
 
 
 
-.catch((error)=>{
 
 
-console.log(error.code);
+}
 
-console.log(error.message);
+catch(error){
+
+
+
+console.log(error);
 
 
 
 document
+
 .getElementById("message")
+
 .innerHTML =
-"❌ Login gagal : " + error.code;
+
+"❌ Email atau Password salah";
+
+
+
+}
+
+
 
 
 
@@ -244,7 +429,7 @@ document
 
 
 
-});
+
 
 
 
