@@ -348,21 +348,19 @@ role = doc.data().role;
 
 
 localStorage.setItem(
-
 "loginUser",
-
 JSON.stringify({
 
-email:user.email,
+username:userCredential.user.email,
 
-uid:user.uid,
+email:userCredential.user.email,
 
-role:role
+uid:userCredential.user.uid,
+
+role:"admin"
 
 })
-
 );
-
 
 
 

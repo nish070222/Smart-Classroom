@@ -184,11 +184,13 @@ Welcome
 
 
 
+
 <p>
 
 Status Lampu:
 
 </p>
+
 
 
 
@@ -201,6 +203,7 @@ OFF
 
 
 
+
 <button class="on"
 
 onclick="lampOn()">
@@ -208,6 +211,7 @@ onclick="lampOn()">
 ON
 
 </button>
+
 
 
 
@@ -228,6 +232,7 @@ OFF
 
 
 
+
 <div class="timer-box">
 
 
@@ -236,6 +241,7 @@ OFF
 ⏱ Tempoh Lampu Hidup
 
 </h2>
+
 
 
 <h1 id="timer">
@@ -251,7 +257,10 @@ OFF
 
 
 
+
 </div>
+
+
 
 
 
@@ -273,6 +282,7 @@ OFF
 
 
 
+
 <p>
 
 ESP32:
@@ -287,6 +297,7 @@ ESP32:
 
 
 
+
 <p>
 
 📍 Lokasi:
@@ -298,6 +309,8 @@ Makmal Tutorial
 
 
 </div>
+
+
 
 
 
@@ -324,18 +337,56 @@ Makmal Tutorial
 
 
 
+
+
 <script>
 
 
 
-
-
 // ======================
-// HIDE ADMIN MENU
+// PAPAR USER
 // ======================
 
 
-if(user.role!="admin"){
+document.getElementById(
+
+"userName"
+
+).innerHTML =
+
+
+"👤 " + (loginUser.email || "User");
+
+
+
+
+
+
+document.getElementById(
+
+"welcome"
+
+).innerHTML =
+
+
+"Welcome, " + (loginUser.email || "User");
+
+
+
+
+
+
+
+
+
+
+
+// ======================
+// ROLE MENU
+// ======================
+
+
+if(loginUser.role!="admin"){
 
 
 
@@ -355,7 +406,11 @@ document.getElementById(
 ).style.display="none";
 
 
+
 }
+
+
+
 
 
 
@@ -374,23 +429,27 @@ function updateClock(){
 
 
 
-let now=new Date();
+let now = new Date();
 
 
 
-let h=now.getHours();
 
-let m=now.getMinutes();
+let h = now.getHours();
 
-let s=now.getSeconds();
+let m = now.getMinutes();
+
+let s = now.getSeconds();
 
 
 
-h=h<10?"0"+h:h;
 
-m=m<10?"0"+m:m;
 
-s=s<10?"0"+s:s;
+h = h<10 ? "0"+h : h;
+
+m = m<10 ? "0"+m : m;
+
+s = s<10 ? "0"+s : s;
+
 
 
 
@@ -399,7 +458,8 @@ document.getElementById(
 
 "time"
 
-).innerHTML=
+).innerHTML =
+
 
 h+":"+m+":"+s;
 
@@ -408,11 +468,14 @@ h+":"+m+":"+s;
 
 
 
-let d=now.getDate();
 
-let mo=now.getMonth()+1;
+let d = now.getDate();
 
-let y=now.getFullYear();
+let mo = now.getMonth()+1;
+
+let y = now.getFullYear();
+
+
 
 
 
@@ -421,7 +484,8 @@ document.getElementById(
 
 "date"
 
-).innerHTML=
+).innerHTML =
+
 
 d+"/"+mo+"/"+y;
 
@@ -433,13 +497,20 @@ d+"/"+mo+"/"+y;
 
 
 
+
+
+
 setInterval(updateClock,1000);
+
 
 updateClock();
 
 
 
+
 </script>
+
+
 
 
 
