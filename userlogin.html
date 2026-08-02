@@ -11,7 +11,6 @@
 Smart Classroom Login
 </title>
 
-
 <link rel="stylesheet" href="style.css">
 
 </head>
@@ -82,7 +81,10 @@ LOGIN
 
 
 
+
+
 <script type="module">
+
 
 
 // ==========================
@@ -166,7 +168,6 @@ appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
 
 
-
 // START FIREBASE
 
 
@@ -203,13 +204,11 @@ document
 
 
 let email =
-
 document.getElementById("email").value;
 
 
 
 let password =
-
 document.getElementById("password").value;
 
 
@@ -219,7 +218,6 @@ document.getElementById("password").value;
 
 
 if(email==="" || password===""){
-
 
 
 document.getElementById("message").innerHTML =
@@ -244,7 +242,7 @@ try{
 
 
 
-// LOGIN AUTH
+// LOGIN FIREBASE AUTH
 
 
 const userCredential =
@@ -270,9 +268,7 @@ const user = userCredential.user;
 
 
 
-
 // DEFAULT ROLE
-
 
 let role = "user";
 
@@ -282,7 +278,7 @@ let role = "user";
 
 
 
-// CARI USER DALAM FIRESTORE
+// CARI ROLE DALAM FIRESTORE GUNA EMAIL
 
 
 const q = query(
@@ -291,16 +287,15 @@ collection(db,"users"),
 
 where(
 
-"uid",
+"email",
 
 "==",
 
-user.uid
+user.email
 
 )
 
 );
-
 
 
 
@@ -316,6 +311,21 @@ const snapshot = await getDocs(q);
 
 
 
+
+if(snapshot.empty){
+
+
+
+console.log("User tiada dalam Firestore");
+
+
+
+}
+
+else{
+
+
+
 snapshot.forEach((doc)=>{
 
 
@@ -326,13 +336,16 @@ role = doc.data().role;
 
 
 
+}
 
 
 
 
 
 
-// SIMPAN LOGIN DATA
+
+
+// SIMPAN LOGIN
 
 
 localStorage.setItem(
@@ -360,10 +373,19 @@ role:role
 
 
 
+
+console.log("ROLE:",role);
+
+
+
+
+
+
+
+
 document.getElementById("message").innerHTML =
 
 "✅ Login Berjaya";
-
 
 
 
@@ -402,9 +424,7 @@ document.getElementById("message").innerHTML =
 "❌ Email atau Password salah";
 
 
-
 }
-
 
 
 
@@ -412,8 +432,9 @@ document.getElementById("message").innerHTML =
 
 
 
-</script>
 
+
+</script>
 
 
 </body>
