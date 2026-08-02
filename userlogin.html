@@ -14,16 +14,13 @@ Smart Classroom Login
 
 <link rel="stylesheet" href="style.css">
 
-
 </head>
 
 
 <body class="login-body">
 
 
-
 <div class="login-card">
-
 
 
 <h1>
@@ -31,12 +28,9 @@ Smart Classroom Login
 </h1>
 
 
-
 <p>
 Login Sistem Kawalan Lampu
 </p>
-
-
 
 
 
@@ -49,7 +43,6 @@ Login Sistem Kawalan Lampu
 id="email"
 type="email"
 placeholder="Contoh: admin@gmail.com">
-
 
 
 
@@ -69,7 +62,6 @@ placeholder="Masukkan password">
 
 
 
-
 <button 
 class="login-btn"
 id="loginBtn">
@@ -80,9 +72,7 @@ LOGIN
 
 
 
-
 <p id="message"></p>
-
 
 
 </div>
@@ -92,11 +82,7 @@ LOGIN
 
 
 
-
-
-
 <script type="module">
-
 
 
 // ==========================
@@ -104,7 +90,7 @@ LOGIN
 // ==========================
 
 
-import { initializeApp } 
+import { initializeApp }
 
 from
 
@@ -151,8 +137,6 @@ from
 
 
 
-
-
 // ==========================
 // FIREBASE CONFIG
 // ==========================
@@ -181,6 +165,8 @@ appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
 
 
+
+
 // START FIREBASE
 
 
@@ -200,8 +186,9 @@ const db = getFirestore(app);
 
 
 
+
 // ==========================
-// LOGIN BUTTON
+// LOGIN
 // ==========================
 
 
@@ -209,7 +196,7 @@ document
 
 .getElementById("loginBtn")
 
-.addEventListener("click",async function(){
+.addEventListener("click", async ()=>{
 
 
 
@@ -218,7 +205,6 @@ document
 let email =
 
 document.getElementById("email").value;
-
 
 
 
@@ -232,14 +218,11 @@ document.getElementById("password").value;
 
 
 
-if(email=="" || password==""){
+if(email==="" || password===""){
 
 
-document
 
-.getElementById("message")
-
-.innerHTML =
+document.getElementById("message").innerHTML =
 
 "⚠️ Sila isi email dan password";
 
@@ -256,16 +239,15 @@ return;
 
 
 
+
 try{
 
 
 
+// LOGIN AUTH
 
 
-// LOGIN FIREBASE AUTH
-
-
-let userCredential =
+const userCredential =
 
 await signInWithEmailAndPassword(
 
@@ -281,7 +263,8 @@ password
 
 
 
-let user = userCredential.user;
+const user = userCredential.user;
+
 
 
 
@@ -290,17 +273,19 @@ let user = userCredential.user;
 
 // DEFAULT ROLE
 
-let role="user";
+
+let role = "user";
 
 
 
 
 
 
-// CARI ROLE FIRESTORE
+
+// CARI USER DALAM FIRESTORE
 
 
-let q = query(
+const q = query(
 
 collection(db,"users"),
 
@@ -322,7 +307,10 @@ user.uid
 
 
 
-let snapshot = await getDocs(q);
+
+const snapshot = await getDocs(q);
+
+
 
 
 
@@ -344,22 +332,25 @@ role = doc.data().role;
 
 
 
-// SIMPAN LOGIN USER
+// SIMPAN LOGIN DATA
 
 
 localStorage.setItem(
+
 "loginUser",
+
 JSON.stringify({
 
-username:userCredential.user.email,
+username:user.email,
 
-email:userCredential.user.email,
+email:user.email,
 
-uid:userCredential.user.uid,
+uid:user.uid,
 
-role:"admin"
+role:role
 
 })
+
 );
 
 
@@ -367,11 +358,9 @@ role:"admin"
 
 
 
-document
 
-.getElementById("message")
 
-.innerHTML =
+document.getElementById("message").innerHTML =
 
 "✅ Login Berjaya";
 
@@ -394,10 +383,11 @@ window.location.href="index.html";
 
 
 
-
-
-
 }
+
+
+
+
 
 catch(error){
 
@@ -407,11 +397,7 @@ console.log(error);
 
 
 
-document
-
-.getElementById("message")
-
-.innerHTML =
+document.getElementById("message").innerHTML =
 
 "❌ Email atau Password salah";
 
@@ -422,12 +408,7 @@ document
 
 
 
-
 });
-
-
-
-
 
 
 
