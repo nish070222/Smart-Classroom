@@ -1,59 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>
 Smart Classroom Login
 </title>
 
-
 <link rel="stylesheet" href="style.css">
 
-
 </head>
-
 
 
 <body class="login-body">
 
 
-
-
-
 <div class="login-card">
 
 
-
 <h1>
-
 🏫 SmartClass
-
 </h1>
 
 
-
 <p>
-
 Login Sistem Kawalan Lampu
-
 </p>
-
-
 
 
 
 <input id="username"
 
-placeholder="Nama Pengguna">
+type="email"
 
-
+placeholder="Email">
 
 
 
@@ -62,7 +46,6 @@ placeholder="Nama Pengguna">
 type="password"
 
 placeholder="Password">
-
 
 
 
@@ -78,10 +61,7 @@ LOGIN
 
 
 
-
-
 <p id="message"></p>
-
 
 
 
@@ -91,72 +71,81 @@ LOGIN
 
 
 
+<script type="module">
 
 
+// Firebase Import
+
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
-<script src="users.js"></script>
-
-
-
-
-
-<script>
-
-
-function login(){
-
-
-
-let username = document.getElementById(
-
-"username"
-
-).value;
-
-
-
-let password = document.getElementById(
-
-"password"
-
-).value;
+import { 
+getAuth,
+signInWithEmailAndPassword 
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
 
 
+// Firebase Configuration
 
-let users = JSON.parse(
+const firebaseConfig = {
 
-localStorage.getItem("users")
+apiKey: "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
 
-);
+authDomain: "smart-classroom-351a3.firebaseapp.com",
 
+projectId: "smart-classroom-351a3",
 
+storageBucket: "smart-classroom-351a3.firebasestorage.app",
 
+messagingSenderId: "1031651524426",
 
+appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 
-
-let user = users.find(function(data){
-
-
-
-return data.username==username &&
-
-data.password==password;
+};
 
 
 
-});
+
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+
+const auth = getAuth(app);
 
 
 
 
 
 
+window.login = function(){
 
-if(user){
+
+
+let email = document.getElementById("username").value;
+
+
+let password = document.getElementById("password").value;
+
+
+
+
+
+signInWithEmailAndPassword(auth,email,password)
+
+
+
+.then((userCredential)=>{
+
+
+
+let user = userCredential.user;
 
 
 
@@ -172,44 +161,40 @@ JSON.stringify(user)
 
 
 
+document.getElementById("message").innerHTML =
 
-if(user.role=="admin"){
+"✅ Login Berjaya";
+
+
+
+
+
+setTimeout(()=>{
 
 
 window.location="dashboard.html";
 
 
-}
-
-else{
-
-
-window.location="index.html";
-
-
-}
+},1000);
 
 
 
 
-}
+})
 
 
 
-else{
 
 
-document.getElementById(
-
-"message"
-
-).innerHTML=
-
-"❌ Username atau password salah";
+.catch((error)=>{
 
 
-}
+document.getElementById("message").innerHTML =
 
+"❌ Email atau password salah";
+
+
+});
 
 
 
@@ -221,10 +206,6 @@ document.getElementById(
 
 
 
-
-
-
 </body>
-
 
 </html>
