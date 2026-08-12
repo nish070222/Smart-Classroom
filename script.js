@@ -1,3 +1,4 @@
+
 // =====================================================
 // SMART CLASSROOM CONTROL SYSTEM
 // script.js
@@ -6,14 +7,64 @@
 // - Kawal Lampu
 // - ESP32
 // - Timer
-// - History
+// - History Firestore
 // - Log Aktiviti
-// - Dashboard
 // =====================================================
 
 
 // =====================================================
-// GLOBAL TIMER
+// FIREBASE
+// =====================================================
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+// =====================================================
+// FIREBASE CONFIG
+// =====================================================
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
+
+    authDomain:
+        "smart-classroom-351a3.firebaseapp.com",
+
+    projectId:
+        "smart-classroom-351a3",
+
+    storageBucket:
+        "smart-classroom-351a3.firebasestorage.app",
+
+    messagingSenderId:
+        "1031651524426",
+
+    appId:
+        "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const db =
+    getFirestore(app);
+
+
+// =====================================================
+// TIMER
 // =====================================================
 
 let timer;
@@ -30,7 +81,8 @@ let running = false;
 // ESP32
 // =====================================================
 
-const ESP32_IP = "192.168.4.1";
+const ESP32_IP =
+    "192.168.4.1";
 
 
 // =====================================================
@@ -40,12 +92,16 @@ const ESP32_IP = "192.168.4.1";
 function updateTimerDisplay() {
 
     let hour =
-        Math.floor(seconds / 3600);
+        Math.floor(
+            seconds / 3600
+        );
+
 
     let minute =
         Math.floor(
             (seconds % 3600) / 60
         );
+
 
     let second =
         seconds % 60;
@@ -56,10 +112,12 @@ function updateTimerDisplay() {
             ? "0" + hour
             : hour;
 
+
     minute =
         minute < 10
             ? "0" + minute
             : minute;
+
 
     second =
         second < 10
@@ -72,8 +130,6 @@ function updateTimerDisplay() {
         minute + ":" +
         second;
 
-
-    // Light Control timer
 
     let timerBox =
         document.getElementById(
@@ -88,8 +144,6 @@ function updateTimerDisplay() {
 
     }
 
-
-    // Dashboard timer
 
     let dashTimer =
         document.getElementById(
@@ -162,10 +216,6 @@ function stopTimer() {
 function lampOn() {
 
 
-    // ==============================
-    // ESP32
-    // ==============================
-
     fetch(
         "http://" +
         ESP32_IP +
@@ -196,10 +246,6 @@ function lampOn() {
     });
 
 
-    // ==============================
-    // LIGHT CONTROL
-    // ==============================
-
     let lamp =
         document.getElementById(
             "lampStatus"
@@ -216,10 +262,6 @@ function lampOn() {
 
     }
 
-
-    // ==============================
-    // DASHBOARD
-    // ==============================
 
     let dashLamp =
         document.getElementById(
@@ -238,19 +280,11 @@ function lampOn() {
     }
 
 
-    // ==============================
-    // SAVE STATUS
-    // ==============================
-
     localStorage.setItem(
         "lampStatus",
         "ON"
     );
 
-
-    // ==============================
-    // SAVE START TIME
-    // ==============================
 
     let start =
         new Date();
@@ -262,19 +296,11 @@ function lampOn() {
     );
 
 
-    // ==============================
-    // LOG
-    // ==============================
-
     addLog(
         "💡 Lampu ON",
         "Berjaya"
     );
 
-
-    // ==============================
-    // TIMER
-    // ==============================
 
     startTimer();
 
@@ -287,10 +313,6 @@ function lampOn() {
 
 function lampOff() {
 
-
-    // ==============================
-    // ESP32
-    // ==============================
 
     fetch(
         "http://" +
@@ -322,10 +344,6 @@ function lampOff() {
     });
 
 
-    // ==============================
-    // LIGHT CONTROL
-    // ==============================
-
     let lamp =
         document.getElementById(
             "lampStatus"
@@ -342,10 +360,6 @@ function lampOff() {
 
     }
 
-
-    // ==============================
-    // DASHBOARD
-    // ==============================
 
     let dashLamp =
         document.getElementById(
@@ -364,33 +378,19 @@ function lampOff() {
     }
 
 
-    // ==============================
-    // SAVE STATUS
-    // ==============================
-
     localStorage.setItem(
         "lampStatus",
         "OFF"
     );
 
 
-    // ==============================
-    // STOP TIMER
-    // ==============================
-
     stopTimer();
 
 
-    // ==============================
-    // SAVE HISTORY
-    // ==============================
+    // SIMPAN HISTORY KE FIRESTORE
 
     saveHistory();
 
-
-    // ==============================
-    // RESET TIMER
-    // ==============================
 
     seconds = 0;
 
@@ -404,10 +404,6 @@ function lampOff() {
     updateTimerDisplay();
 
 
-    // ==============================
-    // LOG
-    // ==============================
-
     addLog(
         "💡 Lampu OFF",
         "Berjaya"
@@ -417,10 +413,10 @@ function lampOff() {
 
 
 // =====================================================
-// SAVE HISTORY
+// SAVE HISTORY TO FIRESTORE
 // =====================================================
 
-function saveHistory() {
+async function saveHistory() {
 
 
     let startValue =
@@ -430,6 +426,10 @@ function saveHistory() {
 
 
     if (!startValue) {
+
+        console.log(
+            "Tiada start time"
+        );
 
         return;
 
@@ -478,20 +478,18 @@ function saveHistory() {
             ? "0" + hour
             : hour;
 
+
     minute =
         minute < 10
             ? "0" + minute
             : minute;
+
 
     second =
         second < 10
             ? "0" + second
             : second;
 
-
-    // ==============================
-    // USER
-    // ==============================
 
     let user =
         JSON.parse(
@@ -501,24 +499,22 @@ function saveHistory() {
         );
 
 
-    // ==============================
-    // HISTORY
-    // ==============================
-
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "history"
-            )
-        ) || [];
-
-
-    history.unshift({
+    let historyData = {
 
         user:
             user
                 ? user.username
                 : "Unknown",
+
+        email:
+            user
+                ? user.email
+                : "",
+
+        uid:
+            user
+                ? user.uid
+                : "",
 
         role:
             user
@@ -557,29 +553,82 @@ function saveHistory() {
             ":" +
             minute +
             ":" +
-            second
+            second,
 
-    });
+        timestamp:
+            serverTimestamp()
 
-
-    localStorage.setItem(
-        "history",
-        JSON.stringify(history)
-    );
+    };
 
 
-    // Jangan simpan session lama sebagai
-    // start time untuk sesi seterusnya
+    try {
 
-    localStorage.removeItem(
-        "startTime"
-    );
+        const docRef =
+            await addDoc(
+                collection(
+                    db,
+                    "history"
+                ),
+                historyData
+            );
+
+
+        console.log(
+            "✅ History berjaya disimpan:",
+            docRef.id
+        );
+
+
+        // LocalStorage masih disimpan
+        // sebagai backup
+
+        let history =
+            JSON.parse(
+                localStorage.getItem(
+                    "history"
+                )
+            ) || [];
+
+
+        history.unshift(
+            historyData
+        );
+
+
+        localStorage.setItem(
+            "history",
+            JSON.stringify(
+                history
+            )
+        );
+
+
+        localStorage.removeItem(
+            "startTime"
+        );
+
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "❌ Firestore Error:",
+            error
+        );
+
+
+        alert(
+            "❌ Gagal simpan History ke Firebase"
+        );
+
+    }
 
 }
 
 
 // =====================================================
-// ADD LOG
+// ACTIVITY LOG
 // =====================================================
 
 function addLog(
@@ -636,8 +685,6 @@ function addLog(
 
     });
 
-
-    // Maximum 10 log
 
     if (logs.length > 10) {
 
@@ -748,12 +795,9 @@ window.addEventListener(
     "load",
     function() {
 
-
         updateTimerDisplay();
 
-
         loadLampStatus();
-
 
     }
 );
