@@ -610,20 +610,21 @@ async function saveHistory() {
 
     }
 
-    catch(error) {
+   catch(error) {
 
-        console.error(
-            "❌ Firestore Error:",
-            error
-        );
+    console.error(
+        "❌ FIRESTORE ERROR:",
+        error
+    );
 
+    alert(
+        "❌ Firebase Error:\n" +
+        error.code +
+        "\n\n" +
+        error.message
+    );
 
-        alert(
-            "❌ Gagal simpan History ke Firebase"
-        );
-
-    }
-
+}
 }
 
 
