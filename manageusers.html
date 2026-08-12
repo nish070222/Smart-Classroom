@@ -3,332 +3,259 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-SmartClass Manage User
-</title>
+    <title>SmartClass Manage User</title>
 
+    <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
-
-<link rel="stylesheet" href="manageusers.css">
-
+    <link rel="stylesheet" href="manageusers.css">
 
 </head>
 
-
 <body>
-
-
 
 <!-- SIDEBAR -->
 
 <div class="sidebar">
 
+    <h2>🏫 SmartClass</h2>
 
-<h2>
-🏫 SmartClass
-</h2>
+    <a href="index.html">
+        💡 Light Control
+    </a>
 
+    <a href="dashboard.html">
+        📊 Dashboard
+    </a>
 
-<a href="index.html">
-💡 Light Control
-</a>
+    <a href="history.html">
+        📅 History
+    </a>
 
+    <a href="manageusers.html" class="active">
+        👥 Manage User
+    </a>
 
-<a href="dashboard.html">
-📊 Dashboard
-</a>
+    <div class="side-user">
 
+        <p id="adminName"></p>
 
-<a href="history.html">
-📅 History
-</a>
+    </div>
 
-
-<a href="manageusers.html" class="active">
-👥 Manage User
-</a>
-
-
-
-
-<div class="side-user">
-
-<p id="adminName">
-</p>
+    <a href="#" onclick="logout()">
+        🚪 Logout
+    </a>
 
 </div>
-
-
-
-
-<a href="#" onclick="logout()">
-
-🚪 Logout
-
-</a>
-
-
-</div>
-
-
-
-
-
-
 
 
 <!-- MAIN CONTENT -->
 
-
 <div class="main manage-main">
 
+    <h1>👥 Pengurusan Pengguna</h1>
+
+    <p>Manage account Smart Classroom</p>
 
 
-<h1>
-👥 Pengurusan Pengguna
-</h1>
+    <!-- STAT CARD -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <h3>👥 Total User</h3>
+
+            <h1 id="totalUser">0</h1>
+
+        </div>
 
 
-<p>
-Manage account Smart Classroom
-</p>
+        <div class="stat-card">
+
+            <h3>👑 Admin</h3>
+
+            <h1 id="totalAdmin">0</h1>
+
+        </div>
 
 
+        <div class="stat-card">
+
+            <h3>🙋 User</h3>
+
+            <h1 id="totalNormal">0</h1>
+
+        </div>
+
+    </div>
 
 
+    <!-- ADD USER -->
+
+    <div class="user-card">
+
+        <h2>➕ Tambah User</h2>
+
+        <div class="form-group">
+
+            <input
+                id="email"
+                type="email"
+                placeholder="Masukkan Email User"
+                autocomplete="off"
+            >
+
+            <input
+                id="password"
+                type="password"
+                placeholder="Masukkan Password User"
+                autocomplete="new-password"
+            >
+
+            <select id="role">
+
+                <option value="user">
+                    User
+                </option>
+
+                <option value="admin">
+                    Admin
+                </option>
+
+            </select>
+
+            <button onclick="addUser()">
+                Tambah
+            </button>
+
+        </div>
+
+    </div>
 
 
+    <!-- SEARCH -->
 
-<!-- STAT CARD -->
+    <div class="search-box">
+
+        <input
+            id="search"
+            placeholder="🔍 Cari email pengguna..."
+            onkeyup="searchUser()"
+        >
+
+    </div>
 
 
-<div class="stats">
+    <!-- TABLE -->
 
+    <div class="user-table-card">
 
+        <h2>📋 Senarai Pengguna</h2>
 
-<div class="stat-card">
+        <table>
 
-<h3>
-👥 Total User
-</h3>
+            <thead>
 
-<h1 id="totalUser">
-0
-</h1>
+                <tr>
+
+                    <th>Email</th>
+
+                    <th>Role</th>
+
+                    <th>Tindakan</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="userList"></tbody>
+
+        </table>
+
+    </div>
 
 </div>
 
 
+<!-- EDIT USER MODAL -->
+
+<div id="editModal" class="edit-modal">
+
+    <div class="edit-modal-content">
+
+        <div class="edit-header">
+
+            <div>
+                <h2>✏️ Edit User</h2>
+                <p>Kemaskini role pengguna</p>
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeEditModal()">
+                ×
+            </button>
+
+        </div>
 
 
+        <div class="edit-body">
 
-<div class="stat-card">
+            <label>Email</label>
 
-<h3>
-👑 Admin
-</h3>
-
-<h1 id="totalAdmin">
-0
-</h1>
-
-</div>
+            <input
+                id="editEmail"
+                type="text"
+                disabled
+            >
 
 
+            <label>Role</label>
+
+            <select id="editRole">
+
+                <option value="user">
+                    🙋 User
+                </option>
+
+                <option value="admin">
+                    👑 Admin
+                </option>
+
+            </select>
+
+        </div>
 
 
+        <div class="edit-footer">
 
-<div class="stat-card">
+            <button
+                class="cancel-btn"
+                onclick="closeEditModal()">
+                Batal
+            </button>
 
-<h3>
-🙋 User
-</h3>
+            <button
+                class="save-btn"
+                onclick="saveEditUser()">
+                💾 Simpan
+            </button>
 
-<h1 id="totalNormal">
-0
-</h1>
+        </div>
 
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ADD USER -->
-
-
-<div class="user-card">
-
-
-<h2>
-➕ Tambah User
-</h2>
-
-
-
-<div class="form-group">
-
-<input 
-id="email"
-type="email"
-placeholder="Masukkan Email User"
-autocomplete="off">
-
-
-<input 
-id="password"
-type="password"
-placeholder="Masukkan Password User"
-autocomplete="new-password">
-
-<select id="role">
-
-
-<option value="user">
-User
-</option>
-
-
-<option value="admin">
-Admin
-</option>
-
-
-</select>
-
-
-
-<button onclick="addUser()">
-
-Tambah
-
-</button>
-
+    </div>
 
 </div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- SEARCH -->
-
-
-<div class="search-box">
-
-
-<input 
-id="search"
-placeholder="🔍 Cari email pengguna..."
-onkeyup="searchUser()">
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- TABLE -->
-
-
-<div class="user-table-card">
-
-
-<h2>
-📋 Senarai Pengguna
-</h2>
-
-
-
-
-<table>
-
-
-<thead>
-
-
-<tr>
-
-<th>
-Email
-</th>
-
-
-<th>
-Role
-</th>
-
-
-<th>
-Tindakan
-</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-<tbody id="userList">
-
-</tbody>
-
-
-
-</table>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
 
 
 <script src="logout.js"></script>
 
-
-
 <script type="module" src="manageusers.js"></script>
 
-
-
 </body>
-
 
 </html>
