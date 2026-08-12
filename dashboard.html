@@ -9,11 +9,231 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>
-        Smart Classroom Dashboard
-    </title>
+    <title>Smart Classroom Dashboard</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =====================================
+           DASHBOARD EXTRA STYLE
+           ===================================== */
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            margin-bottom: 5px;
+        }
+
+        .welcome p {
+            margin-top: 0;
+            color: #666;
+        }
+
+        .dashboard-card {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .box {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.08);
+
+            text-align: center;
+        }
+
+        .box h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .box h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .box h3 {
+            margin: 0;
+        }
+
+        .online {
+            color: green;
+        }
+
+        .offline {
+            color: red;
+        }
+
+        /* =====================================
+           STATISTICS
+           ===================================== */
+
+        .statistics {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.08);
+        }
+
+        .stat-box h3 {
+            margin-top: 0;
+
+            color: #555;
+        }
+
+        .stat-value {
+            font-size: 30px;
+
+            font-weight: bold;
+
+            margin-top: 10px;
+        }
+
+        /* =====================================
+           LOG
+           ===================================== */
+
+        .log {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.08);
+        }
+
+        .log-header {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .log-header h2 {
+            margin: 0;
+        }
+
+        .clear-log {
+            border: none;
+
+            background: #e74c3c;
+
+            color: white;
+
+            padding: 8px 14px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+        }
+
+        .clear-log:hover {
+            opacity: 0.85;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse:
+                collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+
+            text-align: center;
+
+            border-bottom:
+                1px solid #ddd;
+        }
+
+        th {
+            background: #f5f5f5;
+        }
+
+        .empty-log {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #777;
+        }
+
+        /* =====================================
+           RESPONSIVE
+           ===================================== */
+
+        @media(max-width:900px) {
+
+            .dashboard-card {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .statistics {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+        @media(max-width:600px) {
+
+            .dashboard-card {
+                grid-template-columns:
+                    1fr;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -21,36 +241,39 @@
 <body>
 
 
+<!-- =====================================
+     AUTH CHECK
+     ===================================== -->
+
 <script src="auth.js"></script>
 
 
 <script>
 
-// ======================
-// ADMIN CHECK
-// ======================
-
-let loginUser = JSON.parse(
-
-    localStorage.getItem("loginUser")
-
-);
+let loginUser =
+    JSON.parse(
+        localStorage.getItem("loginUser")
+    );
 
 
-if (!loginUser || loginUser.role != "admin") {
+if (
+    !loginUser ||
+    loginUser.role != "admin"
+) {
 
-    window.location = "index.html";
+    window.location =
+        "index.html";
 
 }
 
 </script>
 
 
-
-<!-- SIDEBAR -->
+<!-- =====================================
+     SIDEBAR
+     ===================================== -->
 
 <div class="sidebar">
-
 
     <h2>
         🏫 SmartClass
@@ -58,192 +281,248 @@ if (!loginUser || loginUser.role != "admin") {
 
 
     <a href="index.html">
-
         💡 Light Control
-
     </a>
 
 
     <a href="dashboard.html">
-
         📊 Dashboard
-
     </a>
 
 
     <a href="history.html">
-
         📅 History
-
     </a>
 
 
     <a href="manageusers.html">
-
         👥 Manage User
-
     </a>
 
 
-    <a href="#" onclick="logout()">
+    <a href="#"
+       onclick="logout()">
 
         🚪 Logout
 
     </a>
 
-
 </div>
 
 
-
-<!-- MAIN -->
+<!-- =====================================
+     MAIN DASHBOARD
+     ===================================== -->
 
 <div class="dashboard">
 
 
-    <h1>
+    <!-- WELCOME -->
 
-        🏫 Smart Classroom Dashboard
+    <div class="welcome">
 
-    </h1>
+        <h1>
+            🏫 Smart Classroom Dashboard
+        </h1>
 
-
-    <p>
-
-        Monitoring Sistem Admin
-
-    </p>
-
-
-
-    <!-- DASHBOARD CARDS -->
-
-    <div class="dashboard-card">
-
-
-        <div class="box">
-
-            <h2>
-
-                ⏱ Masa Lampu Hidup
-
-            </h2>
-
-
-            <h1 id="dashTimer">
-
-                00:00:00
-
-            </h1>
-
-        </div>
-
-
-
-        <div class="box">
-
-            <h2>
-
-                💡 Status Lampu
-
-            </h2>
-
-
-            <h1 id="dashLamp">
-
-                OFF
-
-            </h1>
-
-        </div>
-
-
-
-        <div class="box">
-
-            <h2>
-
-                📡 ESP32
-
-            </h2>
-
-
-            <h1 class="online">
-
-                ONLINE
-
-            </h1>
-
-        </div>
-
-
-
-        <div class="box">
-
-            <h2>
-
-                📍 Lokasi
-
-            </h2>
-
-
-            <h3>
-
-                Makmal Tutorial
-
-            </h3>
-
-        </div>
-
+        <p id="welcomeText">
+            Monitoring Sistem Admin
+        </p>
 
     </div>
 
 
+    <!-- =====================================
+         MAIN CARDS
+         ===================================== -->
 
-    <!-- LOG AKTIVITI -->
+    <div class="dashboard-card">
+
+
+        <!-- TIMER -->
+
+        <div class="box">
+
+            <h2>
+                ⏱ Masa Lampu Hidup
+            </h2>
+
+            <h1 id="dashTimer">
+                00:00:00
+            </h1>
+
+        </div>
+
+
+        <!-- LAMP -->
+
+        <div class="box">
+
+            <h2>
+                💡 Status Lampu
+            </h2>
+
+            <h1 id="dashLamp">
+                OFF
+            </h1>
+
+        </div>
+
+
+        <!-- ESP32 -->
+
+        <div class="box">
+
+            <h2>
+                📡 ESP32
+            </h2>
+
+            <h1 id="espStatus"
+                class="offline">
+
+                CHECKING
+
+            </h1>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="box">
+
+            <h2>
+                📍 Lokasi
+            </h2>
+
+            <h3>
+                Makmal Tutorial
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         STATISTICS
+         ===================================== -->
+
+    <div class="statistics">
+
+
+        <!-- TOTAL SESSION -->
+
+        <div class="stat-box">
+
+            <h3>
+                📊 Jumlah Sesi
+            </h3>
+
+            <div class="stat-value"
+                 id="totalSessions">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL USAGE -->
+
+        <div class="stat-box">
+
+            <h3>
+                ⏱ Jumlah Penggunaan
+            </h3>
+
+            <div class="stat-value"
+                 id="totalUsage">
+
+                00:00:00
+
+            </div>
+
+        </div>
+
+
+        <!-- TODAY -->
+
+        <div class="stat-box">
+
+            <h3>
+                📅 Penggunaan Hari Ini
+            </h3>
+
+            <div class="stat-value"
+                 id="todaySessions">
+
+                0
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         ACTIVITY LOG
+         ===================================== -->
 
     <div class="log">
 
 
-        <h2>
+        <div class="log-header">
 
-            📋 Log Aktiviti
+            <h2>
+                📋 Log Aktiviti
+            </h2>
 
-        </h2>
+            <button
+                class="clear-log"
+                onclick="clearLogs()">
 
+                🗑️ Kosongkan
+
+            </button>
+
+        </div>
 
 
         <table>
 
+            <thead>
 
-            <tr>
+                <tr>
 
-                <th>
-                    Masa
-                </th>
+                    <th>
+                        Masa
+                    </th>
 
-                <th>
-                    Pengguna
-                </th>
+                    <th>
+                        Pengguna
+                    </th>
 
-                <th>
-                    Aktiviti
-                </th>
+                    <th>
+                        Aktiviti
+                    </th>
 
-                <th>
-                    Status
-                </th>
+                    <th>
+                        Status
+                    </th>
 
-            </tr>
+                </tr>
+
+            </thead>
 
 
             <tbody id="activityLog">
 
             </tbody>
 
-
         </table>
-
 
     </div>
 
@@ -251,113 +530,452 @@ if (!loginUser || loginUser.role != "admin") {
 </div>
 
 
+<!-- =====================================
+     SYSTEM SCRIPTS
+     ===================================== -->
 
 <script src="script.js"></script>
 
 <script src="logout.js"></script>
 
 
-
 <script>
 
 
-// ======================
-// STATUS LAMP
-// ======================
+// =====================================
+// WELCOME ADMIN
+// =====================================
 
-let status = localStorage.getItem(
+function updateWelcome() {
 
-    "lampStatus"
-
-);
-
-
-let lamp = document.getElementById(
-
-    "dashLamp"
-
-);
+    let user =
+        JSON.parse(
+            localStorage.getItem(
+                "loginUser"
+            )
+        );
 
 
-if (status == "ON") {
+    let welcome =
+        document.getElementById(
+            "welcomeText"
+        );
 
 
-    lamp.innerHTML = "ON";
+    if (user) {
 
-    lamp.style.color = "green";
+        welcome.innerHTML =
+            "Selamat datang, <b>" +
+            (user.username || "Admin") +
+            "</b> • Monitoring Sistem Admin";
 
-
-} else {
-
-
-    lamp.innerHTML = "OFF";
-
-    lamp.style.color = "red";
+    }
 
 }
 
 
+// =====================================
+// LAMP STATUS
+// =====================================
 
-// ======================
+function updateLampStatus() {
+
+    let status =
+        localStorage.getItem(
+            "lampStatus"
+        ) || "OFF";
+
+
+    let lamp =
+        document.getElementById(
+            "dashLamp"
+        );
+
+
+    if (status === "ON") {
+
+        lamp.innerHTML = "ON";
+
+        lamp.style.color =
+            "green";
+
+    }
+
+    else {
+
+        lamp.innerHTML = "OFF";
+
+        lamp.style.color =
+            "red";
+
+    }
+
+}
+
+
+// =====================================
 // LOG AKTIVITI
-// ======================
+// =====================================
 
-let logs = JSON.parse(
+function loadLogs() {
 
-    localStorage.getItem("logs")
-
-) || [];
-
-
-let table = document.getElementById(
-
-    "activityLog"
-
-);
+    let logs =
+        JSON.parse(
+            localStorage.getItem(
+                "logs"
+            )
+        ) || [];
 
 
-
-// Papar log
-
-logs.forEach(function(log) {
-
-
-    table.innerHTML += `
-
-        <tr>
-
-            <td>
-
-                ${log.time}
-
-            </td>
+    let table =
+        document.getElementById(
+            "activityLog"
+        );
 
 
-            <td>
-
-                ${log.user}
-
-            </td>
+    table.innerHTML = "";
 
 
-            <td>
+    if (logs.length === 0) {
 
-                ${log.activity}
+        table.innerHTML = `
 
-            </td>
+            <tr>
+
+                <td colspan="4"
+                    class="empty-log">
+
+                    Tiada aktiviti direkodkan
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
 
 
-            <td>
+    logs.forEach(function(log) {
 
-                ${log.status}
+        table.innerHTML += `
 
-            </td>
+            <tr>
 
-        </tr>
+                <td>
+                    ${log.time || "-"}
+                </td>
 
-    `;
+                <td>
+                    ${log.user || "Unknown"}
+                </td>
 
-});
+                <td>
+                    ${log.activity || "-"}
+                </td>
+
+                <td>
+                    ${log.status || "-"}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+// =====================================
+// CLEAR LOG
+// =====================================
+
+function clearLogs() {
+
+    let confirmDelete =
+        confirm(
+            "Adakah anda pasti mahu mengosongkan semua log aktiviti?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "logs"
+    );
+
+
+    loadLogs();
+
+}
+
+
+// =====================================
+// HISTORY STATISTICS
+// =====================================
+
+function loadStatistics() {
+
+    let history =
+        JSON.parse(
+            localStorage.getItem(
+                "history"
+            )
+        ) || [];
+
+
+    // TOTAL SESSION
+
+    document.getElementById(
+        "totalSessions"
+    ).innerHTML =
+        history.length;
+
+
+    // TOTAL USAGE
+
+    let totalSeconds = 0;
+
+
+    history.forEach(function(item) {
+
+        if (!item.duration) {
+
+            return;
+
+        }
+
+
+        let parts =
+            item.duration.split(":");
+
+
+        if (parts.length !== 3) {
+
+            return;
+
+        }
+
+
+        let hours =
+            parseInt(parts[0]) || 0;
+
+
+        let minutes =
+            parseInt(parts[1]) || 0;
+
+
+        let seconds =
+            parseInt(parts[2]) || 0;
+
+
+        totalSeconds +=
+            (hours * 3600) +
+            (minutes * 60) +
+            seconds;
+
+    });
+
+
+    let hours =
+        Math.floor(
+            totalSeconds / 3600
+        );
+
+
+    let minutes =
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+
+    let seconds =
+        totalSeconds % 60;
+
+
+    hours =
+        hours < 10
+            ? "0" + hours
+            : hours;
+
+
+    minutes =
+        minutes < 10
+            ? "0" + minutes
+            : minutes;
+
+
+    seconds =
+        seconds < 10
+            ? "0" + seconds
+            : seconds;
+
+
+    document.getElementById(
+        "totalUsage"
+    ).innerHTML =
+
+        hours + ":" +
+        minutes + ":" +
+        seconds;
+
+
+    // =================================
+    // TODAY SESSION
+    // =================================
+
+    let today =
+        new Date();
+
+
+    let todayString =
+
+        today.getDate() +
+        "/" +
+        (today.getMonth() + 1) +
+        "/" +
+        today.getFullYear();
+
+
+    let todayCount = 0;
+
+
+    history.forEach(function(item) {
+
+        if (
+            item.date ===
+            todayString
+        ) {
+
+            todayCount++;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "todaySessions"
+    ).innerHTML =
+        todayCount;
+
+}
+
+
+// =====================================
+// ESP32 STATUS
+// =====================================
+
+function checkESP32() {
+
+    let esp =
+        document.getElementById(
+            "espStatus"
+        );
+
+
+    const ESP32_IP =
+        "192.168.4.1";
+
+
+    esp.innerHTML =
+        "CHECKING";
+
+
+    esp.className =
+        "online";
+
+
+    fetch(
+        "http://" +
+        ESP32_IP +
+        "/"
+    )
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "ESP32 Offline"
+            );
+
+        }
+
+
+        esp.innerHTML =
+            "ONLINE";
+
+        esp.className =
+            "online";
+
+    })
+
+    .catch(function(error) {
+
+        esp.innerHTML =
+            "OFFLINE";
+
+        esp.className =
+            "offline";
+
+    });
+
+}
+
+
+// =====================================
+// UPDATE DASHBOARD
+// =====================================
+
+function updateDashboard() {
+
+    updateLampStatus();
+
+    loadLogs();
+
+    loadStatistics();
+
+}
+
+
+// =====================================
+// INITIAL LOAD
+// =====================================
+
+updateWelcome();
+
+updateDashboard();
+
+checkESP32();
+
+
+// =====================================
+// AUTO UPDATE
+// =====================================
+
+setInterval(function() {
+
+    updateDashboard();
+
+}, 1000);
+
+
+// Check ESP32 every 5 seconds
+
+setInterval(function() {
+
+    checkESP32();
+
+}, 5000);
 
 
 </script>
