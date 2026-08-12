@@ -4,13 +4,10 @@
 // FIREBASE AUTH + FIRESTORE
 // =====================================
 
-
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-
 import {
-
     getFirestore,
     collection,
     addDoc,
@@ -18,16 +15,12 @@ import {
     deleteDoc,
     doc,
     updateDoc
-
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
 import {
-
     getAuth,
     createUserWithEmailAndPassword
-
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -89,10 +82,6 @@ if (!loginUser || loginUser.role !== "admin") {
 }
 
 
-document.getElementById("adminName").innerHTML =
-    "👤 " + loginUser.email;
-
-
 // =====================================
 // LOAD USERS
 // =====================================
@@ -108,6 +97,8 @@ async function loadUsers() {
         allUsers = [];
 
 
+        // GET USERS FROM FIRESTORE
+
         let snapshot = await getDocs(
             collection(db, "users")
         );
@@ -117,6 +108,10 @@ async function loadUsers() {
 
         let normal = 0;
 
+
+        // =====================================
+        // PAPAR SEMUA USER
+        // =====================================
 
         snapshot.forEach((item) => {
 
@@ -132,6 +127,8 @@ async function loadUsers() {
             });
 
 
+            // COUNT ROLE
+
             if (data.role === "admin") {
 
                 admin++;
@@ -142,6 +139,8 @@ async function loadUsers() {
 
             }
 
+
+            // ROLE BADGE
 
             let badge;
 
@@ -164,6 +163,8 @@ async function loadUsers() {
 
             }
 
+
+            // TABLE ROW
 
             table.innerHTML += `
 
@@ -205,6 +206,10 @@ async function loadUsers() {
         });
 
 
+        // =====================================
+        // UPDATE STATISTICS
+        // =====================================
+
         document.getElementById("totalUser").innerHTML =
             snapshot.size;
 
@@ -217,11 +222,39 @@ async function loadUsers() {
             normal;
 
 
+        // EMPTY MESSAGE
+
+        if (snapshot.empty) {
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td colspan="3"
+                        style="text-align:center;">
+
+                        Tiada pengguna dijumpai.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Firestore Error:",
+            error
+        );
 
-        alert("Gagal mengambil data pengguna.");
+        alert(
+            "Gagal mengambil data pengguna.\n\n" +
+            error.message
+        );
 
     }
 
@@ -236,29 +269,41 @@ window.addUser = async function () {
 
 
     let email =
-        document.getElementById("email").value.trim();
+        document.getElementById("email")
+        .value
+        .trim();
 
 
     let password =
-        document.getElementById("password").value;
+        document.getElementById("password")
+        .value;
 
 
     let role =
-        document.getElementById("role").value;
+        document.getElementById("role")
+        .value;
 
+
+    // CHECK INPUT
 
     if (email === "" || password === "") {
 
-        alert("Sila isi email dan password.");
+        alert(
+            "Sila isi email dan password."
+        );
 
         return;
 
     }
 
 
+    // CHECK PASSWORD
+
     if (password.length < 6) {
 
-        alert("Password mestilah sekurang-kurangnya 6 aksara.");
+        alert(
+            "Password mestilah sekurang-kurangnya 6 aksara."
+        );
 
         return;
 
@@ -268,7 +313,9 @@ window.addUser = async function () {
     try {
 
 
+        // =====================================
         // CREATE FIREBASE AUTH ACCOUNT
+        // =====================================
 
         let userCredential =
             await createUserWithEmailAndPassword(
@@ -282,7 +329,9 @@ window.addUser = async function () {
             userCredential.user.uid;
 
 
-        // SAVE USER DATA TO FIRESTORE
+        // =====================================
+        // SAVE USER TO FIRESTORE
+        // =====================================
 
         await addDoc(
 
@@ -303,15 +352,24 @@ window.addUser = async function () {
         );
 
 
-        alert("✅ User berjaya didaftarkan!");
+        alert(
+            "✅ User berjaya didaftarkan!"
+        );
 
 
-        document.getElementById("email").value = "";
+        // CLEAR FORM
 
-        document.getElementById("password").value = "";
+        document.getElementById("email")
+            .value = "";
 
-        document.getElementById("role").value = "user";
+        document.getElementById("password")
+            .value = "";
 
+        document.getElementById("role")
+            .value = "user";
+
+
+        // RELOAD USER LIST
 
         loadUsers();
 
@@ -334,14 +392,17 @@ window.addUser = async function () {
 window.editRole = function (id) {
 
 
-    let user = allUsers.find(
-        user => user.id === id
-    );
+    let user =
+        allUsers.find(
+            user => user.id === id
+        );
 
 
     if (!user) {
 
-        alert("User tidak dijumpai.");
+        alert(
+            "User tidak dijumpai."
+        );
 
         return;
 
@@ -351,19 +412,23 @@ window.editRole = function (id) {
     editingUserId = id;
 
 
-    // Papar email
+    // EMAIL
 
-    document.getElementById("editEmail").value =
+    document.getElementById(
+        "editEmail"
+    ).value =
         user.email || "";
 
 
-    // Papar role semasa
+    // CURRENT ROLE
 
-    document.getElementById("editRole").value =
+    document.getElementById(
+        "editRole"
+    ).value =
         user.role || "user";
 
 
-    // Buka modal
+    // OPEN MODAL
 
     document
         .getElementById("editModal")
@@ -404,12 +469,19 @@ window.saveEditUser = async function () {
 
 
     let newRole =
-        document.getElementById("editRole").value;
+        document.getElementById(
+            "editRole"
+        ).value;
 
 
-    if (newRole !== "admin" && newRole !== "user") {
+    if (
+        newRole !== "admin" &&
+        newRole !== "user"
+    ) {
 
-        alert("Role tidak sah.");
+        alert(
+            "Role tidak sah."
+        );
 
         return;
 
@@ -436,7 +508,9 @@ window.saveEditUser = async function () {
         );
 
 
-        alert("✅ Role user berjaya dikemaskini!");
+        alert(
+            "✅ Role user berjaya dikemaskini!"
+        );
 
 
         closeEditModal();
@@ -449,7 +523,10 @@ window.saveEditUser = async function () {
 
         console.error(error);
 
-        alert("Gagal mengemaskini user.");
+        alert(
+            "Gagal mengemaskini user.\n\n" +
+            error.message
+        );
 
     }
 
@@ -470,7 +547,9 @@ window.deleteUser = async function (id) {
 
 
     let email =
-        user ? user.email : "user ini";
+        user
+            ? user.email
+            : "user ini";
 
 
     let confirmDelete = confirm(
@@ -502,7 +581,9 @@ window.deleteUser = async function (id) {
         );
 
 
-        alert("✅ User dipadam.");
+        alert(
+            "✅ User dipadam."
+        );
 
 
         loadUsers();
@@ -512,7 +593,10 @@ window.deleteUser = async function (id) {
 
         console.error(error);
 
-        alert("Gagal memadam user.");
+        alert(
+            "Gagal memadam user.\n\n" +
+            error.message
+        );
 
     }
 
@@ -526,19 +610,17 @@ window.deleteUser = async function (id) {
 window.searchUser = function () {
 
 
-    let value = document
-
-        .getElementById("search")
-
+    let value =
+        document.getElementById("search")
         .value
-
         .toLowerCase()
-
         .trim();
 
 
     let table =
-        document.getElementById("userList");
+        document.getElementById(
+            "userList"
+        );
 
 
     table.innerHTML = "";
@@ -552,6 +634,29 @@ window.searchUser = function () {
                 .includes(value)
 
         );
+
+
+    if (filteredUsers.length === 0) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="3"
+                    style="text-align:center;">
+
+                    Tiada pengguna dijumpai.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
 
 
     filteredUsers.forEach(user => {
@@ -618,7 +723,6 @@ window.searchUser = function () {
 
     });
 
-
 };
 
 
@@ -628,16 +732,18 @@ window.searchUser = function () {
 
 document
     .getElementById("editModal")
-    .addEventListener("click", function (event) {
+    .addEventListener(
+        "click",
+        function (event) {
 
+            if (event.target === this) {
 
-        if (event.target === this) {
+                closeEditModal();
 
-            closeEditModal();
+            }
 
         }
-
-    });
+    );
 
 
 // =====================================
