@@ -1,330 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>
+        Smart Classroom Light Control
+    </title>
 
-<title>
-Smart Classroom Light Control
-</title>
-
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 
 </head>
-
-
 
 
 <body>
 
 
-
-
 <script src="auth.js"></script>
-
-
-
 
 
 <!-- SIDEBAR -->
 
-
 <div class="sidebar">
 
-
-<h2>
-🏫 SmartClass
-</h2>
-
+    <h2>
+        🏫 SmartClass
+    </h2>
 
 
-<a href="index.html">
+    <a href="index.html">
 
-💡 Light Control
+        💡 Light Control
 
-</a>
-
-
-
-<a href="dashboard.html" id="dashboardMenu">
-
-📊 Dashboard
-
-</a>
+    </a>
 
 
+    <a href="dashboard.html" id="dashboardMenu">
 
-<a href="history.html">
+        📊 Dashboard
 
-📅 History
-
-</a>
-
+    </a>
 
 
-<a href="manageusers.html" id="manageMenu">
+    <a href="history.html">
 
-👥 Manage User
+        📅 History
 
-</a>
-
-
+    </a>
 
 
+    <a href="manageusers.html" id="manageMenu">
 
-<div class="side-user">
+        👥 Manage User
+
+    </a>
 
 
-<p id="userName">
+    <a href="#" onclick="logout()">
 
-</p>
+        🚪 Logout
 
+    </a>
 
 </div>
-
-
-
-
-
-<a href="#" onclick="logout()">
-
-🚪 Logout
-
-</a>
-
-
-</div>
-
-
-
-
-
-
 
 
 
 <!-- MAIN -->
 
-
 <div class="main">
 
 
+    <h1>
 
-<h1>
+        Smart Classroom Control System
 
-Smart Classroom Control System
-
-</h1>
-
+    </h1>
 
 
+    <p id="welcome">
 
-<p id="welcome">
+        Welcome
 
-Welcome
-
-</p>
+    </p>
 
 
 
+    <!-- CLOCK -->
+
+    <div class="clock">
+
+
+        🕒 Masa Sekarang
+
+
+        <h2 id="time">
+
+            00:00:00
+
+        </h2>
 
 
 
-
-<div class="clock">
-
-
-🕒 Masa Sekarang
+        📅 Tarikh
 
 
-<h2 id="time">
+        <p id="date">
 
-00:00:00
+            -
 
-</h2>
+        </p>
 
+
+    </div>
 
 
 
-📅 Tarikh
+    <!-- LIGHT CONTROL -->
+
+    <div class="card">
 
 
-<p id="date">
+        <h2>
 
--
+            💡 Lampu Makmal Tutorial
 
-</p>
+        </h2>
+
+
+
+        <p>
+
+            Status Lampu:
+
+        </p>
+
+
+
+        <h1 id="lampStatus">
+
+            OFF
+
+        </h1>
+
+
+
+        <button
+            class="on"
+            onclick="lampOn()">
+
+            ON
+
+        </button>
+
+
+
+        <button
+            class="off"
+            onclick="lampOff()">
+
+            OFF
+
+        </button>
+
+
+
+        <!-- TIMER -->
+
+        <div class="timer-box">
+
+
+            <h2>
+
+                ⏱ Tempoh Lampu Hidup
+
+            </h2>
+
+
+
+            <h1 id="timer">
+
+                00:00:00
+
+            </h1>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- SYSTEM STATUS -->
+
+    <div class="info">
+
+
+        <h2>
+
+            📌 Status Sistem
+
+        </h2>
+
+
+
+        <p>
+
+            ESP32:
+
+            <span class="online">
+
+                🟢 ONLINE
+
+            </span>
+
+        </p>
+
+
+
+        <p>
+
+            📍 Lokasi:
+
+            Makmal Tutorial
+
+        </p>
+
+
+    </div>
 
 
 </div>
 
 
 
-
-
-
-
-
-
-<div class="card">
-
-
-<h2>
-
-💡 Lampu Makmal Tutorial
-
-</h2>
-
-
-
-
-<p>
-
-Status Lampu:
-
-</p>
-
-
-
-
-<h1 id="lampStatus">
-
-OFF
-
-</h1>
-
-
-
-
-
-<button class="on"
-
-onclick="lampOn()">
-
-ON
-
-</button>
-
-
-
-
-
-
-<button class="off"
-
-onclick="lampOff()">
-
-OFF
-
-</button>
-
-
-
-
-
-
-
-
-
-<div class="timer-box">
-
-
-<h2>
-
-⏱ Tempoh Lampu Hidup
-
-</h2>
-
-
-
-<h1 id="timer">
-
-00:00:00
-
-</h1>
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="info">
-
-
-<h2>
-
-📌 Status Sistem
-
-</h2>
-
-
-
-
-<p>
-
-ESP32:
-
-<span class="online">
-
-🟢 ONLINE
-
-</span>
-
-</p>
-
-
-
-
-<p>
-
-📍 Lokasi:
-
-Makmal Tutorial
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
+<!-- JAVASCRIPT -->
 
 <script src="script.js"></script>
 
@@ -332,52 +246,19 @@ Makmal Tutorial
 
 
 
-
-
-
-
-
-
-
 <script>
 
 
-
 // ======================
-// PAPAR USER
+// WELCOME USER
 // ======================
-
 
 document.getElementById(
-
-"userName"
-
+    "welcome"
 ).innerHTML =
 
-
-"👤 " + (loginUser.email || "User");
-
-
-
-
-
-
-document.getElementById(
-
-"welcome"
-
-).innerHTML =
-
-
-"Welcome, " + (loginUser.email || "User");
-
-
-
-
-
-
-
-
+    "Welcome, " +
+    (loginUser.email || "User");
 
 
 
@@ -385,45 +266,26 @@ document.getElementById(
 // ROLE MENU
 // ======================
 
-
 let user = JSON.parse(
 
-localStorage.getItem("loginUser")
+    localStorage.getItem("loginUser")
 
 );
 
 
-if(loginUser.role!="admin"){
+if (loginUser.role != "admin") {
 
 
-
-document.getElementById(
-
-"dashboardMenu"
-
-).style.display="none";
+    document.getElementById(
+        "dashboardMenu"
+    ).style.display = "none";
 
 
-
-
-document.getElementById(
-
-"manageMenu"
-
-).style.display="none";
-
-
+    document.getElementById(
+        "manageMenu"
+    ).style.display = "none";
 
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -431,98 +293,70 @@ document.getElementById(
 // CLOCK
 // ======================
 
-
-function updateClock(){
-
+function updateClock() {
 
 
-let now = new Date();
+    let now = new Date();
 
 
+    let h = now.getHours();
 
+    let m = now.getMinutes();
 
-let h = now.getHours();
-
-let m = now.getMinutes();
-
-let s = now.getSeconds();
+    let s = now.getSeconds();
 
 
 
+    h = h < 10 ? "0" + h : h;
 
+    m = m < 10 ? "0" + m : m;
 
-h = h<10 ? "0"+h : h;
-
-m = m<10 ? "0"+m : m;
-
-s = s<10 ? "0"+s : s;
-
+    s = s < 10 ? "0" + s : s;
 
 
 
+    document.getElementById(
+        "time"
+    ).innerHTML =
 
-document.getElementById(
-
-"time"
-
-).innerHTML =
-
-
-h+":"+m+":"+s;
+        h + ":" + m + ":" + s;
 
 
 
+    let d = now.getDate();
+
+    let mo = now.getMonth() + 1;
+
+    let y = now.getFullYear();
 
 
 
+    document.getElementById(
+        "date"
+    ).innerHTML =
 
-let d = now.getDate();
-
-let mo = now.getMonth()+1;
-
-let y = now.getFullYear();
-
-
-
-
-
-
-document.getElementById(
-
-"date"
-
-).innerHTML =
-
-
-d+"/"+mo+"/"+y;
-
-
+        d + "/" + mo + "/" + y;
 
 }
 
 
 
+setInterval(
 
+    updateClock,
 
+    1000
 
-
-
-setInterval(updateClock,1000);
+);
 
 
 updateClock();
 
 
-
-
 </script>
-
-
-
-
-
 
 
 </body>
 
 </html>
+```
