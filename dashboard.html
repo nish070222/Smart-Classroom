@@ -1,382 +1,254 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
+    <title>
+        Smart Classroom Dashboard
+    </title>
 
-<title>
-Smart Classroom Dashboard
-</title>
-
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 
 </head>
-
 
 
 <body>
 
 
-
-
 <script src="auth.js"></script>
 
 
-
-
-
 <script>
-
 
 // ======================
 // ADMIN CHECK
 // ======================
 
-
 let loginUser = JSON.parse(
 
-localStorage.getItem("loginUser")
+    localStorage.getItem("loginUser")
 
 );
 
 
+if (!loginUser || loginUser.role != "admin") {
 
-
-if(!loginUser || loginUser.role!="admin"){
-
-
-window.location="index.html";
-
+    window.location = "index.html";
 
 }
-
-
 
 </script>
 
 
 
-
-
-
-
-
-
 <!-- SIDEBAR -->
-
 
 <div class="sidebar">
 
 
-
-<h2>
-🏫 SmartClass
-</h2>
-
+    <h2>
+        🏫 SmartClass
+    </h2>
 
 
+    <a href="index.html">
 
-<a href="index.html">
+        💡 Light Control
 
-💡 Light Control
-
-</a>
-
+    </a>
 
 
+    <a href="dashboard.html">
 
-<a href="dashboard.html">
+        📊 Dashboard
 
-📊 Dashboard
-
-</a>
-
+    </a>
 
 
+    <a href="history.html">
 
-<a href="history.html">
+        📅 History
 
-📅 History
-
-</a>
-
+    </a>
 
 
+    <a href="manageusers.html">
 
-<a href="manageusers.html">
+        👥 Manage User
 
-👥 Manage User
-
-</a>
+    </a>
 
 
-<a href="#" onclick="logout()">
+    <a href="#" onclick="logout()">
 
-🚪 Logout
+        🚪 Logout
 
-</a>
-
+    </a>
 
 
 </div>
-
 
 
 
 <!-- MAIN -->
 
-
 <div class="dashboard">
 
 
+    <h1>
+
+        🏫 Smart Classroom Dashboard
+
+    </h1>
+
+
+    <p>
+
+        Monitoring Sistem Admin
+
+    </p>
 
 
 
+    <!-- DASHBOARD CARDS -->
 
-<h1>
-
-🏫 Smart Classroom Dashboard
-
-</h1>
+    <div class="dashboard-card">
 
 
+        <div class="box">
+
+            <h2>
+
+                ⏱ Masa Lampu Hidup
+
+            </h2>
 
 
+            <h1 id="dashTimer">
 
-<p>
+                00:00:00
 
-Monitoring Sistem Admin
+            </h1>
 
-</p>
-
-
-
-
-
-
-
-
-
-<div class="dashboard-card">
+        </div>
 
 
 
+        <div class="box">
+
+            <h2>
+
+                💡 Status Lampu
+
+            </h2>
+
+
+            <h1 id="dashLamp">
+
+                OFF
+
+            </h1>
+
+        </div>
 
 
 
-<div class="box">
+        <div class="box">
+
+            <h2>
+
+                📡 ESP32
+
+            </h2>
 
 
-<h2>
+            <h1 class="online">
 
-⏱ Masa Lampu Hidup
+                ONLINE
 
-</h2>
+            </h1>
+
+        </div>
 
 
-<h1 id="dashTimer">
 
-00:00:00
+        <div class="box">
 
-</h1>
+            <h2>
+
+                📍 Lokasi
+
+            </h2>
+
+
+            <h3>
+
+                Makmal Tutorial
+
+            </h3>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- LOG AKTIVITI -->
+
+    <div class="log">
+
+
+        <h2>
+
+            📋 Log Aktiviti
+
+        </h2>
+
+
+
+        <table>
+
+
+            <tr>
+
+                <th>
+                    Masa
+                </th>
+
+                <th>
+                    Pengguna
+                </th>
+
+                <th>
+                    Aktiviti
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+            </tr>
+
+
+            <tbody id="activityLog">
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
 
 
 </div>
-
-
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h2>
-
-💡 Status Lampu
-
-</h2>
-
-
-<h1 id="dashLamp">
-
-OFF
-
-</h1>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h2>
-
-📡 ESP32
-
-</h2>
-
-
-<h1 class="online">
-
-ONLINE
-
-</h1>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h2>
-
-📍 Lokasi
-
-</h2>
-
-
-<h3>
-
-Makmal Tutorial
-
-</h3>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="log">
-
-
-<h2>
-
-📋 Log Aktiviti
-
-</h2>
-
-
-
-
-
-
-<table>
-
-
-
-<tr>
-
-
-<th>
-
-Masa
-
-</th>
-
-
-<th>
-
-Pengguna
-
-</th>
-
-
-<th>
-
-Aktiviti
-
-</th>
-
-
-<th>
-
-Status
-
-</th>
-
-
-</tr>
-
-
-
-
-
-
-<tbody id="activityLog">
-
-</tbody>
-
-
-
-
-
-</table>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
 
 
 
@@ -386,105 +258,43 @@ Status
 
 
 
-
-
-
-
-
-
 <script>
-
-
-
-
-// ======================
-// PAPAR EMAIL ADMIN
-// ======================
-
-
-
-document.getElementById(
-
-"adminName"
-
-).innerHTML =
-
-
-"👤 " + 
-
-(loginUser.email || "Admin");
-
-
-
-
-
-
-
-
-
 
 
 // ======================
 // STATUS LAMP
 // ======================
 
-
-
 let status = localStorage.getItem(
 
-"lampStatus"
+    "lampStatus"
 
 );
-
-
-
 
 
 let lamp = document.getElementById(
 
-"dashLamp"
+    "dashLamp"
 
 );
 
 
+if (status == "ON") {
 
 
+    lamp.innerHTML = "ON";
+
+    lamp.style.color = "green";
 
 
-if(status=="ON"){
+} else {
 
 
+    lamp.innerHTML = "OFF";
 
-lamp.innerHTML="ON";
-
-
-lamp.style.color="green";
-
-
-
-}
-
-else{
-
-
-
-lamp.innerHTML="OFF";
-
-
-lamp.style.color="red";
-
-
+    lamp.style.color = "red";
 
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -492,109 +302,65 @@ lamp.style.color="red";
 // LOG AKTIVITI
 // ======================
 
-
-
 let logs = JSON.parse(
 
-localStorage.getItem("logs")
+    localStorage.getItem("logs")
 
-)||[];
-
-
-
-
+) || [];
 
 
 let table = document.getElementById(
 
-"activityLog"
+    "activityLog"
 
 );
 
 
 
+// Papar log
+
+logs.forEach(function(log) {
 
 
+    table.innerHTML += `
+
+        <tr>
+
+            <td>
+
+                ${log.time}
+
+            </td>
 
 
+            <td>
 
-logs.forEach(function(log){
+                ${log.user}
 
-
-
-
-
-table.innerHTML += `
+            </td>
 
 
+            <td>
 
-<tr>
+                ${log.activity}
 
-
-
-<td>
-
-${log.time}
-
-</td>
+            </td>
 
 
+            <td>
 
+                ${log.status}
 
-<td>
+            </td>
 
-${log.user}
+        </tr>
 
-</td>
-
-
-
-
-
-<td>
-
-${log.activity}
-
-</td>
-
-
-
-
-
-<td>
-
-${log.status}
-
-</td>
-
-
-
-
-</tr>
-
-
-
-`;
-
-
-
+    `;
 
 });
 
 
-
-
-
-
-
-
 </script>
-
-
-
-
-
-
 
 
 </body>
