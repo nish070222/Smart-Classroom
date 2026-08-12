@@ -1,37 +1,86 @@
-
-// =====================================
+// =====================================================
 // SMART CLASSROOM
-// FIRESTORE HISTORY
-// =====================================
+// HISTORY SYSTEM
+// history.js
+//
+// Fungsi:
+// - Ambil history dari Firestore
+// - Papar history
+// - Admin boleh delete
+// =====================================================
+
+
+// =====================================================
+// FIREBASE IMPORT
+// =====================================================
 
 import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+    getAuth
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
+    getFirestore,
     collection,
     getDocs,
     deleteDoc,
     doc,
-    orderBy,
-    query
+    query,
+    orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-import {
-    db
-} from "./firebase.js";
+// =====================================================
+// FIREBASE CONFIG
+// =====================================================
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
+
+    authDomain:
+        "smart-classroom-351a3.firebaseapp.com",
+
+    projectId:
+        "smart-classroom-351a3",
+
+    storageBucket:
+        "smart-classroom-351a3.firebasestorage.app",
+
+    messagingSenderId:
+        "1031651524426",
+
+    appId:
+        "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
+
+};
 
 
-// =====================================
-// ELEMENT
-// =====================================
+// =====================================================
+// INITIALIZE FIREBASE
+// =====================================================
 
-const table =
-    document.getElementById(
-        "historyTable"
-    );
+const app =
+    initializeApp(firebaseConfig);
 
 
-// =====================================
-// USER
-// =====================================
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+// =====================================================
+// GET LOGIN USER
+// =====================================================
 
 const user =
     JSON.parse(
@@ -49,20 +98,116 @@ if (!user) {
 }
 
 
-// =====================================
+// =====================================================
+// WELCOME
+// =====================================================
+
+const welcome =
+    document.getElementById(
+        "welcome"
+    );
+
+
+if (welcome) {
+
+    welcome.innerHTML =
+        "Smart Classroom Control System";
+
+}
+
+
+// =====================================================
+// ROLE MENU
+// =====================================================
+
+if (
+    user &&
+    user.role !== "admin"
+) {
+
+
+    const dashboardMenu =
+        document.getElementById(
+            "dashboardMenu"
+        );
+
+
+    const manageMenu =
+        document.getElementById(
+            "manageMenu"
+        );
+
+
+    if (dashboardMenu) {
+
+        dashboardMenu.style.display =
+            "none";
+
+    }
+
+
+    if (manageMenu) {
+
+        manageMenu.style.display =
+            "none";
+
+    }
+
+}
+
+
+// =====================================================
 // LOAD HISTORY
-// =====================================
+// =====================================================
 
 async function loadHistory() {
 
+
+    const table =
+        document.getElementById(
+            "historyTable"
+        );
+
+
+    if (!table) {
+
+        return;
+
+    }
+
+
+    table.innerHTML = `
+
+        <tr>
+
+            <td colspan="7">
+
+                ⏳ Memuatkan history...
+
+            </td>
+
+        </tr>
+
+    `;
+
+
     try {
+
+
+        // =====================================
+        // FIRESTORE QUERY
+        // =====================================
+
+        const historyRef =
+            collection(
+                db,
+                "history"
+            );
+
 
         const q =
             query(
-                collection(
-                    db,
-                    "history"
-                ),
+                historyRef,
                 orderBy(
                     "timestamp",
                     "desc"
@@ -74,20 +219,28 @@ async function loadHistory() {
             await getDocs(q);
 
 
-        table.innerHTML = "";
+        console.log(
+            "Jumlah history:",
+            snapshot.size
+        );
 
 
-        if (snapshot.empty) {
+        // =====================================
+        // TIADA DATA
+        // =====================================
+
+        if (
+            snapshot.empty
+        ) {
+
 
             table.innerHTML = `
 
                 <tr>
 
-                    <td
-                        colspan="7"
-                        class="no-record">
+                    <td colspan="7">
 
-                        📭 Tiada rekod penggunaan lampu
+                        Tiada rekod penggunaan lampu
 
                     </td>
 
@@ -95,54 +248,55 @@ async function loadHistory() {
 
             `;
 
-            updateSummary([]);
 
             return;
 
         }
 
 
-        let history = [];
+        // =====================================
+        // CLEAR TABLE
+        // =====================================
 
+        table.innerHTML = "";
+
+
+        // =====================================
+        // DISPLAY DATA
+        // =====================================
 
         snapshot.forEach(
-            function(document) {
-
-                history.push({
-
-                    id:
-                        document.id,
-
-                    ...document.data()
-
-                });
-
-            }
-        );
-
-
-        // =================================
-        // PAPAR DATA
-        // =================================
-
-        history.forEach(
             function(data) {
 
-                let deleteButton;
 
+                const history =
+                    data.data();
+
+
+                const documentId =
+                    data.id;
+
+
+                let deleteButton =
+                    "";
+
+
+                // =================================
+                // ADMIN DELETE
+                // =================================
 
                 if (
-                    user.role ===
-                    "admin"
+                    user.role === "admin"
                 ) {
+
 
                     deleteButton = `
 
                         <button
+
                             class="delete-btn"
-                            onclick="
-                                deleteHistory('${data.id}')
-                            ">
+
+                            onclick="deleteHistory('${documentId}')">
 
                             🗑 Delete
 
@@ -152,7 +306,9 @@ async function loadHistory() {
 
                 }
 
+
                 else {
+
 
                     deleteButton =
                         "🔒 Tiada akses";
@@ -160,62 +316,79 @@ async function loadHistory() {
                 }
 
 
+                // =================================
+                // CREATE ROW
+                // =================================
+
                 table.innerHTML += `
 
                     <tr>
 
                         <td>
-                            👤
-                            ${
-                                data.user ||
-                                data.email ||
+
+                            👤 ${
+                                history.user ||
+                                history.email ||
                                 "Unknown"
                             }
+
                         </td>
 
 
                         <td>
+
                             ${
-                                data.role ||
+                                history.role ||
                                 "user"
                             }
+
                         </td>
 
 
                         <td>
+
                             ${
-                                data.date ||
+                                history.date ||
                                 "-"
                             }
+
                         </td>
 
 
                         <td>
+
                             ${
-                                data.start ||
+                                history.start ||
                                 "-"
                             }
+
                         </td>
 
 
                         <td>
+
                             ${
-                                data.end ||
+                                history.end ||
                                 "-"
                             }
+
                         </td>
 
 
                         <td>
+
                             ${
-                                data.duration ||
+                                history.duration ||
                                 "-"
                             }
+
                         </td>
 
 
                         <td>
+
                             ${deleteButton}
+
                         </td>
 
                     </tr>
@@ -226,15 +399,13 @@ async function loadHistory() {
         );
 
 
-        updateSummary(history);
-
-
     }
 
     catch(error) {
 
+
         console.error(
-            "Firestore Error:",
+            "❌ Firestore History Error:",
             error
         );
 
@@ -243,11 +414,9 @@ async function loadHistory() {
 
             <tr>
 
-                <td
-                    colspan="7"
-                    class="no-record">
+                <td colspan="7">
 
-                    ❌ Gagal mengambil data Firestore
+                    ❌ Gagal mengambil data Firebase
 
                 </td>
 
@@ -255,237 +424,143 @@ async function loadHistory() {
 
         `;
 
+
+        alert(
+
+            "❌ Gagal mengambil History Firebase\n\n" +
+
+            error.code +
+            "\n\n" +
+            error.message
+
+        );
+
     }
 
 }
 
 
-// =====================================
-// SUMMARY
-// =====================================
+// =====================================================
+// DELETE HISTORY
+// =====================================================
 
-function updateSummary(
-    history
+async function deleteHistory(
+    documentId
 ) {
 
 
-    // Total sessions
-
-    document.getElementById(
-        "totalSessions"
-    ).innerHTML =
-        history.length;
-
-
-    // Total duration
-
-    let totalSeconds = 0;
-
-
-    history.forEach(
-        function(data) {
-
-            if (!data.duration) {
-
-                return;
-
-            }
-
-
-            let parts =
-                data.duration.split(":");
-
-
-            if (
-                parts.length !== 3
-            ) {
-
-                return;
-
-            }
-
-
-            let hour =
-                parseInt(parts[0]) || 0;
-
-
-            let minute =
-                parseInt(parts[1]) || 0;
-
-
-            let second =
-                parseInt(parts[2]) || 0;
-
-
-            totalSeconds +=
-                (hour * 3600) +
-                (minute * 60) +
-                second;
-
-        }
-    );
-
-
-    let hour =
-        Math.floor(
-            totalSeconds / 3600
+    const currentUser =
+        JSON.parse(
+            localStorage.getItem(
+                "loginUser"
+            )
         );
 
 
-    let minute =
-        Math.floor(
-            (totalSeconds % 3600) / 60
+    // =====================================
+    // ADMIN CHECK
+    // =====================================
+
+    if (
+        !currentUser ||
+        currentUser.role !== "admin"
+    ) {
+
+
+        alert(
+            "❌ Hanya Admin boleh delete"
         );
 
 
-    let second =
-        totalSeconds % 60;
+        return;
+
+    }
 
 
-    hour =
-        hour < 10
-            ? "0" + hour
-            : hour;
+    // =====================================
+    // CONFIRM
+    // =====================================
+
+    const confirmDelete =
+        confirm(
+            "Adakah anda pasti mahu delete rekod ini?"
+        );
 
 
-    minute =
-        minute < 10
-            ? "0" + minute
-            : minute;
+    if (!confirmDelete) {
+
+        return;
+
+    }
 
 
-    second =
-        second < 10
-            ? "0" + second
-            : second;
+    try {
 
 
-    document.getElementById(
-        "totalDuration"
-    ).innerHTML =
+        await deleteDoc(
 
-        hour + ":" +
-        minute + ":" +
-        second;
+            doc(
+                db,
+                "history",
+                documentId
+            )
 
-
-    // =================================
-    // TODAY
-    // =================================
-
-    const today =
-        new Date();
+        );
 
 
-    const todayString =
-
-        today.getDate() +
-        "/" +
-        (today.getMonth() + 1) +
-        "/" +
-        today.getFullYear();
+        alert(
+            "✅ Rekod berjaya dipadam"
+        );
 
 
-    let todayCount = 0;
+        // Reload history
+
+        loadHistory();
 
 
-    history.forEach(
-        function(data) {
+    }
 
-            if (
-                data.date ===
-                todayString
-            ) {
-
-                todayCount++;
-
-            }
-
-        }
-    );
+    catch(error) {
 
 
-    document.getElementById(
-        "todaySessions"
-    ).innerHTML =
-        todayCount;
+        console.error(
+            "❌ Delete Error:",
+            error
+        );
+
+
+        alert(
+
+            "❌ Gagal delete rekod\n\n" +
+
+            error.code +
+            "\n\n" +
+            error.message
+
+        );
+
+    }
 
 }
 
 
-// =====================================
-// DELETE HISTORY
-// =====================================
+// =====================================================
+// MAKE DELETE AVAILABLE TO HTML
+// =====================================================
 
 window.deleteHistory =
-    async function(id) {
+    deleteHistory;
 
 
-        if (
-            !user ||
-            user.role !== "admin"
-        ) {
+// =====================================================
+// LOAD PAGE
+// =====================================================
 
-            alert(
-                "❌ Hanya Admin boleh delete"
-            );
+window.addEventListener(
+    "load",
+    function() {
 
-            return;
+        loadHistory();
 
-        }
-
-
-        const confirmDelete =
-            confirm(
-                "Adakah anda pasti mahu delete rekod ini?"
-            );
-
-
-        if (!confirmDelete) {
-
-            return;
-
-        }
-
-
-        try {
-
-            await deleteDoc(
-                doc(
-                    db,
-                    "history",
-                    id
-                )
-            );
-
-
-            alert(
-                "✅ Rekod berjaya dipadam"
-            );
-
-
-            loadHistory();
-
-        }
-
-        catch(error) {
-
-            console.error(
-                error
-            );
-
-
-            alert(
-                "❌ Gagal delete rekod"
-            );
-
-        }
-
-    };
-
-
-// =====================================
-// START
-// =====================================
-
-loadHistory();
+    }
+);
