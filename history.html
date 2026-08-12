@@ -3,16 +3,16 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<title>
-Smart Classroom History
-</title>
+    <title>
+        Smart Classroom History
+    </title>
 
-
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -23,70 +23,50 @@ Smart Classroom History
 <script src="auth.js"></script>
 
 
-
-
 <!-- SIDEBAR -->
 
 <div class="sidebar">
 
-
-<h2>
-🏫 SmartClass
-</h2>
-
+    <h2>
+        🏫 SmartClass
+    </h2>
 
 
+    <a href="index.html">
 
-<a href="index.html">
+        💡 Light Control
 
-💡 Light Control
-
-</a>
-
+    </a>
 
 
+    <a href="dashboard.html" id="dashboardMenu">
 
-<a href="dashboard.html" id="dashboardMenu">
+        📊 Dashboard
 
-📊 Dashboard
-
-</a>
-
+    </a>
 
 
+    <a href="history.html">
 
-<a href="history.html">
+        📅 History
 
-📅 History
-
-</a>
-
+    </a>
 
 
+    <a href="manageusers.html" id="manageMenu">
 
-<a href="manageusers.html" id="manageMenu">
+        👥 Manage User
 
-👥 Manage User
-
-</a>
-
+    </a>
 
 
-<a href="#" onclick="logout()">
+    <a href="#" onclick="logout()">
 
-🚪 Logout
+        🚪 Logout
 
-</a>
-
-
+    </a>
 
 </div>
-
-
-
-
-
-
 
 
 
@@ -95,116 +75,82 @@ Smart Classroom History
 <div class="main">
 
 
+    <h1>
 
-<h1>
+        📅 Rekod Penggunaan Lampu
 
-📅 Rekod Penggunaan Lampu
-
-</h1>
-
+    </h1>
 
 
+    <p id="welcome">
 
-<p id="welcome">
-
-</p>
+    </p>
 
 
 
+    <!-- HISTORY TABLE -->
+
+    <div class="history-table-card">
+
+
+        <h2>
+
+            📋 History Lampu
+
+        </h2>
 
 
 
-<div class="history-table-card">
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Pengguna
+                    </th>
+
+                    <th>
+                        Role
+                    </th>
+
+                    <th>
+                        Tarikh
+                    </th>
+
+                    <th>
+                        Masa Mula
+                    </th>
+
+                    <th>
+                        Masa Tamat
+                    </th>
+
+                    <th>
+                        Tempoh
+                    </th>
+
+                    <th>
+                        Tindakan
+                    </th>
+
+                </tr>
+
+            </thead>
 
 
+            <tbody id="historyTable">
 
-<h2>
+            </tbody>
 
-📋 History Lampu
-
-</h2>
-
+        </table>
 
 
-
-
-
-<table>
-
-
-<thead>
-
-<tr>
-
-
-<th>
-Pengguna
-</th>
-
-
-<th>
-Role
-</th>
-
-
-<th>
-Tarikh
-</th>
-
-
-<th>
-Masa Mula
-</th>
-
-
-<th>
-Masa Tamat
-</th>
-
-
-<th>
-Tempoh
-</th>
-
-
-<th>
-Tindakan
-</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-<tbody id="historyTable">
-
-
-</tbody>
-
-
-
-</table>
-
-
-
+    </div>
 
 
 </div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
 
 
 
@@ -212,64 +158,37 @@ Tindakan
 
 
 
-
-
-
-
 <script>
-
 
 
 // ==========================
 // USER CHECK
 // ==========================
 
-
 let user = JSON.parse(
 
-localStorage.getItem("loginUser")
+    localStorage.getItem("loginUser")
 
 );
 
 
+if (!user) {
 
-
-
-if(!user){
-
-
-window.location="userlogin.html";
-
+    window.location = "userlogin.html";
 
 }
 
 
 
+// ==========================
+// WELCOME
+// ==========================
 
+document.getElementById(
+    "welcome"
+).innerHTML =
 
-
-// PAPAR USER
-
-
-document.getElementById("userName").innerHTML =
-
-
-"👤 " + (user.email || "User");
-
-
-
-
-
-
-document.getElementById("welcome").innerHTML =
-
-
-"Smart Classroom Control System";
-
-
-
-
-
+    "Smart Classroom Control System";
 
 
 
@@ -277,32 +196,19 @@ document.getElementById("welcome").innerHTML =
 // ROLE MENU
 // ==========================
 
+if (user.role != "admin") {
 
 
-if(user.role!="admin"){
+    document.getElementById(
+        "dashboardMenu"
+    ).style.display = "none";
 
 
-document.getElementById(
-
-"dashboardMenu"
-
-).style.display="none";
-
-
-
-document.getElementById(
-
-"manageMenu"
-
-).style.display="none";
-
+    document.getElementById(
+        "manageMenu"
+    ).style.display = "none";
 
 }
-
-
-
-
-
 
 
 
@@ -310,288 +216,210 @@ document.getElementById(
 // DISPLAY HISTORY
 // ==========================
 
-
-
 let history = JSON.parse(
 
-localStorage.getItem("history")
+    localStorage.getItem("history")
 
-)||[];
-
-
-
+) || [];
 
 
 let table = document.getElementById(
-
-"historyTable"
-
+    "historyTable"
 );
 
 
 
+// TIADA REKOD
+
+if (history.length == 0) {
 
 
+    table.innerHTML = `
 
+        <tr>
 
-if(history.length==0){
+            <td colspan="7">
 
+                Tiada rekod penggunaan lampu
 
-table.innerHTML = `
+            </td>
 
-<tr>
+        </tr>
 
-<td colspan="7">
-
-Tiada rekod penggunaan lampu
-
-</td>
-
-</tr>
-
-`;
-
-
-
-}
-
-else{
-
-
-
-history.forEach(function(data,index){
-
-
-
-
-
-let deleteButton = "";
-
-
-
-// ADMIN SAHAJA BOLEH DELETE
-
-if(user.role=="admin"){
-
-
-deleteButton = `
-
-
-<button
-
-class="delete-btn"
-
-onclick="deleteHistory(${index})">
-
-
-🗑 Delete
-
-
-</button>
-
-
-`;
-
-
-
-}
-
-else{
-
-
-deleteButton = "🔒 Tiada akses";
-
+    `;
 
 }
 
 
 
+// ADA REKOD
 
+else {
 
 
-table.innerHTML += `
+    history.forEach(function(data, index) {
 
 
+        let deleteButton = "";
 
-<tr>
 
 
+        // ADMIN SAHAJA BOLEH DELETE
 
-<td>
+        if (user.role == "admin") {
 
-👤 ${data.user || data.email || "Unknown"}
 
-</td>
+            deleteButton = `
 
+                <button
 
+                    class="delete-btn"
 
+                    onclick="deleteHistory(${index})">
 
+                    🗑 Delete
 
-<td>
+                </button>
 
-${data.role || "user"}
+            `;
 
-</td>
+        }
 
 
+        else {
 
 
+            deleteButton =
+                "🔒 Tiada akses";
 
-<td>
+        }
 
-${data.date || "-"}
 
-</td>
 
+        table.innerHTML += `
 
+            <tr>
 
+                <td>
 
+                    👤 ${data.user ||
+                        data.email ||
+                        "Unknown"}
 
-<td>
+                </td>
 
-${data.start || "-"}
 
-</td>
+                <td>
 
+                    ${data.role || "user"}
 
+                </td>
 
 
+                <td>
 
-<td>
+                    ${data.date || "-"}
 
-${data.end || "-"}
+                </td>
 
-</td>
 
+                <td>
 
+                    ${data.start || "-"}
 
+                </td>
 
 
-<td>
+                <td>
 
-${data.duration || "-"}
+                    ${data.end || "-"}
 
-</td>
+                </td>
 
 
+                <td>
 
+                    ${data.duration || "-"}
 
+                </td>
 
-<td>
 
-${deleteButton}
+                <td>
 
-</td>
+                    ${deleteButton}
 
+                </td>
 
+            </tr>
 
+        `;
 
-
-</tr>
-
-
-
-`;
-
-
-
-});
-
-
+    });
 
 }
-
-
-
-
-
-
-
-
-
 
 
 
 // ==========================
-// DELETE HISTORY ADMIN ONLY
+// DELETE HISTORY
+// ADMIN ONLY
 // ==========================
 
-
-function deleteHistory(index){
-
+function deleteHistory(index) {
 
 
-let currentUser = JSON.parse(
+    let currentUser = JSON.parse(
 
-localStorage.getItem("loginUser")
+        localStorage.getItem("loginUser")
 
-);
-
-
+    );
 
 
-
-if(!currentUser || currentUser.role!="admin"){
-
-
-alert("❌ Hanya Admin boleh delete");
-
-
-return;
+    if (
+        !currentUser ||
+        currentUser.role != "admin"
+    ) {
 
 
-}
+        alert(
+            "❌ Hanya Admin boleh delete"
+        );
 
+
+        return;
+
+    }
 
 
 
+    let history = JSON.parse(
+
+        localStorage.getItem("history")
+
+    ) || [];
 
 
 
-let history = JSON.parse(
-
-localStorage.getItem("history")
-
-)||[];
+    history.splice(index, 1);
 
 
 
+    localStorage.setItem(
+
+        "history",
+
+        JSON.stringify(history)
+
+    );
 
 
 
-history.splice(index,1);
-
-
-
-
-
-
-
-localStorage.setItem(
-
-"history",
-
-JSON.stringify(history)
-
-);
-
-
-
-
-
-
-location.reload();
-
-
+    location.reload();
 
 }
-
 
 
 </script>
-
-
-
 
 
 </body>
