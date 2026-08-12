@@ -16,10 +16,11 @@
     <link rel="stylesheet"
           href="style.css">
 
+
     <style>
 
         /* =====================================
-           HISTORY PAGE
+           HISTORY SUMMARY
            ===================================== */
 
         .history-summary {
@@ -68,6 +69,10 @@
 
         }
 
+
+        /* =====================================
+           HISTORY TABLE
+           ===================================== */
 
         .history-table-card {
 
@@ -142,6 +147,10 @@
         }
 
 
+        /* =====================================
+           DELETE BUTTON
+           ===================================== */
+
         .delete-btn {
 
             border: none;
@@ -166,6 +175,10 @@
         }
 
 
+        /* =====================================
+           NO RECORD
+           ===================================== */
+
         .no-record {
 
             text-align: center;
@@ -176,6 +189,10 @@
 
         }
 
+
+        /* =====================================
+           RESPONSIVE
+           ===================================== */
 
         @media(max-width: 800px) {
 
@@ -196,6 +213,10 @@
 <body>
 
 
+<!-- =====================================
+     AUTH CHECK
+     ===================================== -->
+
 <script src="auth.js"></script>
 
 
@@ -205,13 +226,16 @@
 
 <div class="sidebar">
 
+
     <h2>
         🏫 SmartClass
     </h2>
 
 
     <a href="index.html">
+
         💡 Light Control
+
     </a>
 
 
@@ -245,6 +269,7 @@
 
     </a>
 
+
 </div>
 
 
@@ -256,12 +281,16 @@
 
 
     <h1>
+
         📅 Rekod Penggunaan Lampu
+
     </h1>
 
 
     <p id="welcome">
+
         Smart Classroom Control System
+
     </p>
 
 
@@ -275,8 +304,11 @@
         <div class="summary-box">
 
             <h3>
+
                 📊 Jumlah Sesi
+
             </h3>
+
 
             <div class="summary-value"
                  id="totalSessions">
@@ -291,8 +323,11 @@
         <div class="summary-box">
 
             <h3>
+
                 ⏱ Jumlah Penggunaan
+
             </h3>
+
 
             <div class="summary-value"
                  id="totalDuration">
@@ -307,8 +342,11 @@
         <div class="summary-box">
 
             <h3>
+
                 📅 Sesi Hari Ini
+
             </h3>
+
 
             <div class="summary-value"
                  id="todaySessions">
@@ -331,7 +369,9 @@
 
 
         <h2>
+
             📋 History Lampu
+
         </h2>
 
 
@@ -377,6 +417,18 @@
 
             <tbody id="historyTable">
 
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="no-record">
+
+                        ⏳ Memuatkan rekod...
+
+                    </td>
+
+                </tr>
+
             </tbody>
 
 
@@ -389,17 +441,36 @@
 </div>
 
 
+<!-- =====================================
+     LOGOUT
+     ===================================== -->
+
 <script src="logout.js"></script>
 
+
+<!-- =====================================
+     FIREBASE HISTORY
+     ===================================== -->
+
+<script
+    type="module"
+    src="history.js">
+</script>
+
+
+<!-- =====================================
+     ROLE MENU + WELCOME
+     ===================================== -->
 
 <script>
 
 
 // =====================================
-// USER CHECK
+// USER
 // =====================================
 
-let user =
+const currentUser =
+
     JSON.parse(
         localStorage.getItem(
             "loginUser"
@@ -407,9 +478,9 @@ let user =
     );
 
 
-if (!user) {
+if (!currentUser) {
 
-    window.location =
+    window.location.href =
         "userlogin.html";
 
 }
@@ -419,421 +490,61 @@ if (!user) {
 // WELCOME
 // =====================================
 
-document.getElementById(
-    "welcome"
-).innerHTML =
+if (currentUser) {
 
-    "Selamat datang, <b>" +
-    (
-        user.username ||
-        "User"
-    ) +
-    "</b> • Smart Classroom Control System";
+    document.getElementById(
+        "welcome"
+    ).innerHTML =
+
+        "Selamat datang, <b>" +
+        (
+            currentUser.username ||
+            currentUser.email ||
+            "User"
+        ) +
+        "</b> • Smart Classroom Control System";
+
+}
 
 
 // =====================================
 // ROLE MENU
 // =====================================
 
-if (user.role !== "admin") {
-
-    document.getElementById(
-        "dashboardMenu"
-    ).style.display =
-        "none";
+if (
+    currentUser &&
+    currentUser.role !== "admin"
+) {
 
 
-    document.getElementById(
-        "manageMenu"
-    ).style.display =
-        "none";
-
-}
-
-
-// =====================================
-// GET HISTORY
-// =====================================
-
-let history =
-    JSON.parse(
-        localStorage.getItem(
-            "history"
-        )
-    ) || [];
-
-
-let table =
-    document.getElementById(
-        "historyTable"
-    );
-
-
-// =====================================
-// SUMMARY
-// =====================================
-
-function loadSummary() {
-
-
-    // Total sessions
-
-    document.getElementById(
-        "totalSessions"
-    ).innerHTML =
-        history.length;
-
-
-    // Total duration
-
-    let totalSeconds = 0;
-
-
-    history.forEach(function(data) {
-
-        if (!data.duration) {
-
-            return;
-
-        }
-
-
-        let parts =
-            data.duration.split(":");
-
-
-        if (parts.length !== 3) {
-
-            return;
-
-        }
-
-
-        let hour =
-            parseInt(parts[0]) || 0;
-
-
-        let minute =
-            parseInt(parts[1]) || 0;
-
-
-        let second =
-            parseInt(parts[2]) || 0;
-
-
-        totalSeconds +=
-            (hour * 3600) +
-            (minute * 60) +
-            second;
-
-    });
-
-
-    let hour =
-        Math.floor(
-            totalSeconds / 3600
+    const dashboardMenu =
+        document.getElementById(
+            "dashboardMenu"
         );
 
 
-    let minute =
-        Math.floor(
-            (totalSeconds % 3600) / 60
+    const manageMenu =
+        document.getElementById(
+            "manageMenu"
         );
 
 
-    let second =
-        totalSeconds % 60;
+    if (dashboardMenu) {
 
-
-    hour =
-        hour < 10
-            ? "0" + hour
-            : hour;
-
-
-    minute =
-        minute < 10
-            ? "0" + minute
-            : minute;
-
-
-    second =
-        second < 10
-            ? "0" + second
-            : second;
-
-
-    document.getElementById(
-        "totalDuration"
-    ).innerHTML =
-
-        hour + ":" +
-        minute + ":" +
-        second;
-
-
-    // Today's sessions
-
-    let today =
-        new Date();
-
-
-    let todayString =
-
-        today.getDate() +
-        "/" +
-        (today.getMonth() + 1) +
-        "/" +
-        today.getFullYear();
-
-
-    let todayCount = 0;
-
-
-    history.forEach(function(data) {
-
-        if (
-            data.date ===
-            todayString
-        ) {
-
-            todayCount++;
-
-        }
-
-    });
-
-
-    document.getElementById(
-        "todaySessions"
-    ).innerHTML =
-        todayCount;
-
-}
-
-
-// =====================================
-// DISPLAY HISTORY
-// =====================================
-
-function loadHistory() {
-
-
-    table.innerHTML = "";
-
-
-    if (history.length === 0) {
-
-        table.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="7"
-                    class="no-record">
-
-                    📭 Tiada rekod penggunaan lampu
-
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
+        dashboardMenu.style.display =
+            "none";
 
     }
 
 
-    history.forEach(
-        function(data, index) {
+    if (manageMenu) {
 
-
-            let deleteButton;
-
-
-            if (
-                user.role ===
-                "admin"
-            ) {
-
-                deleteButton = `
-
-                    <button
-                        class="delete-btn"
-                        onclick="
-                            deleteHistory(${index})
-                        ">
-
-                        🗑 Delete
-
-                    </button>
-
-                `;
-
-            }
-
-            else {
-
-                deleteButton =
-                    "🔒 Tiada akses";
-
-            }
-
-
-            table.innerHTML += `
-
-                <tr>
-
-                    <td>
-
-                        👤
-                        ${
-                            data.user ||
-                            data.email ||
-                            "Unknown"
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            data.role ||
-                            "user"
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            data.date ||
-                            "-"
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            data.start ||
-                            "-"
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            data.end ||
-                            "-"
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            data.duration ||
-                            "-"
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            deleteButton
-                        }
-
-                    </td>
-
-                </tr>
-
-            `;
-
-        }
-    );
-
-}
-
-
-// =====================================
-// DELETE HISTORY
-// =====================================
-
-function deleteHistory(index) {
-
-
-    let currentUser =
-        JSON.parse(
-            localStorage.getItem(
-                "loginUser"
-            )
-        );
-
-
-    if (
-        !currentUser ||
-        currentUser.role !==
-        "admin"
-    ) {
-
-        alert(
-            "❌ Hanya Admin boleh delete"
-        );
-
-        return;
+        manageMenu.style.display =
+            "none";
 
     }
 
-
-    let confirmDelete =
-        confirm(
-            "Adakah anda pasti mahu delete rekod ini?"
-        );
-
-
-    if (!confirmDelete) {
-
-        return;
-
-    }
-
-
-    history.splice(
-        index,
-        1
-    );
-
-
-    localStorage.setItem(
-        "history",
-        JSON.stringify(history)
-    );
-
-
-    loadSummary();
-
-    loadHistory();
-
 }
-
-
-// =====================================
-// INITIAL LOAD
-// =====================================
-
-loadSummary();
-
-loadHistory();
 
 
 </script>
