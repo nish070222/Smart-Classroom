@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,182 @@
         Smart Classroom History
     </title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
+
+    <style>
+
+        /* =====================================
+           HISTORY PAGE
+           ===================================== */
+
+        .history-summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin: 25px 0;
+
+        }
+
+
+        .summary-box {
+
+            background: #ffffff;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        .summary-box h3 {
+
+            margin: 0 0 10px;
+
+            color: #555;
+
+        }
+
+
+        .summary-value {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+        }
+
+
+        .history-table-card {
+
+            background: #ffffff;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.08);
+
+            overflow-x: auto;
+
+        }
+
+
+        .history-table-card h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse:
+                collapse;
+
+        }
+
+
+        th {
+
+            background: #ffffff;
+
+            color: #222;
+
+            font-weight: 600;
+
+            border-bottom:
+                2px solid #e5e5e5;
+
+            padding: 13px;
+
+            text-align: center;
+
+        }
+
+
+        td {
+
+            padding: 13px;
+
+            text-align: center;
+
+            border-bottom:
+                1px solid #eeeeee;
+
+        }
+
+
+        tr:hover td {
+
+            background: #fafafa;
+
+        }
+
+
+        .delete-btn {
+
+            border: none;
+
+            background: #e74c3c;
+
+            color: white;
+
+            padding: 8px 12px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+        }
+
+
+        .delete-btn:hover {
+
+            opacity: 0.85;
+
+        }
+
+
+        .no-record {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #777;
+
+        }
+
+
+        @media(max-width: 800px) {
+
+            .history-summary {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -23,7 +199,9 @@
 <script src="auth.js"></script>
 
 
-<!-- SIDEBAR -->
+<!-- =====================================
+     SIDEBAR
+     ===================================== -->
 
 <div class="sidebar">
 
@@ -33,13 +211,12 @@
 
 
     <a href="index.html">
-
         💡 Light Control
-
     </a>
 
 
-    <a href="dashboard.html" id="dashboardMenu">
+    <a href="dashboard.html"
+       id="dashboardMenu">
 
         📊 Dashboard
 
@@ -53,14 +230,16 @@
     </a>
 
 
-    <a href="manageusers.html" id="manageMenu">
+    <a href="manageusers.html"
+       id="manageMenu">
 
         👥 Manage User
 
     </a>
 
 
-    <a href="#" onclick="logout()">
+    <a href="#"
+       onclick="logout()">
 
         🚪 Logout
 
@@ -69,39 +248,95 @@
 </div>
 
 
-
-<!-- MAIN -->
+<!-- =====================================
+     MAIN
+     ===================================== -->
 
 <div class="main">
 
 
     <h1>
-
         📅 Rekod Penggunaan Lampu
-
     </h1>
 
 
     <p id="welcome">
-
+        Smart Classroom Control System
     </p>
 
 
+    <!-- =====================================
+         SUMMARY
+         ===================================== -->
 
-    <!-- HISTORY TABLE -->
+    <div class="history-summary">
+
+
+        <div class="summary-box">
+
+            <h3>
+                📊 Jumlah Sesi
+            </h3>
+
+            <div class="summary-value"
+                 id="totalSessions">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <h3>
+                ⏱ Jumlah Penggunaan
+            </h3>
+
+            <div class="summary-value"
+                 id="totalDuration">
+
+                00:00:00
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <h3>
+                📅 Sesi Hari Ini
+            </h3>
+
+            <div class="summary-value"
+                 id="todaySessions">
+
+                0
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================
+         HISTORY TABLE
+         ===================================== -->
 
     <div class="history-table-card">
 
 
         <h2>
-
             📋 History Lampu
-
         </h2>
 
 
-
         <table>
+
 
             <thead>
 
@@ -144,6 +379,7 @@
 
             </tbody>
 
+
         </table>
 
 
@@ -153,200 +389,250 @@
 </div>
 
 
-
 <script src="logout.js"></script>
-
 
 
 <script>
 
 
-// ==========================
+// =====================================
 // USER CHECK
-// ==========================
+// =====================================
 
-let user = JSON.parse(
-
-    localStorage.getItem("loginUser")
-
-);
+let user =
+    JSON.parse(
+        localStorage.getItem(
+            "loginUser"
+        )
+    );
 
 
 if (!user) {
 
-    window.location = "userlogin.html";
+    window.location =
+        "userlogin.html";
 
 }
 
 
-
-// ==========================
+// =====================================
 // WELCOME
-// ==========================
+// =====================================
 
 document.getElementById(
     "welcome"
 ).innerHTML =
 
-    "Smart Classroom Control System";
+    "Selamat datang, <b>" +
+    (
+        user.username ||
+        "User"
+    ) +
+    "</b> • Smart Classroom Control System";
 
 
-
-// ==========================
+// =====================================
 // ROLE MENU
-// ==========================
+// =====================================
 
-if (user.role != "admin") {
-
+if (user.role !== "admin") {
 
     document.getElementById(
         "dashboardMenu"
-    ).style.display = "none";
+    ).style.display =
+        "none";
 
 
     document.getElementById(
         "manageMenu"
-    ).style.display = "none";
+    ).style.display =
+        "none";
 
 }
 
 
+// =====================================
+// GET HISTORY
+// =====================================
 
-// ==========================
+let history =
+    JSON.parse(
+        localStorage.getItem(
+            "history"
+        )
+    ) || [];
+
+
+let table =
+    document.getElementById(
+        "historyTable"
+    );
+
+
+// =====================================
+// SUMMARY
+// =====================================
+
+function loadSummary() {
+
+
+    // Total sessions
+
+    document.getElementById(
+        "totalSessions"
+    ).innerHTML =
+        history.length;
+
+
+    // Total duration
+
+    let totalSeconds = 0;
+
+
+    history.forEach(function(data) {
+
+        if (!data.duration) {
+
+            return;
+
+        }
+
+
+        let parts =
+            data.duration.split(":");
+
+
+        if (parts.length !== 3) {
+
+            return;
+
+        }
+
+
+        let hour =
+            parseInt(parts[0]) || 0;
+
+
+        let minute =
+            parseInt(parts[1]) || 0;
+
+
+        let second =
+            parseInt(parts[2]) || 0;
+
+
+        totalSeconds +=
+            (hour * 3600) +
+            (minute * 60) +
+            second;
+
+    });
+
+
+    let hour =
+        Math.floor(
+            totalSeconds / 3600
+        );
+
+
+    let minute =
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+
+    let second =
+        totalSeconds % 60;
+
+
+    hour =
+        hour < 10
+            ? "0" + hour
+            : hour;
+
+
+    minute =
+        minute < 10
+            ? "0" + minute
+            : minute;
+
+
+    second =
+        second < 10
+            ? "0" + second
+            : second;
+
+
+    document.getElementById(
+        "totalDuration"
+    ).innerHTML =
+
+        hour + ":" +
+        minute + ":" +
+        second;
+
+
+    // Today's sessions
+
+    let today =
+        new Date();
+
+
+    let todayString =
+
+        today.getDate() +
+        "/" +
+        (today.getMonth() + 1) +
+        "/" +
+        today.getFullYear();
+
+
+    let todayCount = 0;
+
+
+    history.forEach(function(data) {
+
+        if (
+            data.date ===
+            todayString
+        ) {
+
+            todayCount++;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "todaySessions"
+    ).innerHTML =
+        todayCount;
+
+}
+
+
+// =====================================
 // DISPLAY HISTORY
-// ==========================
+// =====================================
 
-let history = JSON.parse(
-
-    localStorage.getItem("history")
-
-) || [];
+function loadHistory() {
 
 
-let table = document.getElementById(
-    "historyTable"
-);
+    table.innerHTML = "";
 
 
+    if (history.length === 0) {
 
-// TIADA REKOD
-
-if (history.length == 0) {
-
-
-    table.innerHTML = `
-
-        <tr>
-
-            <td colspan="7">
-
-                Tiada rekod penggunaan lampu
-
-            </td>
-
-        </tr>
-
-    `;
-
-}
-
-
-
-// ADA REKOD
-
-else {
-
-
-    history.forEach(function(data, index) {
-
-
-        let deleteButton = "";
-
-
-
-        // ADMIN SAHAJA BOLEH DELETE
-
-        if (user.role == "admin") {
-
-
-            deleteButton = `
-
-                <button
-
-                    class="delete-btn"
-
-                    onclick="deleteHistory(${index})">
-
-                    🗑 Delete
-
-                </button>
-
-            `;
-
-        }
-
-
-        else {
-
-
-            deleteButton =
-                "🔒 Tiada akses";
-
-        }
-
-
-
-        table.innerHTML += `
+        table.innerHTML = `
 
             <tr>
 
-                <td>
+                <td
+                    colspan="7"
+                    class="no-record">
 
-                    👤 ${data.user ||
-                        data.email ||
-                        "Unknown"}
-
-                </td>
-
-
-                <td>
-
-                    ${data.role || "user"}
-
-                </td>
-
-
-                <td>
-
-                    ${data.date || "-"}
-
-                </td>
-
-
-                <td>
-
-                    ${data.start || "-"}
-
-                </td>
-
-
-                <td>
-
-                    ${data.end || "-"}
-
-                </td>
-
-
-                <td>
-
-                    ${data.duration || "-"}
-
-                </td>
-
-
-                <td>
-
-                    ${deleteButton}
+                    📭 Tiada rekod penggunaan lampu
 
                 </td>
 
@@ -354,69 +640,200 @@ else {
 
         `;
 
-    });
+        return;
+
+    }
+
+
+    history.forEach(
+        function(data, index) {
+
+
+            let deleteButton;
+
+
+            if (
+                user.role ===
+                "admin"
+            ) {
+
+                deleteButton = `
+
+                    <button
+                        class="delete-btn"
+                        onclick="
+                            deleteHistory(${index})
+                        ">
+
+                        🗑 Delete
+
+                    </button>
+
+                `;
+
+            }
+
+            else {
+
+                deleteButton =
+                    "🔒 Tiada akses";
+
+            }
+
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>
+
+                        👤
+                        ${
+                            data.user ||
+                            data.email ||
+                            "Unknown"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            data.role ||
+                            "user"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            data.date ||
+                            "-"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            data.start ||
+                            "-"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            data.end ||
+                            "-"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            data.duration ||
+                            "-"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            deleteButton
+                        }
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
 
 }
 
 
-
-// ==========================
+// =====================================
 // DELETE HISTORY
-// ADMIN ONLY
-// ==========================
+// =====================================
 
 function deleteHistory(index) {
 
 
-    let currentUser = JSON.parse(
-
-        localStorage.getItem("loginUser")
-
-    );
+    let currentUser =
+        JSON.parse(
+            localStorage.getItem(
+                "loginUser"
+            )
+        );
 
 
     if (
         !currentUser ||
-        currentUser.role != "admin"
+        currentUser.role !==
+        "admin"
     ) {
-
 
         alert(
             "❌ Hanya Admin boleh delete"
         );
-
 
         return;
 
     }
 
 
-
-    let history = JSON.parse(
-
-        localStorage.getItem("history")
-
-    ) || [];
+    let confirmDelete =
+        confirm(
+            "Adakah anda pasti mahu delete rekod ini?"
+        );
 
 
+    if (!confirmDelete) {
 
-    history.splice(index, 1);
+        return;
+
+    }
 
 
-
-    localStorage.setItem(
-
-        "history",
-
-        JSON.stringify(history)
-
+    history.splice(
+        index,
+        1
     );
 
 
+    localStorage.setItem(
+        "history",
+        JSON.stringify(history)
+    );
 
-    location.reload();
+
+    loadSummary();
+
+    loadHistory();
 
 }
+
+
+// =====================================
+// INITIAL LOAD
+// =====================================
+
+loadSummary();
+
+loadHistory();
 
 
 </script>
