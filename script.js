@@ -8,17 +8,24 @@
 // - ESP32
 // - Timer
 // - History Firestore
+// - Backup History LocalStorage
 // - Log Aktiviti
 // =====================================================
 
 
 // =====================================================
-// FIREBASE
+// FIREBASE IMPORT
 // =====================================================
 
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+    getAuth
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -55,8 +62,16 @@ const firebaseConfig = {
 };
 
 
+// =====================================================
+// INITIALIZE FIREBASE
+// =====================================================
+
 const app =
     initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
 
 
 const db =
@@ -67,18 +82,22 @@ const db =
 // TIMER
 // =====================================================
 
-let timer;
+let timer = null;
+
 
 let seconds =
     Number(
-        localStorage.getItem("lampTime")
+        localStorage.getItem(
+            "lampTime"
+        )
     ) || 0;
+
 
 let running = false;
 
 
 // =====================================================
-// ESP32
+// ESP32 IP
 // =====================================================
 
 const ESP32_IP =
@@ -90,6 +109,7 @@ const ESP32_IP =
 // =====================================================
 
 function updateTimerDisplay() {
+
 
     let hour =
         Math.floor(
@@ -126,10 +146,14 @@ function updateTimerDisplay() {
 
 
     let result =
-        hour + ":" +
-        minute + ":" +
+        hour +
+        ":" +
+        minute +
+        ":" +
         second;
 
+
+    // INDEX TIMER
 
     let timerBox =
         document.getElementById(
@@ -144,6 +168,8 @@ function updateTimerDisplay() {
 
     }
 
+
+    // DASHBOARD TIMER
 
     let dashTimer =
         document.getElementById(
@@ -167,6 +193,7 @@ function updateTimerDisplay() {
 
 function startTimer() {
 
+
     if (running) {
 
         return;
@@ -178,20 +205,25 @@ function startTimer() {
 
 
     timer =
-        setInterval(function() {
-
-            seconds++;
-
-
-            localStorage.setItem(
-                "lampTime",
-                seconds
-            );
+        setInterval(
+            function() {
 
 
-            updateTimerDisplay();
+                seconds++;
 
-        }, 1000);
+
+                localStorage.setItem(
+                    "lampTime",
+                    seconds
+                );
+
+
+                updateTimerDisplay();
+
+
+            },
+            1000
+        );
 
 }
 
@@ -202,7 +234,18 @@ function startTimer() {
 
 function stopTimer() {
 
-    clearInterval(timer);
+
+    if (timer) {
+
+        clearInterval(
+            timer
+        );
+
+    }
+
+
+    timer = null;
+
 
     running = false;
 
@@ -216,35 +259,54 @@ function stopTimer() {
 function lampOn() {
 
 
+    console.log(
+        "💡 Lampu ON"
+    );
+
+
+    // =====================================
+    // ESP32
+    // =====================================
+
     fetch(
         "http://" +
         ESP32_IP +
         "/lamp/on"
     )
 
-    .then(function(response) {
+    .then(
+        function(response) {
 
-        return response.text();
+            return response.text();
 
-    })
+        }
+    )
 
-    .then(function(data) {
+    .then(
+        function(data) {
 
-        console.log(
-            "ESP32:",
-            data
-        );
+            console.log(
+                "ESP32:",
+                data
+            );
 
-    })
+        }
+    )
 
-    .catch(function(error) {
+    .catch(
+        function(error) {
 
-        console.log(
-            "ESP32 tidak disambung"
-        );
+            console.log(
+                "⚠️ ESP32 tidak disambung"
+            );
 
-    });
+        }
+    );
 
+
+    // =====================================
+    // UPDATE UI
+    // =====================================
 
     let lamp =
         document.getElementById(
@@ -280,11 +342,19 @@ function lampOn() {
     }
 
 
+    // =====================================
+    // SAVE STATUS
+    // =====================================
+
     localStorage.setItem(
         "lampStatus",
         "ON"
     );
 
+
+    // =====================================
+    // SAVE START TIME
+    // =====================================
 
     let start =
         new Date();
@@ -296,11 +366,19 @@ function lampOn() {
     );
 
 
+    // =====================================
+    // LOG
+    // =====================================
+
     addLog(
         "💡 Lampu ON",
         "Berjaya"
     );
 
+
+    // =====================================
+    // TIMER
+    // =====================================
 
     startTimer();
 
@@ -314,35 +392,54 @@ function lampOn() {
 function lampOff() {
 
 
+    console.log(
+        "💡 Lampu OFF"
+    );
+
+
+    // =====================================
+    // ESP32
+    // =====================================
+
     fetch(
         "http://" +
         ESP32_IP +
         "/lamp/off"
     )
 
-    .then(function(response) {
+    .then(
+        function(response) {
 
-        return response.text();
+            return response.text();
 
-    })
+        }
+    )
 
-    .then(function(data) {
+    .then(
+        function(data) {
 
-        console.log(
-            "ESP32:",
-            data
-        );
+            console.log(
+                "ESP32:",
+                data
+            );
 
-    })
+        }
+    )
 
-    .catch(function(error) {
+    .catch(
+        function(error) {
 
-        console.log(
-            "ESP32 tidak disambung"
-        );
+            console.log(
+                "⚠️ ESP32 tidak disambung"
+            );
 
-    });
+        }
+    );
 
+
+    // =====================================
+    // UPDATE UI
+    // =====================================
 
     let lamp =
         document.getElementById(
@@ -378,19 +475,33 @@ function lampOff() {
     }
 
 
+    // =====================================
+    // SAVE STATUS
+    // =====================================
+
     localStorage.setItem(
         "lampStatus",
         "OFF"
     );
 
 
+    // =====================================
+    // STOP TIMER
+    // =====================================
+
     stopTimer();
 
 
-    // SIMPAN HISTORY KE FIRESTORE
+    // =====================================
+    // SAVE HISTORY
+    // =====================================
 
     saveHistory();
 
+
+    // =====================================
+    // RESET TIMER
+    // =====================================
 
     seconds = 0;
 
@@ -403,6 +514,10 @@ function lampOff() {
 
     updateTimerDisplay();
 
+
+    // =====================================
+    // LOG
+    // =====================================
 
     addLog(
         "💡 Lampu OFF",
@@ -419,6 +534,49 @@ function lampOff() {
 async function saveHistory() {
 
 
+    console.log(
+        "====================================="
+    );
+
+
+    console.log(
+        "🔥 SAVE HISTORY START"
+    );
+
+
+    // =====================================
+    // CHECK FIREBASE AUTH
+    // =====================================
+
+    console.log(
+        "Firebase Auth User:",
+        auth.currentUser
+    );
+
+
+    if (!auth.currentUser) {
+
+
+        console.error(
+            "❌ Firebase Auth User = NULL"
+        );
+
+
+        alert(
+            "❌ Firebase Authentication tidak aktif.\n\n" +
+            "Sila logout dan login semula."
+        );
+
+
+        return;
+
+    }
+
+
+    // =====================================
+    // GET START TIME
+    // =====================================
+
     let startValue =
         localStorage.getItem(
             "startTime"
@@ -427,26 +585,49 @@ async function saveHistory() {
 
     if (!startValue) {
 
-        console.log(
-            "Tiada start time"
+
+        console.error(
+            "❌ startTime tidak dijumpai"
         );
+
+
+        alert(
+            "❌ Masa mula lampu tidak dijumpai."
+        );
+
 
         return;
 
     }
 
 
-    let start =
-        new Date(startValue);
+    // =====================================
+    // START TIME
+    // =====================================
 
+    let start =
+        new Date(
+            startValue
+        );
+
+
+    // =====================================
+    // END TIME
+    // =====================================
 
     let end =
         new Date();
 
 
+    // =====================================
+    // CALCULATE DURATION
+    // =====================================
+
     let total =
         Math.floor(
-            (end - start) / 1000
+            (
+                end - start
+            ) / 1000
         );
 
 
@@ -465,7 +646,9 @@ async function saveHistory() {
 
     let minute =
         Math.floor(
-            (total % 3600) / 60
+            (
+                total % 3600
+            ) / 60
         );
 
 
@@ -491,6 +674,10 @@ async function saveHistory() {
             : second;
 
 
+    // =====================================
+    // GET LOGIN USER
+    // =====================================
+
     let user =
         JSON.parse(
             localStorage.getItem(
@@ -499,34 +686,62 @@ async function saveHistory() {
         );
 
 
+    if (!user) {
+
+
+        console.error(
+            "❌ loginUser tidak dijumpai"
+        );
+
+
+        alert(
+            "❌ Maklumat pengguna tidak dijumpai."
+        );
+
+
+        return;
+
+    }
+
+
+    // =====================================
+    // CREATE FIRESTORE DATA
+    // =====================================
+
     let historyData = {
 
+
         user:
-            user
-                ? user.username
-                : "Unknown",
+            user.username ||
+            user.email ||
+            "Unknown",
+
 
         email:
-            user
-                ? user.email
-                : "",
+            user.email ||
+            auth.currentUser.email ||
+            "",
+
 
         uid:
-            user
-                ? user.uid
-                : "",
+            auth.currentUser.uid,
+
 
         role:
-            user
-                ? user.role
-                : "user",
+            user.role ||
+            "user",
+
 
         date:
             start.getDate() +
             "/" +
-            (start.getMonth() + 1) +
+            (
+                start.getMonth() +
+                1
+            ) +
             "/" +
             start.getFullYear(),
+
 
         start:
             start.getHours() +
@@ -538,6 +753,7 @@ async function saveHistory() {
             ) +
             start.getMinutes(),
 
+
         end:
             end.getHours() +
             ":" +
@@ -548,6 +764,7 @@ async function saveHistory() {
             ) +
             end.getMinutes(),
 
+
         duration:
             hour +
             ":" +
@@ -555,34 +772,60 @@ async function saveHistory() {
             ":" +
             second,
 
+
         timestamp:
             serverTimestamp()
 
     };
 
 
+    console.log(
+        "📦 Data:",
+        historyData
+    );
+
+
+    // =====================================
+    // SEND TO FIRESTORE
+    // =====================================
+
     try {
+
 
         const docRef =
             await addDoc(
+
                 collection(
                     db,
                     "history"
                 ),
+
                 historyData
+
             );
 
 
         console.log(
-            "✅ History berjaya disimpan:",
+            "====================================="
+        );
+
+
+        console.log(
+            "✅ HISTORY BERJAYA DISIMPAN!"
+        );
+
+
+        console.log(
+            "Document ID:",
             docRef.id
         );
 
 
-        // LocalStorage masih disimpan
-        // sebagai backup
+        // =================================
+        // BACKUP LOCALSTORAGE
+        // =================================
 
-        let history =
+        let localHistory =
             JSON.parse(
                 localStorage.getItem(
                     "history"
@@ -590,41 +833,85 @@ async function saveHistory() {
             ) || [];
 
 
-        history.unshift(
+        localHistory.unshift(
             historyData
         );
 
 
         localStorage.setItem(
+
             "history",
+
             JSON.stringify(
-                history
+                localHistory
             )
+
         );
 
+
+        // =================================
+        // REMOVE START TIME
+        // =================================
 
         localStorage.removeItem(
             "startTime"
         );
 
 
+        alert(
+            "✅ History berjaya disimpan ke Firebase!"
+        );
+
+
     }
 
-   catch(error) {
+    catch(error) {
 
-    console.error(
-        "❌ FIRESTORE ERROR:",
-        error
-    );
 
-    alert(
-        "❌ Firebase Error:\n" +
-        error.code +
-        "\n\n" +
-        error.message
-    );
+        console.error(
+            "====================================="
+        );
 
-}
+
+        console.error(
+            "❌ FIRESTORE ERROR"
+        );
+
+
+        console.error(
+            "Error Code:",
+            error.code
+        );
+
+
+        console.error(
+            "Error Message:",
+            error.message
+        );
+
+
+        console.error(
+            "Full Error:",
+            error
+        );
+
+
+        alert(
+
+            "❌ Gagal simpan History ke Firebase\n\n" +
+
+            "Code: " +
+            error.code +
+
+            "\n\n" +
+
+            "Message: " +
+            error.message
+
+        );
+
+    }
+
 }
 
 
@@ -671,11 +958,15 @@ function addLog(
 
     logs.unshift({
 
-        time: time,
+        time:
+            time,
 
         user:
             user
-                ? user.username
+                ? (
+                    user.username ||
+                    user.email
+                )
                 : "Unknown",
 
         activity:
@@ -687,7 +978,11 @@ function addLog(
     });
 
 
-    if (logs.length > 10) {
+    // Maksimum 10 log
+
+    if (
+        logs.length > 10
+    ) {
 
         logs.pop();
 
@@ -696,14 +991,16 @@ function addLog(
 
     localStorage.setItem(
         "logs",
-        JSON.stringify(logs)
+        JSON.stringify(
+            logs
+        )
     );
 
 }
 
 
 // =====================================================
-// LOAD STATUS
+// LOAD LAMP STATUS
 // =====================================================
 
 function loadLampStatus() {
@@ -727,7 +1024,13 @@ function loadLampStatus() {
         );
 
 
-    if (status === "ON") {
+    // =====================================
+    // LAMP ON
+    // =====================================
+
+    if (
+        status === "ON"
+    ) {
 
 
         if (lamp) {
@@ -755,6 +1058,11 @@ function loadLampStatus() {
         startTimer();
 
     }
+
+
+    // =====================================
+    // LAMP OFF
+    // =====================================
 
     else {
 
@@ -787,6 +1095,7 @@ function loadLampStatus() {
 
 }
 
+
 // =====================================================
 // PAGE LOAD
 // =====================================================
@@ -795,9 +1104,23 @@ window.addEventListener(
     "load",
     function() {
 
+
+        console.log(
+            "Smart Classroom script loaded"
+        );
+
+
+        console.log(
+            "Firebase Auth:",
+            auth.currentUser
+        );
+
+
         updateTimerDisplay();
 
+
         loadLampStatus();
+
 
     }
 );
@@ -807,5 +1130,9 @@ window.addEventListener(
 // MAKE FUNCTIONS AVAILABLE TO HTML
 // =====================================================
 
-window.lampOn = lampOn;
-window.lampOff = lampOff;
+window.lampOn =
+    lampOn;
+
+
+window.lampOff =
+    lampOff;
