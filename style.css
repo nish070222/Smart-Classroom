@@ -1,6 +1,7 @@
 /* =====================================================
    SMART CLASSROOM CONTROL SYSTEM
-   PROFESSIONAL UI V2
+   FULL STYLE.CSS
+   LAPTOP + PHONE FRIENDLY
 ===================================================== */
 
 
@@ -22,13 +23,12 @@
     --primary-light: #eff6ff;
 
     --success: #16a34a;
-    --success-light: #f0fdf4;
+    --success-dark: #15803d;
 
     --danger: #dc2626;
-    --danger-light: #fef2f2;
+    --danger-dark: #b91c1c;
 
     --warning: #d97706;
-    --warning-light: #fffbeb;
 
     --dark: #0f172a;
     --text: #334155;
@@ -43,7 +43,8 @@
     --radius: 16px;
 
     --shadow:
-        0 6px 20px rgba(15, 23, 42, 0.07);
+        0 6px 20px
+        rgba(15, 23, 42, .07);
 }
 
 
@@ -52,8 +53,10 @@
 ===================================================== */
 
 * {
+
     margin: 0;
     padding: 0;
+
     box-sizing: border-box;
 
     font-family:
@@ -63,6 +66,7 @@
 
 
 html {
+
     scroll-behavior: smooth;
 }
 
@@ -82,6 +86,24 @@ body {
     color: var(--text);
 
     font-size: 14px;
+
+    overflow-x: hidden;
+}
+
+
+a {
+
+    text-decoration: none;
+}
+
+
+button,
+input,
+select {
+
+    font-family:
+        'Poppins',
+        sans-serif;
 }
 
 
@@ -90,12 +112,14 @@ body {
 ===================================================== */
 
 ::-webkit-scrollbar {
+
     width: 7px;
     height: 7px;
 }
 
 
 ::-webkit-scrollbar-track {
+
     background: #f1f5f9;
 }
 
@@ -109,21 +133,13 @@ body {
 
 
 ::-webkit-scrollbar-thumb:hover {
+
     background: #94a3b8;
 }
 
 
 /* =====================================================
-   LINKS
-===================================================== */
-
-a {
-    text-decoration: none;
-}
-
-
-/* =====================================================
-   LOGIN
+   LOGIN PAGE
 ===================================================== */
 
 .login-body {
@@ -146,7 +162,7 @@ a {
 
     max-width: 100%;
 
-    background: var(--white);
+    background: white;
 
     padding: 38px 35px;
 
@@ -156,7 +172,7 @@ a {
 
     box-shadow:
         0 15px 40px
-        rgba(15, 23, 42, 0.10);
+        rgba(15, 23, 42, .10);
 }
 
 
@@ -185,7 +201,9 @@ a {
 
     width: 100%;
 
-    padding: 12px 14px;
+    height: 44px;
+
+    padding: 10px 14px;
 
     margin: 7px 0;
 
@@ -195,7 +213,7 @@ a {
 
     outline: none;
 
-    background: #fff;
+    background: white;
 
     font-size: 14px;
 
@@ -244,7 +262,8 @@ a {
 
     background: var(--primary-dark);
 
-    transform: translateY(-1px);
+    transform:
+        translateY(-1px);
 }
 
 
@@ -259,7 +278,7 @@ a {
 
 
 /* =====================================================
-   SIDEBAR
+   SIDEBAR - LAPTOP
 ===================================================== */
 
 .sidebar {
@@ -337,7 +356,8 @@ a {
 
     color: white;
 
-    transform: translateX(3px);
+    transform:
+        translateX(3px);
 }
 
 
@@ -411,6 +431,24 @@ a {
 }
 
 
+.welcome {
+
+    margin-bottom: 20px;
+}
+
+
+.welcome h1 {
+
+    margin-bottom: 5px;
+}
+
+
+.welcome p {
+
+    color: var(--muted);
+}
+
+
 /* =====================================================
    CLOCK
 ===================================================== */
@@ -421,7 +459,7 @@ a {
 
     max-width: 100%;
 
-    background: var(--white);
+    background: white;
 
     padding: 24px;
 
@@ -481,7 +519,7 @@ a {
 
 
 /* =====================================================
-   LIGHT CARD
+   LIGHT CONTROL CARD
 ===================================================== */
 
 .card {
@@ -490,7 +528,7 @@ a {
 
     max-width: 100%;
 
-    background: var(--white);
+    background: white;
 
     padding: 30px;
 
@@ -576,6 +614,13 @@ button:hover {
 }
 
 
+button:active {
+
+    transform:
+        scale(.97);
+}
+
+
 .on {
 
     background: var(--success);
@@ -588,7 +633,7 @@ button:hover {
 
 .on:hover {
 
-    background: #15803d;
+    background: var(--success-dark);
 }
 
 
@@ -604,7 +649,7 @@ button:hover {
 
 .off:hover {
 
-    background: #b91c1c;
+    background: var(--danger-dark);
 }
 
 
@@ -872,7 +917,7 @@ button:hover {
 
 
 /* =====================================================
-   LOG
+   ACTIVITY LOG
 ===================================================== */
 
 .log {
@@ -900,7 +945,8 @@ button:hover {
 
     display: flex;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
     align-items: center;
 
@@ -936,7 +982,7 @@ button:hover {
 
 .clear-log:hover {
 
-    background: #b91c1c;
+    background: var(--danger-dark);
 }
 
 
@@ -1152,7 +1198,7 @@ tr:hover td {
 
 .delete-btn:hover {
 
-    background: #b91c1c;
+    background: var(--danger-dark);
 }
 
 
@@ -1282,33 +1328,56 @@ select:focus {
 
 
 /* =====================================================
-   MOBILE
+   PHONE
 ===================================================== */
 
 @media (max-width: 768px) {
 
 
-    /* SIDEBAR */
+    /* ==========================
+       BODY
+    ========================== */
+
+    body {
+
+        font-size: 13px;
+
+        overflow-x: hidden;
+    }
+
+
+    /* ==========================
+       MOBILE NAVIGATION
+    ========================== */
 
     .sidebar {
 
-        position: relative;
+        position: sticky;
+
+        top: 0;
 
         width: 100%;
 
         height: auto;
 
-        padding: 12px;
+        padding: 10px 7px;
 
         text-align: center;
+
+        border-radius:
+            0 0 16px 16px;
+
+        box-shadow:
+            0 4px 15px
+            rgba(15, 23, 42, .15);
     }
 
 
     .sidebar h2 {
 
-        font-size: 18px;
+        font-size: 17px;
 
-        margin-bottom: 8px;
+        margin-bottom: 9px;
     }
 
 
@@ -1316,12 +1385,22 @@ select:focus {
 
         display: inline-flex;
 
-        padding:
-            8px 9px;
+        align-items: center;
 
-        margin: 3px;
+        justify-content: center;
+
+        min-height: 36px;
+
+        padding:
+            7px 9px;
+
+        margin: 2px;
+
+        border-radius: 9px;
 
         font-size: 11px;
+
+        white-space: nowrap;
     }
 
 
@@ -1331,27 +1410,11 @@ select:focus {
     }
 
 
-    /* MAIN */
+    /* ==========================
+       MAIN
+    ========================== */
 
-    .main {
-
-        width: 100%;
-
-        margin-left: 0;
-
-        padding:
-            22px 14px;
-    }
-
-
-    .main > h1 {
-
-        font-size: 23px;
-    }
-
-
-    /* DASHBOARD */
-
+    .main,
     .dashboard {
 
         width: 100%;
@@ -1359,134 +1422,120 @@ select:focus {
         margin-left: 0;
 
         padding:
-            22px 14px;
+            18px 12px 30px;
     }
 
 
+    /* ==========================
+       TITLE
+    ========================== */
+
+    .main > h1,
     .dashboard h1 {
 
-        font-size: 23px;
+        font-size: 21px;
+
+        line-height: 1.35;
+
+        text-align: center;
     }
 
 
-    .dashboard-card {
+    #welcome {
 
-        grid-template-columns:
-            1fr;
+        font-size: 12px;
 
-        gap: 14px;
+        line-height: 1.5;
+
+        margin-top: 6px;
     }
 
 
-    .box {
+    /* ==========================
+       DASHBOARD WELCOME
+    ========================== */
 
-        min-height: 140px;
+    .dashboard .welcome {
+
+        text-align: center;
+
+        margin-bottom: 18px;
     }
 
 
-    /* STATISTICS */
+    .dashboard .welcome p {
 
-    .statistics {
+        font-size: 12px;
 
-        grid-template-columns:
-            1fr;
-
-        gap: 14px;
+        line-height: 1.5;
     }
 
 
-    .stat-box {
+    /* ==========================
+       CLOCK
+    ========================== */
 
-        padding: 17px;
-    }
-
-
-    .stat-value {
-
-        font-size: 24px;
-    }
-
-
-    /* HISTORY */
-
-    .history-summary {
-
-        grid-template-columns:
-            1fr;
-
-        gap: 14px;
-    }
-
-
-    .summary-box {
-
-        padding: 17px;
-    }
-
-
-    .summary-value {
-
-        font-size: 24px;
-    }
-
-
-    .history-table-card {
-
-        padding: 15px;
-    }
-
-
-    .history-table-card table {
-
-        min-width: 800px;
-    }
-
-
-    /* LOG */
-
-    .log {
-
-        padding: 15px;
-    }
-
-
-    .log table {
-
-        min-width: 650px;
-    }
-
-
-    /* LIGHT CONTROL */
-
-    .clock,
-    .card,
-    .info {
+    .clock {
 
         width: 100%;
 
-        padding: 22px;
+        padding:
+            18px 14px;
+
+        margin-top: 15px;
+
+        border-radius: 16px;
     }
 
 
     .clock h2#time {
 
-        font-size: 32px;
+        font-size: 30px;
+
+        margin: 9px 0;
     }
 
 
     .clock #date {
 
-        font-size: 15px;
+        font-size: 13px;
+    }
+
+
+    /* ==========================
+       LIGHT CARD
+    ========================== */
+
+    .card {
+
+        width: 100%;
+
+        padding:
+            22px 15px;
+
+        margin-top: 15px;
+
+        border-radius: 16px;
+    }
+
+
+    .card h2 {
+
+        font-size: 18px;
     }
 
 
     #lampStatus {
 
-        font-size: 40px;
+        font-size: 38px;
+
+        margin: 15px;
     }
 
 
-    /* BUTTON */
+    /* ==========================
+       BUTTON
+    ========================== */
 
     button {
 
@@ -1494,11 +1543,315 @@ select:focus {
 
         height: 42px;
 
+        margin:
+            5px 3px;
+
+        border-radius: 10px;
+
+        font-size: 12px;
+
+        touch-action:
+            manipulation;
+    }
+
+
+    button:active {
+
+        transform:
+            scale(.96);
+    }
+
+
+    /* ==========================
+       TIMER
+    ========================== */
+
+    .timer-box {
+
+        margin-top: 14px;
+
+        padding: 15px;
+
+        border-radius: 12px;
+    }
+
+
+    .timer-box h1 {
+
+        font-size: 23px;
+    }
+
+
+    /* ==========================
+       INFO
+    ========================== */
+
+    .info {
+
+        width: 100%;
+
+        padding:
+            18px 14px;
+
+        margin-top: 15px;
+
+        border-radius: 16px;
+    }
+
+
+    /* ==========================
+       DASHBOARD CARDS
+    ========================== */
+
+    .dashboard-card {
+
+        width: 100%;
+
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .box {
+
+        width: 100%;
+
+        min-height: 125px;
+
+        padding: 18px;
+
+        border-radius: 15px;
+    }
+
+
+    .box h2 {
+
+        font-size: 13px;
+
+        margin-bottom: 9px;
+    }
+
+
+    .box h1 {
+
+        font-size: 25px;
+    }
+
+
+    .box h3 {
+
+        font-size: 14px;
+    }
+
+
+    /* ==========================
+       STATISTICS
+    ========================== */
+
+    .statistics {
+
+        width: 100%;
+
+        grid-template-columns: 1fr;
+
+        gap: 11px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .stat-box {
+
+        padding: 16px;
+
+        border-radius: 15px;
+    }
+
+
+    .stat-box h3 {
+
         font-size: 13px;
     }
 
 
-    /* LOGIN */
+    .stat-value {
+
+        font-size: 23px;
+
+        margin-top: 6px;
+    }
+
+
+    /* ==========================
+       ACTIVITY LOG
+    ========================== */
+
+    .log {
+
+        width: 100%;
+
+        padding: 14px;
+
+        border-radius: 15px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .log-header {
+
+        gap: 8px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .log-header h2 {
+
+        font-size: 17px;
+    }
+
+
+    .clear-log {
+
+        min-width: 85px;
+
+        height: 34px;
+
+        font-size: 11px;
+    }
+
+
+    .log table {
+
+        min-width: 600px;
+    }
+
+
+    th {
+
+        font-size: 11px;
+
+        padding: 10px;
+    }
+
+
+    td {
+
+        font-size: 11px;
+
+        padding: 10px;
+    }
+
+
+    /* ==========================
+       HISTORY SUMMARY
+    ========================== */
+
+    .history-summary {
+
+        width: 100%;
+
+        grid-template-columns: 1fr;
+
+        gap: 11px;
+
+        margin:
+            15px auto;
+    }
+
+
+    .summary-box {
+
+        padding: 16px;
+
+        border-radius: 15px;
+    }
+
+
+    .summary-box h3 {
+
+        font-size: 13px;
+    }
+
+
+    .summary-value {
+
+        font-size: 23px;
+    }
+
+
+    /* ==========================
+       HISTORY TABLE
+    ========================== */
+
+    .history-table-card {
+
+        width: 100%;
+
+        padding: 13px;
+
+        border-radius: 15px;
+
+        margin: 0 auto;
+    }
+
+
+    .history-table-card h2 {
+
+        font-size: 17px;
+
+        margin-bottom: 12px;
+    }
+
+
+    .history-table-card table {
+
+        min-width: 750px;
+    }
+
+
+    .history-table-card th {
+
+        font-size: 11px;
+
+        padding: 10px;
+    }
+
+
+    .history-table-card td {
+
+        font-size: 11px;
+
+        padding: 10px;
+    }
+
+
+    .delete-btn,
+    .edit-btn {
+
+        min-width: 75px;
+
+        width: 75px;
+
+        height: 32px;
+
+        font-size: 11px;
+    }
+
+
+    /* ==========================
+       LOGIN
+    ========================== */
+
+    .login-body {
+
+        padding: 15px;
+    }
+
 
     .login-card {
 
@@ -1507,15 +1860,52 @@ select:focus {
         max-width: 390px;
 
         padding:
-            30px 22px;
+            27px 18px;
+
+        border-radius: 18px;
     }
 
 
-    /* USER FORM */
+    .login-card h1 {
+
+        font-size: 23px;
+    }
+
+
+    .login-card p {
+
+        font-size: 12px;
+    }
+
+
+    .login-card input,
+    .login-card select {
+
+        height: 43px;
+
+        font-size: 13px;
+    }
+
+
+    .login-btn {
+
+        height: 44px;
+
+        font-size: 13px;
+    }
+
+
+    /* ==========================
+       MANAGE USER
+    ========================== */
 
     .user-form {
 
-        padding: 20px;
+        width: 100%;
+
+        padding: 17px;
+
+        border-radius: 15px;
     }
 
 
@@ -1524,8 +1914,12 @@ select:focus {
 
         width: 100%;
 
+        height: 43px;
+
         margin:
-            6px 0;
+            5px 0;
+
+        font-size: 13px;
     }
 
 }
@@ -1535,21 +1929,23 @@ select:focus {
    SMALL PHONE
 ===================================================== */
 
-@media (max-width: 400px) {
+@media (max-width: 380px) {
 
 
     .sidebar h2 {
 
-        font-size: 16px;
+        font-size: 15px;
     }
 
 
     .sidebar a {
 
-        font-size: 10px;
+        font-size: 9px;
 
         padding:
-            7px 6px;
+            6px 7px;
+
+        min-height: 34px;
     }
 
 
@@ -1557,26 +1953,26 @@ select:focus {
     .dashboard {
 
         padding:
-            18px 10px;
+            16px 9px 25px;
     }
 
 
     .main > h1,
     .dashboard h1 {
 
-        font-size: 20px;
+        font-size: 19px;
     }
 
 
     .clock h2#time {
 
-        font-size: 28px;
+        font-size: 27px;
     }
 
 
     #lampStatus {
 
-        font-size: 36px;
+        font-size: 34px;
     }
 
 
@@ -1584,15 +1980,28 @@ select:focus {
 
         min-width: 95px;
 
-        margin:
-            5px 3px;
+        height: 40px;
+
+        font-size: 11px;
     }
 
 
-    .summary-value,
-    .stat-value {
+    .box {
 
-        font-size: 22px;
+        min-height: 115px;
+    }
+
+
+    .box h1 {
+
+        font-size: 23px;
+    }
+
+
+    .stat-value,
+    .summary-value {
+
+        font-size: 21px;
     }
 
 }
@@ -1623,9 +2032,11 @@ select:focus-visible {
 
     * {
 
-        scroll-behavior: auto !important;
+        scroll-behavior:
+            auto !important;
 
-        transition: none !important;
+        transition:
+            none !important;
     }
 
 }
