@@ -1,7 +1,7 @@
 /* =====================================================
    SMART CLASSROOM CONTROL SYSTEM
-   FULL STYLE.CSS
-   LAPTOP + PHONE FRIENDLY
+   PROFESSIONAL RESPONSIVE UI
+   LAPTOP + PHONE
 ===================================================== */
 
 
@@ -23,11 +23,7 @@
     --primary-light: #eff6ff;
 
     --success: #16a34a;
-    --success-dark: #15803d;
-
     --danger: #dc2626;
-    --danger-dark: #b91c1c;
-
     --warning: #d97706;
 
     --dark: #0f172a;
@@ -44,12 +40,13 @@
 
     --shadow:
         0 6px 20px
-        rgba(15, 23, 42, .07);
+        rgba(15, 23, 42, 0.07);
+
 }
 
 
 /* =====================================================
-   GLOBAL RESET
+   RESET
 ===================================================== */
 
 * {
@@ -62,12 +59,14 @@
     font-family:
         'Poppins',
         sans-serif;
+
 }
 
 
 html {
 
     scroll-behavior: smooth;
+
 }
 
 
@@ -87,23 +86,6 @@ body {
 
     font-size: 14px;
 
-    overflow-x: hidden;
-}
-
-
-a {
-
-    text-decoration: none;
-}
-
-
-button,
-input,
-select {
-
-    font-family:
-        'Poppins',
-        sans-serif;
 }
 
 
@@ -115,12 +97,14 @@ select {
 
     width: 7px;
     height: 7px;
+
 }
 
 
 ::-webkit-scrollbar-track {
 
     background: #f1f5f9;
+
 }
 
 
@@ -129,17 +113,30 @@ select {
     background: #cbd5e1;
 
     border-radius: 20px;
+
 }
 
 
 ::-webkit-scrollbar-thumb:hover {
 
     background: #94a3b8;
+
 }
 
 
 /* =====================================================
-   LOGIN PAGE
+   LINKS
+===================================================== */
+
+a {
+
+    text-decoration: none;
+
+}
+
+
+/* =====================================================
+   LOGIN
 ===================================================== */
 
 .login-body {
@@ -153,6 +150,7 @@ select {
     align-items: center;
 
     padding: 20px;
+
 }
 
 
@@ -173,6 +171,7 @@ select {
     box-shadow:
         0 15px 40px
         rgba(15, 23, 42, .10);
+
 }
 
 
@@ -183,6 +182,7 @@ select {
     font-size: 27px;
 
     margin-bottom: 8px;
+
 }
 
 
@@ -193,6 +193,7 @@ select {
     font-size: 13px;
 
     margin-bottom: 22px;
+
 }
 
 
@@ -201,15 +202,15 @@ select {
 
     width: 100%;
 
-    height: 44px;
-
-    padding: 10px 14px;
+    padding: 12px 14px;
 
     margin: 7px 0;
 
     border-radius: 10px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
 
     outline: none;
 
@@ -217,7 +218,6 @@ select {
 
     font-size: 14px;
 
-    transition: .2s;
 }
 
 
@@ -228,7 +228,8 @@ select {
 
     box-shadow:
         0 0 0 3px
-        rgba(37, 99, 235, .10);
+        rgba(37,99,235,.10);
+
 }
 
 
@@ -255,6 +256,7 @@ select {
     cursor: pointer;
 
     transition: .2s;
+
 }
 
 
@@ -262,8 +264,6 @@ select {
 
     background: var(--primary-dark);
 
-    transform:
-        translateY(-1px);
 }
 
 
@@ -274,6 +274,7 @@ select {
     font-size: 13px;
 
     margin-top: 10px;
+
 }
 
 
@@ -309,7 +310,8 @@ select {
 
     box-shadow:
         4px 0 20px
-        rgba(15, 23, 42, .10);
+        rgba(15,23,42,.10);
+
 }
 
 
@@ -324,6 +326,7 @@ select {
     margin-bottom: 25px;
 
     color: white;
+
 }
 
 
@@ -346,18 +349,20 @@ select {
     font-size: 13px;
 
     transition: .2s;
+
 }
 
 
 .sidebar a:hover {
 
     background:
-        rgba(59, 130, 246, .18);
+        rgba(59,130,246,.18);
 
     color: white;
 
     transform:
         translateX(3px);
+
 }
 
 
@@ -367,9 +372,6 @@ select {
 
     color: white;
 
-    box-shadow:
-        0 4px 12px
-        rgba(37, 99, 235, .25);
 }
 
 
@@ -390,6 +392,7 @@ select {
     flex-direction: column;
 
     align-items: center;
+
 }
 
 
@@ -399,9 +402,8 @@ select {
 
     font-size: 29px;
 
-    line-height: 1.3;
-
     text-align: center;
+
 }
 
 
@@ -412,6 +414,7 @@ select {
     margin-top: 6px;
 
     text-align: center;
+
 }
 
 
@@ -428,24 +431,7 @@ select {
     font-size: 14px;
 
     text-align: center;
-}
 
-
-.welcome {
-
-    margin-bottom: 20px;
-}
-
-
-.welcome h1 {
-
-    margin-bottom: 5px;
-}
-
-
-.welcome p {
-
-    color: var(--muted);
 }
 
 
@@ -479,20 +465,8 @@ select {
 
     border:
         1px solid
-        rgba(226, 232, 240, .7);
+        rgba(226,232,240,.7);
 
-    transition: .2s;
-}
-
-
-.clock:hover {
-
-    transform:
-        translateY(-3px);
-
-    box-shadow:
-        0 10px 25px
-        rgba(15, 23, 42, .10);
 }
 
 
@@ -505,6 +479,7 @@ select {
     font-weight: 600;
 
     margin: 12px 0;
+
 }
 
 
@@ -515,11 +490,12 @@ select {
     font-size: 15px;
 
     font-weight: 500;
+
 }
 
 
 /* =====================================================
-   LIGHT CONTROL CARD
+   LIGHT CARD
 ===================================================== */
 
 .card {
@@ -540,18 +516,6 @@ select {
 
     box-shadow: var(--shadow);
 
-    border:
-        1px solid
-        rgba(226, 232, 240, .7);
-
-    transition: .2s;
-}
-
-
-.card:hover {
-
-    transform:
-        translateY(-3px);
 }
 
 
@@ -561,7 +525,6 @@ select {
 
     font-size: 20px;
 
-    margin-bottom: 5px;
 }
 
 
@@ -574,6 +537,7 @@ select {
     color: var(--danger);
 
     margin: 18px;
+
 }
 
 
@@ -604,6 +568,7 @@ button {
     font-weight: 600;
 
     transition: .2s;
+
 }
 
 
@@ -611,13 +576,7 @@ button:hover {
 
     transform:
         translateY(-2px);
-}
 
-
-button:active {
-
-    transform:
-        scale(.97);
 }
 
 
@@ -625,15 +584,6 @@ button:active {
 
     background: var(--success);
 
-    box-shadow:
-        0 4px 10px
-        rgba(22, 163, 74, .15);
-}
-
-
-.on:hover {
-
-    background: var(--success-dark);
 }
 
 
@@ -641,15 +591,20 @@ button:active {
 
     background: var(--danger);
 
-    box-shadow:
-        0 4px 10px
-        rgba(220, 38, 38, .15);
 }
 
 
-.off:hover {
+.edit-btn {
 
-    background: var(--danger-dark);
+    background: var(--warning);
+
+}
+
+
+.delete-btn {
+
+    background: var(--danger);
+
 }
 
 
@@ -671,6 +626,7 @@ button:active {
     border:
         1px solid
         #dbeafe;
+
 }
 
 
@@ -679,6 +635,7 @@ button:active {
     color: var(--primary);
 
     font-size: 26px;
+
 }
 
 
@@ -703,6 +660,7 @@ button:active {
     text-align: center;
 
     box-shadow: var(--shadow);
+
 }
 
 
@@ -711,6 +669,7 @@ button:active {
     color: var(--success);
 
     font-weight: 600;
+
 }
 
 
@@ -719,6 +678,7 @@ button:active {
     color: var(--danger);
 
     font-weight: 600;
+
 }
 
 
@@ -733,6 +693,7 @@ button:active {
     margin-left: 235px;
 
     padding: 32px;
+
 }
 
 
@@ -742,6 +703,7 @@ button:active {
 
     margin:
         0 auto 24px;
+
 }
 
 
@@ -750,6 +712,7 @@ button:active {
     color: var(--dark);
 
     font-size: 28px;
+
 }
 
 
@@ -760,6 +723,7 @@ button:active {
     margin-top: 5px;
 
     font-size: 14px;
+
 }
 
 
@@ -777,9 +741,10 @@ button:active {
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4,1fr);
 
     gap: 17px;
+
 }
 
 
@@ -805,22 +770,10 @@ button:active {
 
     border:
         1px solid
-        rgba(226, 232, 240, .8);
+        rgba(226,232,240,.8);
 
     box-shadow: var(--shadow);
 
-    transition: .2s;
-}
-
-
-.box:hover {
-
-    transform:
-        translateY(-4px);
-
-    box-shadow:
-        0 12px 28px
-        rgba(15, 23, 42, .10);
 }
 
 
@@ -833,6 +786,7 @@ button:active {
     font-weight: 600;
 
     margin-bottom: 12px;
+
 }
 
 
@@ -842,7 +796,6 @@ button:active {
 
     font-weight: 700;
 
-    margin: 0;
 }
 
 
@@ -851,6 +804,7 @@ button:active {
     color: var(--text);
 
     font-size: 15px;
+
 }
 
 
@@ -870,9 +824,10 @@ button:active {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3,1fr);
 
     gap: 17px;
+
 }
 
 
@@ -884,23 +839,19 @@ button:active {
 
     border-radius: var(--radius);
 
-    border:
-        1px solid
-        rgba(226, 232, 240, .8);
-
     box-shadow: var(--shadow);
+
 }
 
 
 .stat-box h3 {
-
-    margin: 0;
 
     color: var(--muted);
 
     font-size: 14px;
 
     font-weight: 500;
+
 }
 
 
@@ -913,11 +864,12 @@ button:active {
     color: var(--dark);
 
     margin-top: 8px;
+
 }
 
 
 /* =====================================================
-   ACTIVITY LOG
+   LOG
 ===================================================== */
 
 .log {
@@ -932,12 +884,12 @@ button:active {
 
     border-radius: var(--radius);
 
-    margin:
-        0 auto;
+    margin: 0 auto;
 
     box-shadow: var(--shadow);
 
     overflow-x: auto;
+
 }
 
 
@@ -945,22 +897,21 @@ button:active {
 
     display: flex;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
     align-items: center;
 
     margin-bottom: 15px;
+
 }
 
 
 .log-header h2 {
 
-    margin: 0;
-
     font-size: 19px;
 
     color: var(--dark);
+
 }
 
 
@@ -976,13 +927,6 @@ button:active {
 
     background: var(--danger);
 
-    padding: 0 12px;
-}
-
-
-.clear-log:hover {
-
-    background: var(--danger-dark);
 }
 
 
@@ -994,8 +938,8 @@ table {
 
     width: 100%;
 
-    border-collapse:
-        collapse;
+    border-collapse: collapse;
+
 }
 
 
@@ -1016,6 +960,7 @@ th {
         var(--border);
 
     white-space: nowrap;
+
 }
 
 
@@ -1032,13 +977,14 @@ td {
     border-bottom:
         1px solid
         #edf0f3;
+
 }
 
 
 tr:hover td {
 
-    background:
-        #f8fafc;
+    background: #f8fafc;
+
 }
 
 
@@ -1055,11 +1001,12 @@ tr:hover td {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3,1fr);
 
     gap: 17px;
 
     margin: 22px auto;
+
 }
 
 
@@ -1071,24 +1018,17 @@ tr:hover td {
 
     border-radius: var(--radius);
 
-    border:
-        1px solid
-        rgba(226, 232, 240, .8);
-
     box-shadow: var(--shadow);
+
 }
 
 
 .summary-box h3 {
 
-    margin:
-        0 0 8px;
-
     color: var(--muted);
 
     font-size: 14px;
 
-    font-weight: 500;
 }
 
 
@@ -1099,6 +1039,9 @@ tr:hover td {
     font-weight: 700;
 
     color: var(--dark);
+
+    margin-top: 8px;
+
 }
 
 
@@ -1123,100 +1066,32 @@ tr:hover td {
     box-shadow: var(--shadow);
 
     overflow-x: auto;
+
 }
 
 
 .history-table-card h2 {
 
-    margin:
-        0 0 18px;
+    margin-bottom: 18px;
 
     font-size: 19px;
 
     color: var(--dark);
+
 }
 
 
 .history-table-card table {
 
     min-width: 800px;
-}
 
-
-.history-table-card th {
-
-    background: #f8fafc;
-
-    color: var(--text);
-
-    padding: 12px;
 }
 
 
 .history-table-card td {
 
-    padding: 12px;
-
     white-space: nowrap;
-}
 
-
-.history-table-card tr:hover td {
-
-    background:
-        #f8fafc;
-}
-
-
-.no-record {
-
-    text-align: center;
-
-    padding: 30px;
-
-    color: var(--muted);
-}
-
-
-/* =====================================================
-   DELETE BUTTON
-===================================================== */
-
-.delete-btn {
-
-    min-width: 85px;
-
-    width: 85px;
-
-    height: 35px;
-
-    margin: 3px;
-
-    background: var(--danger);
-}
-
-
-.delete-btn:hover {
-
-    background: var(--danger-dark);
-}
-
-
-/* =====================================================
-   EDIT BUTTON
-===================================================== */
-
-.edit-btn {
-
-    min-width: 85px;
-
-    width: 85px;
-
-    height: 35px;
-
-    margin: 3px;
-
-    background: var(--warning);
 }
 
 
@@ -1239,6 +1114,7 @@ tr:hover td {
     text-align: center;
 
     box-shadow: var(--shadow);
+
 }
 
 
@@ -1260,14 +1136,7 @@ tr:hover td {
         var(--border);
 
     outline: none;
-}
 
-
-.user-form input:focus,
-.user-form select:focus {
-
-    border-color:
-        var(--primary);
 }
 
 
@@ -1290,6 +1159,7 @@ select {
     outline: none;
 
     font-size: 14px;
+
 }
 
 
@@ -1301,7 +1171,8 @@ select:focus {
 
     box-shadow:
         0 0 0 3px
-        rgba(37, 99, 235, .08);
+        rgba(37,99,235,.08);
+
 }
 
 
@@ -1309,19 +1180,20 @@ select:focus {
    TABLET
 ===================================================== */
 
-@media (max-width: 1000px) {
+@media (max-width:1000px) {
 
     .dashboard-card {
 
         grid-template-columns:
-            repeat(2, 1fr);
-    }
+            repeat(2,1fr);
 
+    }
 
     .statistics {
 
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2,1fr);
+
     }
 
 }
@@ -1331,197 +1203,244 @@ select:focus {
    PHONE
 ===================================================== */
 
-@media (max-width: 768px) {
+@media (max-width:768px) {
 
 
-    /* ==========================
+    /* ==========================================
        BODY
-    ========================== */
+    ========================================== */
 
     body {
 
         font-size: 13px;
 
-        overflow-x: hidden;
+        padding-bottom: 72px;
+
     }
 
 
-    /* ==========================
-       MOBILE NAVIGATION
-    ========================== */
+    /* ==========================================
+       MOBILE NAVBAR
+    ========================================== */
 
     .sidebar {
 
-        position: sticky;
+        position: fixed;
 
-        top: 0;
+        left: 0;
+
+        bottom: 0;
+
+        top: auto;
 
         width: 100%;
 
-        height: auto;
+        height: 64px;
 
-        padding: 10px 7px;
+        padding: 6px 5px;
 
-        text-align: center;
-
-        border-radius:
-            0 0 16px 16px;
-
-        box-shadow:
-            0 4px 15px
-            rgba(15, 23, 42, .15);
-    }
-
-
-    .sidebar h2 {
-
-        font-size: 17px;
-
-        margin-bottom: 9px;
-    }
-
-
-    .sidebar a {
-
-        display: inline-flex;
+        display: flex;
 
         align-items: center;
 
+        justify-content: space-around;
+
+        background:
+            rgba(15,23,42,.97);
+
+        border-top:
+            1px solid
+            rgba(255,255,255,.08);
+
+        box-shadow:
+            0 -5px 20px
+            rgba(0,0,0,.15);
+
+        overflow-x: auto;
+
+        overflow-y: hidden;
+
+        z-index: 9999;
+
+    }
+
+
+    /* Hide SmartClass title */
+
+    .sidebar h2 {
+
+        display: none;
+
+    }
+
+
+    /* Navigation links */
+
+    .sidebar a {
+
+        flex:
+            0 0 auto;
+
+        width: auto;
+
+        min-width: 62px;
+
+        height: 52px;
+
+        margin: 0 2px;
+
+        padding: 5px 8px;
+
+        display: flex;
+
+        flex-direction: column;
+
         justify-content: center;
 
-        min-height: 36px;
+        align-items: center;
 
-        padding:
-            7px 9px;
+        gap: 2px;
 
-        margin: 2px;
+        border-radius: 10px;
 
-        border-radius: 9px;
+        color: #cbd5e1;
 
-        font-size: 11px;
+        font-size: 9px;
+
+        line-height: 1.1;
 
         white-space: nowrap;
+
+        text-align: center;
+
     }
 
 
     .sidebar a:hover {
 
         transform: none;
+
+        background:
+            rgba(59,130,246,.18);
+
     }
 
 
-    /* ==========================
-       MAIN
-    ========================== */
+    .sidebar .active {
 
-    .main,
-    .dashboard {
+        background:
+            var(--primary);
+
+        color: white;
+
+        box-shadow:
+            0 3px 10px
+            rgba(37,99,235,.30);
+
+    }
+
+
+    /* ==========================================
+       MAIN
+    ========================================== */
+
+    .main {
 
         width: 100%;
 
         margin-left: 0;
 
         padding:
-            18px 12px 30px;
+            20px 13px 25px;
+
     }
 
 
-    /* ==========================
-       TITLE
-    ========================== */
+    .main > h1 {
 
-    .main > h1,
-    .dashboard h1 {
+        font-size: 22px;
 
-        font-size: 21px;
+        line-height: 1.3;
 
-        line-height: 1.35;
-
-        text-align: center;
     }
 
+
+    .main > p {
+
+        font-size: 12px;
+
+    }
+
+
+    /* ==========================================
+       WELCOME
+    ========================================== */
 
     #welcome {
 
-        font-size: 12px;
+        font-size: 13px;
 
-        line-height: 1.5;
+        margin-top: 5px;
 
-        margin-top: 6px;
     }
 
 
-    /* ==========================
-       DASHBOARD WELCOME
-    ========================== */
-
-    .dashboard .welcome {
-
-        text-align: center;
-
-        margin-bottom: 18px;
-    }
-
-
-    .dashboard .welcome p {
-
-        font-size: 12px;
-
-        line-height: 1.5;
-    }
-
-
-    /* ==========================
+    /* ==========================================
        CLOCK
-    ========================== */
+    ========================================== */
 
     .clock {
 
         width: 100%;
 
-        padding:
-            18px 14px;
+        padding: 20px 15px;
 
-        margin-top: 15px;
+        margin-top: 16px;
 
-        border-radius: 16px;
+        border-radius: 15px;
+
     }
 
 
     .clock h2#time {
 
-        font-size: 30px;
+        font-size: 31px;
 
         margin: 9px 0;
+
+        letter-spacing: 1px;
+
     }
 
 
     .clock #date {
 
         font-size: 13px;
+
     }
 
 
-    /* ==========================
+    /* ==========================================
        LIGHT CARD
-    ========================== */
+    ========================================== */
 
     .card {
 
         width: 100%;
 
-        padding:
-            22px 15px;
+        padding: 22px 15px;
 
         margin-top: 15px;
 
-        border-radius: 16px;
+        border-radius: 15px;
+
     }
 
 
     .card h2 {
 
         font-size: 18px;
+
     }
 
 
@@ -1530,28 +1449,29 @@ select:focus {
         font-size: 38px;
 
         margin: 15px;
+
     }
 
 
-    /* ==========================
+    /* ==========================================
        BUTTON
-    ========================== */
+    ========================================== */
 
     button {
 
         min-width: 105px;
 
-        height: 42px;
+        height: 44px;
 
-        margin:
-            5px 3px;
+        margin: 5px 3px;
 
         border-radius: 10px;
 
-        font-size: 12px;
+        font-size: 13px;
 
-        touch-action:
-            manipulation;
+        -webkit-tap-highlight-color:
+            transparent;
+
     }
 
 
@@ -1559,49 +1479,92 @@ select:focus {
 
         transform:
             scale(.96);
+
     }
 
 
-    /* ==========================
+    /* ==========================================
        TIMER
-    ========================== */
+    ========================================== */
 
     .timer-box {
 
-        margin-top: 14px;
+        margin-top: 15px;
 
         padding: 15px;
 
         border-radius: 12px;
+
     }
 
 
     .timer-box h1 {
 
-        font-size: 23px;
+        font-size: 24px;
+
     }
 
 
-    /* ==========================
+    /* ==========================================
        INFO
-    ========================== */
+    ========================================== */
 
     .info {
 
         width: 100%;
 
-        padding:
-            18px 14px;
+        padding: 18px;
 
         margin-top: 15px;
 
-        border-radius: 16px;
+        border-radius: 15px;
+
     }
 
 
-    /* ==========================
+    /* ==========================================
+       DASHBOARD
+    ========================================== */
+
+    .dashboard {
+
+        width: 100%;
+
+        margin-left: 0;
+
+        padding:
+            20px 13px 25px;
+
+    }
+
+
+    .dashboard .welcome {
+
+        margin:
+            0 0 18px;
+
+    }
+
+
+    .dashboard h1 {
+
+        font-size: 21px;
+
+        line-height: 1.35;
+
+    }
+
+
+    .dashboard .welcome p {
+
+        font-size: 12px;
+
+    }
+
+
+    /* ==========================================
        DASHBOARD CARDS
-    ========================== */
+    ========================================== */
 
     .dashboard-card {
 
@@ -1612,6 +1575,7 @@ select:focus {
         gap: 12px;
 
         margin-bottom: 15px;
+
     }
 
 
@@ -1624,6 +1588,7 @@ select:focus {
         padding: 18px;
 
         border-radius: 15px;
+
     }
 
 
@@ -1631,25 +1596,28 @@ select:focus {
 
         font-size: 13px;
 
-        margin-bottom: 9px;
+        margin-bottom: 8px;
+
     }
 
 
     .box h1 {
 
         font-size: 25px;
+
     }
 
 
     .box h3 {
 
         font-size: 14px;
+
     }
 
 
-    /* ==========================
+    /* ==========================================
        STATISTICS
-    ========================== */
+    ========================================== */
 
     .statistics {
 
@@ -1657,23 +1625,26 @@ select:focus {
 
         grid-template-columns: 1fr;
 
-        gap: 11px;
+        gap: 12px;
 
         margin-bottom: 15px;
+
     }
 
 
     .stat-box {
 
-        padding: 16px;
+        padding: 17px;
 
         border-radius: 15px;
+
     }
 
 
     .stat-box h3 {
 
         font-size: 13px;
+
     }
 
 
@@ -1681,37 +1652,37 @@ select:focus {
 
         font-size: 23px;
 
-        margin-top: 6px;
     }
 
 
-    /* ==========================
-       ACTIVITY LOG
-    ========================== */
+    /* ==========================================
+       LOG
+    ========================================== */
 
     .log {
 
         width: 100%;
 
-        padding: 14px;
+        padding: 15px;
 
         border-radius: 15px;
 
-        margin-bottom: 15px;
     }
 
 
     .log-header {
 
-        gap: 8px;
+        gap: 10px;
 
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+
     }
 
 
     .log-header h2 {
 
         font-size: 17px;
+
     }
 
 
@@ -1719,37 +1690,43 @@ select:focus {
 
         min-width: 85px;
 
-        height: 34px;
+        height: 35px;
 
         font-size: 11px;
+
+        padding: 0 8px;
+
     }
 
 
     .log table {
 
         min-width: 600px;
+
     }
 
 
     th {
 
+        padding: 10px;
+
         font-size: 11px;
 
-        padding: 10px;
     }
 
 
     td {
 
+        padding: 10px;
+
         font-size: 11px;
 
-        padding: 10px;
     }
 
 
-    /* ==========================
+    /* ==========================================
        HISTORY SUMMARY
-    ========================== */
+    ========================================== */
 
     .history-summary {
 
@@ -1757,46 +1734,50 @@ select:focus {
 
         grid-template-columns: 1fr;
 
-        gap: 11px;
+        gap: 12px;
 
-        margin:
-            15px auto;
+        margin: 15px auto;
+
     }
 
 
     .summary-box {
 
-        padding: 16px;
+        padding: 17px;
 
         border-radius: 15px;
+
     }
 
 
     .summary-box h3 {
 
         font-size: 13px;
+
     }
 
 
     .summary-value {
 
         font-size: 23px;
+
     }
 
 
-    /* ==========================
+    /* ==========================================
        HISTORY TABLE
-    ========================== */
+    ========================================== */
 
     .history-table-card {
 
         width: 100%;
 
-        padding: 13px;
+        padding: 14px;
 
         border-radius: 15px;
 
-        margin: 0 auto;
+        overflow-x: auto;
+
     }
 
 
@@ -1804,13 +1785,15 @@ select:focus {
 
         font-size: 17px;
 
-        margin-bottom: 12px;
+        margin-bottom: 14px;
+
     }
 
 
     .history-table-card table {
 
-        min-width: 750px;
+        min-width: 760px;
+
     }
 
 
@@ -1819,6 +1802,7 @@ select:focus {
         font-size: 11px;
 
         padding: 10px;
+
     }
 
 
@@ -1827,8 +1811,13 @@ select:focus {
         font-size: 11px;
 
         padding: 10px;
+
     }
 
+
+    /* ==========================================
+       DELETE / EDIT BUTTON
+    ========================================== */
 
     .delete-btn,
     .edit-btn {
@@ -1837,75 +1826,27 @@ select:focus {
 
         width: 75px;
 
-        height: 32px;
+        height: 34px;
 
         font-size: 11px;
+
+        margin: 2px;
+
     }
 
 
-    /* ==========================
-       LOGIN
-    ========================== */
-
-    .login-body {
-
-        padding: 15px;
-    }
-
-
-    .login-card {
-
-        width: 100%;
-
-        max-width: 390px;
-
-        padding:
-            27px 18px;
-
-        border-radius: 18px;
-    }
-
-
-    .login-card h1 {
-
-        font-size: 23px;
-    }
-
-
-    .login-card p {
-
-        font-size: 12px;
-    }
-
-
-    .login-card input,
-    .login-card select {
-
-        height: 43px;
-
-        font-size: 13px;
-    }
-
-
-    .login-btn {
-
-        height: 44px;
-
-        font-size: 13px;
-    }
-
-
-    /* ==========================
+    /* ==========================================
        MANAGE USER
-    ========================== */
+    ========================================== */
 
     .user-form {
 
         width: 100%;
 
-        padding: 17px;
+        padding: 18px;
 
         border-radius: 15px;
+
     }
 
 
@@ -1914,12 +1855,66 @@ select:focus {
 
         width: 100%;
 
-        height: 43px;
+        margin: 6px 0;
 
-        margin:
-            5px 0;
+        height: 42px;
+
+    }
+
+
+    /* ==========================================
+       LOGIN
+    ========================================== */
+
+    .login-body {
+
+        padding: 15px;
+
+    }
+
+
+    .login-card {
+
+        width: 100%;
+
+        max-width: 370px;
+
+        padding:
+            28px 20px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .login-card h1 {
+
+        font-size: 24px;
+
+    }
+
+
+    .login-card p {
+
+        font-size: 12px;
+
+    }
+
+
+    .login-card input,
+    .login-card select {
+
+        height: 44px;
 
         font-size: 13px;
+
+    }
+
+
+    .login-btn {
+
+        height: 45px;
+
     }
 
 }
@@ -1927,33 +1922,64 @@ select:focus {
 
 /* =====================================================
    SMALL PHONE
+   480px
 ===================================================== */
 
-@media (max-width: 380px) {
+@media (max-width:480px) {
 
 
-    .sidebar h2 {
+    body {
 
-        font-size: 15px;
+        padding-bottom: 68px;
+
+    }
+
+
+    /* ==========================================
+       NAVBAR
+    ========================================== */
+
+    .sidebar {
+
+        height: 62px;
+
+        padding:
+            5px 3px;
+
     }
 
 
     .sidebar a {
 
-        font-size: 9px;
+        min-width: 58px;
+
+        height: 50px;
 
         padding:
-            6px 7px;
+            4px 5px;
 
-        min-height: 34px;
+        font-size: 8px;
+
     }
 
 
-    .main,
+    /* ==========================================
+       MAIN
+    ========================================== */
+
+    .main {
+
+        padding:
+            17px 10px 20px;
+
+    }
+
+
     .dashboard {
 
         padding:
-            16px 9px 25px;
+            17px 10px 20px;
+
     }
 
 
@@ -1961,47 +1987,256 @@ select:focus {
     .dashboard h1 {
 
         font-size: 19px;
+
+    }
+
+
+    /* ==========================================
+       CLOCK
+    ========================================== */
+
+    .clock {
+
+        padding:
+            17px 12px;
+
     }
 
 
     .clock h2#time {
 
         font-size: 27px;
+
+        letter-spacing: .5px;
+
+    }
+
+
+    .clock #date {
+
+        font-size: 12px;
+
+    }
+
+
+    /* ==========================================
+       LIGHT
+    ========================================== */
+
+    .card {
+
+        padding:
+            20px 12px;
+
+    }
+
+
+    .card h2 {
+
+        font-size: 17px;
+
     }
 
 
     #lampStatus {
 
-        font-size: 34px;
+        font-size: 35px;
+
+        margin: 13px;
+
     }
 
+
+    /* ==========================================
+       BUTTON
+    ========================================== */
 
     button {
 
-        min-width: 95px;
+        min-width: 96px;
 
-        height: 40px;
+        height: 43px;
 
-        font-size: 11px;
+        font-size: 12px;
+
     }
 
 
+    /* ==========================================
+       DASHBOARD BOX
+    ========================================== */
+
     .box {
 
-        min-height: 115px;
+        min-height: 118px;
+
+        padding: 16px;
+
+    }
+
+
+    .box h2 {
+
+        font-size: 12px;
+
     }
 
 
     .box h1 {
 
         font-size: 23px;
+
     }
 
 
-    .stat-value,
+    .box h3 {
+
+        font-size: 13px;
+
+    }
+
+
+    /* ==========================================
+       STATISTICS
+    ========================================== */
+
+    .stat-box {
+
+        padding: 15px;
+
+    }
+
+
+    .stat-value {
+
+        font-size: 21px;
+
+    }
+
+
+    /* ==========================================
+       LOGIN
+    ========================================== */
+
+    .login-card {
+
+        padding:
+            25px 17px;
+
+    }
+
+
+    .login-card h1 {
+
+        font-size: 22px;
+
+    }
+
+
+    /* ==========================================
+       HISTORY
+    ========================================== */
+
+    .history-table-card {
+
+        padding: 12px;
+
+    }
+
+
     .summary-value {
 
         font-size: 21px;
+
+    }
+
+}
+
+
+/* =====================================================
+   VERY SMALL PHONE
+   360px
+===================================================== */
+
+@media (max-width:360px) {
+
+
+    .sidebar a {
+
+        min-width: 53px;
+
+        font-size: 7px;
+
+    }
+
+
+    .main,
+    .dashboard {
+
+        padding-left: 8px;
+
+        padding-right: 8px;
+
+    }
+
+
+    .main > h1,
+    .dashboard h1 {
+
+        font-size: 18px;
+
+    }
+
+
+    .clock h2#time {
+
+        font-size: 24px;
+
+    }
+
+
+    #lampStatus {
+
+        font-size: 32px;
+
+    }
+
+
+    button {
+
+        min-width: 90px;
+
+    }
+
+}
+
+
+/* =====================================================
+   TOUCH FRIENDLY
+===================================================== */
+
+@media (hover:none) and (pointer:coarse) {
+
+
+    button {
+
+        min-height: 44px;
+
+    }
+
+
+    .sidebar a {
+
+        min-height: 44px;
+
+    }
+
+
+    input,
+    select {
+
+        min-height: 42px;
+
     }
 
 }
@@ -2018,9 +2253,10 @@ select:focus-visible {
 
     outline:
         3px solid
-        rgba(37, 99, 235, .25);
+        rgba(37,99,235,.25);
 
     outline-offset: 2px;
+
 }
 
 
@@ -2028,7 +2264,7 @@ select:focus-visible {
    REDUCE MOTION
 ===================================================== */
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion:reduce) {
 
     * {
 
@@ -2037,6 +2273,7 @@ select:focus-visible {
 
         transition:
             none !important;
+
     }
 
 }
