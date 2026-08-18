@@ -1949,18 +1949,13 @@ select:focus {
     }
 
 
-    .sidebar a {
-
-        min-width: 58px;
-
-        height: 50px;
-
-        padding:
-            4px 5px;
-
-        font-size: 8px;
-
-    }
+  .sidebar a {
+    min-width: 58px;
+    height: 50px;
+    padding: 4px 5px;
+    font-size: 10px;
+    font-weight: 500;
+}
 
 
     /* ==========================================
@@ -2165,7 +2160,7 @@ select:focus {
 
         min-width: 53px;
 
-        font-size: 7px;
+        font-size: 9px;
 
     }
 
