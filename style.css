@@ -1,7 +1,7 @@
 /* =====================================================
    SMART CLASSROOM CONTROL SYSTEM
-   PROFESSIONAL RESPONSIVE UI
-   LAPTOP + PHONE
+   STYLE.CSS
+   LAPTOP + PHONE FRIENDLY
 ===================================================== */
 
 
@@ -41,12 +41,11 @@
     --shadow:
         0 6px 20px
         rgba(15, 23, 42, 0.07);
-
 }
 
 
 /* =====================================================
-   RESET
+   GLOBAL RESET
 ===================================================== */
 
 * {
@@ -59,14 +58,12 @@
     font-family:
         'Poppins',
         sans-serif;
-
 }
 
 
 html {
 
     scroll-behavior: smooth;
-
 }
 
 
@@ -85,7 +82,6 @@ body {
     color: var(--text);
 
     font-size: 14px;
-
 }
 
 
@@ -97,14 +93,12 @@ body {
 
     width: 7px;
     height: 7px;
-
 }
 
 
 ::-webkit-scrollbar-track {
 
     background: #f1f5f9;
-
 }
 
 
@@ -113,14 +107,12 @@ body {
     background: #cbd5e1;
 
     border-radius: 20px;
-
 }
 
 
 ::-webkit-scrollbar-thumb:hover {
 
     background: #94a3b8;
-
 }
 
 
@@ -131,7 +123,6 @@ body {
 a {
 
     text-decoration: none;
-
 }
 
 
@@ -150,7 +141,6 @@ a {
     align-items: center;
 
     padding: 20px;
-
 }
 
 
@@ -170,8 +160,7 @@ a {
 
     box-shadow:
         0 15px 40px
-        rgba(15, 23, 42, .10);
-
+        rgba(15, 23, 42, 0.10);
 }
 
 
@@ -182,7 +171,6 @@ a {
     font-size: 27px;
 
     margin-bottom: 8px;
-
 }
 
 
@@ -193,7 +181,6 @@ a {
     font-size: 13px;
 
     margin-bottom: 22px;
-
 }
 
 
@@ -208,9 +195,7 @@ a {
 
     border-radius: 10px;
 
-    border:
-        1px solid
-        var(--border);
+    border: 1px solid var(--border);
 
     outline: none;
 
@@ -218,6 +203,7 @@ a {
 
     font-size: 14px;
 
+    transition: .2s;
 }
 
 
@@ -228,8 +214,7 @@ a {
 
     box-shadow:
         0 0 0 3px
-        rgba(37,99,235,.10);
-
+        rgba(37, 99, 235, .10);
 }
 
 
@@ -256,7 +241,6 @@ a {
     cursor: pointer;
 
     transition: .2s;
-
 }
 
 
@@ -264,6 +248,7 @@ a {
 
     background: var(--primary-dark);
 
+    transform: translateY(-1px);
 }
 
 
@@ -274,12 +259,11 @@ a {
     font-size: 13px;
 
     margin-top: 10px;
-
 }
 
 
 /* =====================================================
-   SIDEBAR - LAPTOP
+   SIDEBAR / NAVBAR LAPTOP
 ===================================================== */
 
 .sidebar {
@@ -310,8 +294,7 @@ a {
 
     box-shadow:
         4px 0 20px
-        rgba(15,23,42,.10);
-
+        rgba(15, 23, 42, .10);
 }
 
 
@@ -326,7 +309,6 @@ a {
     margin-bottom: 25px;
 
     color: white;
-
 }
 
 
@@ -336,7 +318,7 @@ a {
 
     align-items: center;
 
-    gap: 8px;
+    gap: 9px;
 
     color: #cbd5e1;
 
@@ -349,20 +331,17 @@ a {
     font-size: 13px;
 
     transition: .2s;
-
 }
 
 
 .sidebar a:hover {
 
     background:
-        rgba(59,130,246,.18);
+        rgba(59, 130, 246, .18);
 
     color: white;
 
-    transform:
-        translateX(3px);
-
+    transform: translateX(3px);
 }
 
 
@@ -372,6 +351,9 @@ a {
 
     color: white;
 
+    box-shadow:
+        0 4px 12px
+        rgba(37, 99, 235, .25);
 }
 
 
@@ -392,7 +374,6 @@ a {
     flex-direction: column;
 
     align-items: center;
-
 }
 
 
@@ -402,8 +383,9 @@ a {
 
     font-size: 29px;
 
-    text-align: center;
+    line-height: 1.3;
 
+    text-align: center;
 }
 
 
@@ -414,7 +396,6 @@ a {
     margin-top: 6px;
 
     text-align: center;
-
 }
 
 
@@ -431,7 +412,6 @@ a {
     font-size: 14px;
 
     text-align: center;
-
 }
 
 
@@ -465,8 +445,19 @@ a {
 
     border:
         1px solid
-        rgba(226,232,240,.7);
+        rgba(226, 232, 240, .7);
 
+    transition: .2s;
+}
+
+
+.clock:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(15, 23, 42, .10);
 }
 
 
@@ -479,7 +470,6 @@ a {
     font-weight: 600;
 
     margin: 12px 0;
-
 }
 
 
@@ -490,7 +480,6 @@ a {
     font-size: 15px;
 
     font-weight: 500;
-
 }
 
 
@@ -516,6 +505,17 @@ a {
 
     box-shadow: var(--shadow);
 
+    border:
+        1px solid
+        rgba(226, 232, 240, .7);
+
+    transition: .2s;
+}
+
+
+.card:hover {
+
+    transform: translateY(-3px);
 }
 
 
@@ -525,6 +525,7 @@ a {
 
     font-size: 20px;
 
+    margin-bottom: 5px;
 }
 
 
@@ -537,7 +538,6 @@ a {
     color: var(--danger);
 
     margin: 18px;
-
 }
 
 
@@ -568,15 +568,12 @@ button {
     font-weight: 600;
 
     transition: .2s;
-
 }
 
 
 button:hover {
 
-    transform:
-        translateY(-2px);
-
+    transform: translateY(-2px);
 }
 
 
@@ -584,6 +581,15 @@ button:hover {
 
     background: var(--success);
 
+    box-shadow:
+        0 4px 10px
+        rgba(22, 163, 74, .15);
+}
+
+
+.on:hover {
+
+    background: #15803d;
 }
 
 
@@ -591,20 +597,15 @@ button:hover {
 
     background: var(--danger);
 
+    box-shadow:
+        0 4px 10px
+        rgba(220, 38, 38, .15);
 }
 
 
-.edit-btn {
+.off:hover {
 
-    background: var(--warning);
-
-}
-
-
-.delete-btn {
-
-    background: var(--danger);
-
+    background: #b91c1c;
 }
 
 
@@ -616,8 +617,7 @@ button:hover {
 
     margin-top: 18px;
 
-    background:
-        var(--primary-light);
+    background: var(--primary-light);
 
     padding: 17px;
 
@@ -626,7 +626,6 @@ button:hover {
     border:
         1px solid
         #dbeafe;
-
 }
 
 
@@ -635,7 +634,6 @@ button:hover {
     color: var(--primary);
 
     font-size: 26px;
-
 }
 
 
@@ -660,7 +658,6 @@ button:hover {
     text-align: center;
 
     box-shadow: var(--shadow);
-
 }
 
 
@@ -669,7 +666,6 @@ button:hover {
     color: var(--success);
 
     font-weight: 600;
-
 }
 
 
@@ -678,7 +674,6 @@ button:hover {
     color: var(--danger);
 
     font-weight: 600;
-
 }
 
 
@@ -693,7 +688,6 @@ button:hover {
     margin-left: 235px;
 
     padding: 32px;
-
 }
 
 
@@ -703,7 +697,6 @@ button:hover {
 
     margin:
         0 auto 24px;
-
 }
 
 
@@ -712,7 +705,6 @@ button:hover {
     color: var(--dark);
 
     font-size: 28px;
-
 }
 
 
@@ -723,7 +715,6 @@ button:hover {
     margin-top: 5px;
 
     font-size: 14px;
-
 }
 
 
@@ -741,10 +732,9 @@ button:hover {
     display: grid;
 
     grid-template-columns:
-        repeat(4,1fr);
+        repeat(4, 1fr);
 
     gap: 17px;
-
 }
 
 
@@ -770,10 +760,21 @@ button:hover {
 
     border:
         1px solid
-        rgba(226,232,240,.8);
+        rgba(226, 232, 240, .8);
 
     box-shadow: var(--shadow);
 
+    transition: .2s;
+}
+
+
+.box:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(15, 23, 42, .10);
 }
 
 
@@ -786,7 +787,6 @@ button:hover {
     font-weight: 600;
 
     margin-bottom: 12px;
-
 }
 
 
@@ -796,6 +796,7 @@ button:hover {
 
     font-weight: 700;
 
+    margin: 0;
 }
 
 
@@ -804,7 +805,6 @@ button:hover {
     color: var(--text);
 
     font-size: 15px;
-
 }
 
 
@@ -824,10 +824,9 @@ button:hover {
     display: grid;
 
     grid-template-columns:
-        repeat(3,1fr);
+        repeat(3, 1fr);
 
     gap: 17px;
-
 }
 
 
@@ -839,19 +838,23 @@ button:hover {
 
     border-radius: var(--radius);
 
-    box-shadow: var(--shadow);
+    border:
+        1px solid
+        rgba(226, 232, 240, .8);
 
+    box-shadow: var(--shadow);
 }
 
 
 .stat-box h3 {
+
+    margin: 0;
 
     color: var(--muted);
 
     font-size: 14px;
 
     font-weight: 500;
-
 }
 
 
@@ -864,7 +867,6 @@ button:hover {
     color: var(--dark);
 
     margin-top: 8px;
-
 }
 
 
@@ -889,7 +891,6 @@ button:hover {
     box-shadow: var(--shadow);
 
     overflow-x: auto;
-
 }
 
 
@@ -902,16 +903,16 @@ button:hover {
     align-items: center;
 
     margin-bottom: 15px;
-
 }
 
 
 .log-header h2 {
 
+    margin: 0;
+
     font-size: 19px;
 
     color: var(--dark);
-
 }
 
 
@@ -927,6 +928,13 @@ button:hover {
 
     background: var(--danger);
 
+    padding: 0 12px;
+}
+
+
+.clear-log:hover {
+
+    background: #b91c1c;
 }
 
 
@@ -939,7 +947,6 @@ table {
     width: 100%;
 
     border-collapse: collapse;
-
 }
 
 
@@ -960,7 +967,6 @@ th {
         var(--border);
 
     white-space: nowrap;
-
 }
 
 
@@ -977,14 +983,12 @@ td {
     border-bottom:
         1px solid
         #edf0f3;
-
 }
 
 
 tr:hover td {
 
     background: #f8fafc;
-
 }
 
 
@@ -1001,12 +1005,11 @@ tr:hover td {
     display: grid;
 
     grid-template-columns:
-        repeat(3,1fr);
+        repeat(3, 1fr);
 
     gap: 17px;
 
     margin: 22px auto;
-
 }
 
 
@@ -1018,17 +1021,24 @@ tr:hover td {
 
     border-radius: var(--radius);
 
-    box-shadow: var(--shadow);
+    border:
+        1px solid
+        rgba(226, 232, 240, .8);
 
+    box-shadow: var(--shadow);
 }
 
 
 .summary-box h3 {
 
+    margin:
+        0 0 8px;
+
     color: var(--muted);
 
     font-size: 14px;
 
+    font-weight: 500;
 }
 
 
@@ -1039,9 +1049,6 @@ tr:hover td {
     font-weight: 700;
 
     color: var(--dark);
-
-    margin-top: 8px;
-
 }
 
 
@@ -1066,32 +1073,99 @@ tr:hover td {
     box-shadow: var(--shadow);
 
     overflow-x: auto;
-
 }
 
 
 .history-table-card h2 {
 
-    margin-bottom: 18px;
+    margin:
+        0 0 18px;
 
     font-size: 19px;
 
     color: var(--dark);
-
 }
 
 
 .history-table-card table {
 
     min-width: 800px;
+}
 
+
+.history-table-card th {
+
+    background: #f8fafc;
+
+    color: var(--text);
+
+    padding: 12px;
 }
 
 
 .history-table-card td {
 
-    white-space: nowrap;
+    padding: 12px;
 
+    white-space: nowrap;
+}
+
+
+.history-table-card tr:hover td {
+
+    background: #f8fafc;
+}
+
+
+.no-record {
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: var(--muted);
+}
+
+
+/* =====================================================
+   DELETE BUTTON
+===================================================== */
+
+.delete-btn {
+
+    min-width: 85px;
+
+    width: 85px;
+
+    height: 35px;
+
+    margin: 3px;
+
+    background: var(--danger);
+}
+
+
+.delete-btn:hover {
+
+    background: #b91c1c;
+}
+
+
+/* =====================================================
+   EDIT BUTTON
+===================================================== */
+
+.edit-btn {
+
+    min-width: 85px;
+
+    width: 85px;
+
+    height: 35px;
+
+    margin: 3px;
+
+    background: var(--warning);
 }
 
 
@@ -1114,7 +1188,6 @@ tr:hover td {
     text-align: center;
 
     box-shadow: var(--shadow);
-
 }
 
 
@@ -1136,7 +1209,14 @@ tr:hover td {
         var(--border);
 
     outline: none;
+}
 
+
+.user-form input:focus,
+.user-form select:focus {
+
+    border-color:
+        var(--primary);
 }
 
 
@@ -1159,7 +1239,6 @@ select {
     outline: none;
 
     font-size: 14px;
-
 }
 
 
@@ -1171,8 +1250,7 @@ select:focus {
 
     box-shadow:
         0 0 0 3px
-        rgba(37,99,235,.08);
-
+        rgba(37, 99, 235, .08);
 }
 
 
@@ -1180,20 +1258,19 @@ select:focus {
    TABLET
 ===================================================== */
 
-@media (max-width:1000px) {
+@media (max-width: 1000px) {
 
     .dashboard-card {
 
         grid-template-columns:
-            repeat(2,1fr);
-
+            repeat(2, 1fr);
     }
+
 
     .statistics {
 
         grid-template-columns:
-            repeat(2,1fr);
-
+            repeat(2, 1fr);
     }
 
 }
@@ -1201,118 +1278,90 @@ select:focus {
 
 /* =====================================================
    PHONE
+   <= 768px
 ===================================================== */
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
 
 
-    /* ==========================================
-       BODY
-    ========================================== */
-
-    body {
-
-        font-size: 13px;
-
-        padding-bottom: 72px;
-
-    }
-
-
-    /* ==========================================
-       MOBILE NAVBAR
-    ========================================== */
+    /* =========================================
+       NAVBAR PHONE
+    ========================================= */
 
     .sidebar {
 
-        position: fixed;
-
-        left: 0;
-
-        bottom: 0;
-
-        top: auto;
+        position: relative;
 
         width: 100%;
 
-        height: 64px;
+        height: auto;
 
-        padding: 6px 5px;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: space-around;
-
-        background:
-            rgba(15,23,42,.97);
-
-        border-top:
-            1px solid
-            rgba(255,255,255,.08);
-
-        box-shadow:
-            0 -5px 20px
-            rgba(0,0,0,.15);
-
-        overflow-x: auto;
-
-        overflow-y: hidden;
-
-        z-index: 9999;
-
-    }
-
-
-    /* Hide SmartClass title */
-
-    .sidebar h2 {
-
-        display: none;
-
-    }
-
-
-    /* Navigation links */
-
-    .sidebar a {
-
-        flex:
-            0 0 auto;
-
-        width: auto;
-
-        min-width: 62px;
-
-        height: 52px;
-
-        margin: 0 2px;
-
-        padding: 5px 8px;
-
-        display: flex;
-
-        flex-direction: column;
-
-        justify-content: center;
-
-        align-items: center;
-
-        gap: 2px;
-
-        border-radius: 10px;
-
-        color: #cbd5e1;
-
-        font-size: 9px;
-
-        line-height: 1.1;
-
-        white-space: nowrap;
+        padding:
+            15px 10px 18px;
 
         text-align: center;
 
+        background:
+            linear-gradient(
+                180deg,
+                #0f172a,
+                #1e293b
+            );
+
+        box-shadow:
+            0 4px 18px
+            rgba(15, 23, 42, .18);
+
+        overflow: visible;
+    }
+
+
+    .sidebar h2 {
+
+        font-size: 20px;
+
+        margin-bottom: 13px;
+
+        padding-bottom: 3px;
+    }
+
+
+    /*
+       NAVBAR BUTTON
+    */
+
+    .sidebar a {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 43px;
+
+        padding:
+            10px 12px;
+
+        margin:
+            4px 2px;
+
+        border-radius: 11px;
+
+        font-size: 12px;
+
+        font-weight: 500;
+
+        gap: 5px;
+
+        color: #e2e8f0;
+
+        background:
+            rgba(255,255,255,.04);
+
+        transition:
+            background .2s,
+            transform .2s;
     }
 
 
@@ -1321,8 +1370,15 @@ select:focus {
         transform: none;
 
         background:
-            rgba(59,130,246,.18);
+            rgba(59,130,246,.25);
 
+        color: white;
+    }
+
+
+    .sidebar a:active {
+
+        transform: scale(.96);
     }
 
 
@@ -1334,15 +1390,14 @@ select:focus {
         color: white;
 
         box-shadow:
-            0 3px 10px
-            rgba(37,99,235,.30);
-
+            0 4px 10px
+            rgba(37,99,235,.25);
     }
 
 
-    /* ==========================================
+    /* =========================================
        MAIN
-    ========================================== */
+    ========================================= */
 
     .main {
 
@@ -1351,180 +1406,27 @@ select:focus {
         margin-left: 0;
 
         padding:
-            20px 13px 25px;
-
+            22px 14px;
     }
 
 
     .main > h1 {
 
-        font-size: 22px;
+        font-size: 23px;
 
-        line-height: 1.3;
-
+        line-height: 1.35;
     }
 
 
     .main > p {
 
-        font-size: 12px;
-
-    }
-
-
-    /* ==========================================
-       WELCOME
-    ========================================== */
-
-    #welcome {
-
         font-size: 13px;
-
-        margin-top: 5px;
-
     }
 
 
-    /* ==========================================
-       CLOCK
-    ========================================== */
-
-    .clock {
-
-        width: 100%;
-
-        padding: 20px 15px;
-
-        margin-top: 16px;
-
-        border-radius: 15px;
-
-    }
-
-
-    .clock h2#time {
-
-        font-size: 31px;
-
-        margin: 9px 0;
-
-        letter-spacing: 1px;
-
-    }
-
-
-    .clock #date {
-
-        font-size: 13px;
-
-    }
-
-
-    /* ==========================================
-       LIGHT CARD
-    ========================================== */
-
-    .card {
-
-        width: 100%;
-
-        padding: 22px 15px;
-
-        margin-top: 15px;
-
-        border-radius: 15px;
-
-    }
-
-
-    .card h2 {
-
-        font-size: 18px;
-
-    }
-
-
-    #lampStatus {
-
-        font-size: 38px;
-
-        margin: 15px;
-
-    }
-
-
-    /* ==========================================
-       BUTTON
-    ========================================== */
-
-    button {
-
-        min-width: 105px;
-
-        height: 44px;
-
-        margin: 5px 3px;
-
-        border-radius: 10px;
-
-        font-size: 13px;
-
-        -webkit-tap-highlight-color:
-            transparent;
-
-    }
-
-
-    button:active {
-
-        transform:
-            scale(.96);
-
-    }
-
-
-    /* ==========================================
-       TIMER
-    ========================================== */
-
-    .timer-box {
-
-        margin-top: 15px;
-
-        padding: 15px;
-
-        border-radius: 12px;
-
-    }
-
-
-    .timer-box h1 {
-
-        font-size: 24px;
-
-    }
-
-
-    /* ==========================================
-       INFO
-    ========================================== */
-
-    .info {
-
-        width: 100%;
-
-        padding: 18px;
-
-        margin-top: 15px;
-
-        border-radius: 15px;
-
-    }
-
-
-    /* ==========================================
+    /* =========================================
        DASHBOARD
-    ========================================== */
+    ========================================= */
 
     .dashboard {
 
@@ -1533,102 +1435,63 @@ select:focus {
         margin-left: 0;
 
         padding:
-            20px 13px 25px;
-
-    }
-
-
-    .dashboard .welcome {
-
-        margin:
-            0 0 18px;
-
+            22px 14px;
     }
 
 
     .dashboard h1 {
 
-        font-size: 21px;
+        font-size: 23px;
 
         line-height: 1.35;
-
     }
 
 
     .dashboard .welcome p {
 
-        font-size: 12px;
-
+        font-size: 13px;
     }
 
 
-    /* ==========================================
-       DASHBOARD CARDS
-    ========================================== */
-
     .dashboard-card {
-
-        width: 100%;
 
         grid-template-columns: 1fr;
 
-        gap: 12px;
-
-        margin-bottom: 15px;
-
+        gap: 14px;
     }
 
 
     .box {
 
-        width: 100%;
+        min-height: 140px;
 
-        min-height: 125px;
-
-        padding: 18px;
+        padding: 20px;
 
         border-radius: 15px;
-
     }
 
 
     .box h2 {
 
-        font-size: 13px;
-
-        margin-bottom: 8px;
-
+        font-size: 14px;
     }
 
 
     .box h1 {
 
-        font-size: 25px;
-
+        font-size: 27px;
     }
 
 
-    .box h3 {
-
-        font-size: 14px;
-
-    }
-
-
-    /* ==========================================
+    /* =========================================
        STATISTICS
-    ========================================== */
+    ========================================= */
 
     .statistics {
 
-        width: 100%;
-
         grid-template-columns: 1fr;
 
-        gap: 12px;
-
-        margin-bottom: 15px;
-
+        gap: 13px;
     }
 
 
@@ -1636,137 +1499,39 @@ select:focus {
 
         padding: 17px;
 
-        border-radius: 15px;
-
-    }
-
-
-    .stat-box h3 {
-
-        font-size: 13px;
-
+        border-radius: 14px;
     }
 
 
     .stat-value {
 
-        font-size: 23px;
-
+        font-size: 24px;
     }
 
 
-    /* ==========================================
-       LOG
-    ========================================== */
-
-    .log {
-
-        width: 100%;
-
-        padding: 15px;
-
-        border-radius: 15px;
-
-    }
-
-
-    .log-header {
-
-        gap: 10px;
-
-        margin-bottom: 12px;
-
-    }
-
-
-    .log-header h2 {
-
-        font-size: 17px;
-
-    }
-
-
-    .clear-log {
-
-        min-width: 85px;
-
-        height: 35px;
-
-        font-size: 11px;
-
-        padding: 0 8px;
-
-    }
-
-
-    .log table {
-
-        min-width: 600px;
-
-    }
-
-
-    th {
-
-        padding: 10px;
-
-        font-size: 11px;
-
-    }
-
-
-    td {
-
-        padding: 10px;
-
-        font-size: 11px;
-
-    }
-
-
-    /* ==========================================
-       HISTORY SUMMARY
-    ========================================== */
+    /* =========================================
+       HISTORY
+    ========================================= */
 
     .history-summary {
 
-        width: 100%;
-
         grid-template-columns: 1fr;
 
-        gap: 12px;
-
-        margin: 15px auto;
-
+        gap: 13px;
     }
 
 
     .summary-box {
 
         padding: 17px;
-
-        border-radius: 15px;
-
-    }
-
-
-    .summary-box h3 {
-
-        font-size: 13px;
-
     }
 
 
     .summary-value {
 
-        font-size: 23px;
-
+        font-size: 24px;
     }
 
-
-    /* ==========================================
-       HISTORY TABLE
-    ========================================== */
 
     .history-table-card {
 
@@ -1774,79 +1539,128 @@ select:focus {
 
         padding: 14px;
 
-        border-radius: 15px;
-
-        overflow-x: auto;
-
-    }
-
-
-    .history-table-card h2 {
-
-        font-size: 17px;
-
-        margin-bottom: 14px;
-
+        border-radius: 14px;
     }
 
 
     .history-table-card table {
 
-        min-width: 760px;
-
+        min-width: 800px;
     }
 
 
-    .history-table-card th {
+    /* =========================================
+       LOG
+    ========================================= */
 
-        font-size: 11px;
-
-        padding: 10px;
-
-    }
-
-
-    .history-table-card td {
-
-        font-size: 11px;
-
-        padding: 10px;
-
-    }
-
-
-    /* ==========================================
-       DELETE / EDIT BUTTON
-    ========================================== */
-
-    .delete-btn,
-    .edit-btn {
-
-        min-width: 75px;
-
-        width: 75px;
-
-        height: 34px;
-
-        font-size: 11px;
-
-        margin: 2px;
-
-    }
-
-
-    /* ==========================================
-       MANAGE USER
-    ========================================== */
-
-    .user-form {
+    .log {
 
         width: 100%;
 
-        padding: 18px;
+        padding: 14px;
+
+        border-radius: 14px;
+    }
+
+
+    .log-header {
+
+        gap: 10px;
+    }
+
+
+    .log-header h2 {
+
+        font-size: 17px;
+    }
+
+
+    .log table {
+
+        min-width: 650px;
+    }
+
+
+    /* =========================================
+       LIGHT CONTROL
+    ========================================= */
+
+    .clock,
+    .card,
+    .info {
+
+        width: 100%;
+
+        padding: 21px;
 
         border-radius: 15px;
+    }
 
+
+    .clock h2#time {
+
+        font-size: 32px;
+    }
+
+
+    .clock #date {
+
+        font-size: 14px;
+    }
+
+
+    #lampStatus {
+
+        font-size: 40px;
+
+        margin: 16px;
+    }
+
+
+    /* =========================================
+       BUTTON
+    ========================================= */
+
+    button {
+
+        min-width: 105px;
+
+        height: 43px;
+
+        font-size: 13px;
+
+        margin: 5px 3px;
+
+        border-radius: 10px;
+    }
+
+
+    /* =========================================
+       LOGIN
+    ========================================= */
+
+    .login-card {
+
+        width: 100%;
+
+        max-width: 390px;
+
+        padding:
+            30px 22px;
+
+        border-radius: 18px;
+    }
+
+
+    /* =========================================
+       USER FORM
+    ========================================= */
+
+    .user-form {
+
+        padding: 20px;
+
+        border-radius: 15px;
     }
 
 
@@ -1855,66 +1669,8 @@ select:focus {
 
         width: 100%;
 
-        margin: 6px 0;
-
-        height: 42px;
-
-    }
-
-
-    /* ==========================================
-       LOGIN
-    ========================================== */
-
-    .login-body {
-
-        padding: 15px;
-
-    }
-
-
-    .login-card {
-
-        width: 100%;
-
-        max-width: 370px;
-
-        padding:
-            28px 20px;
-
-        border-radius: 18px;
-
-    }
-
-
-    .login-card h1 {
-
-        font-size: 24px;
-
-    }
-
-
-    .login-card p {
-
-        font-size: 12px;
-
-    }
-
-
-    .login-card input,
-    .login-card select {
-
-        height: 44px;
-
-        font-size: 13px;
-
-    }
-
-
-    .login-btn {
-
-        height: 45px;
-
+        margin:
+            6px 0;
     }
 
 }
@@ -1922,232 +1678,259 @@ select:focus {
 
 /* =====================================================
    SMALL PHONE
-   480px
+   <= 480px
 ===================================================== */
 
-@media (max-width:480px) {
+@media (max-width: 480px) {
 
 
-    body {
-
-        padding-bottom: 68px;
-
-    }
-
-
-    /* ==========================================
-       NAVBAR
-    ========================================== */
+    /* =========================================
+       NAVBAR LEBIH BESAR & SENANG TEKAN
+    ========================================= */
 
     .sidebar {
 
-        height: 62px;
-
         padding:
-            5px 3px;
+            16px 8px 20px;
+    }
 
+
+    .sidebar h2 {
+
+        font-size: 19px;
+
+        margin-bottom: 14px;
     }
 
 
     .sidebar a {
 
-        min-width: 58px;
-
-        height: 50px;
+        min-height: 45px;
 
         padding:
-            4px 5px;
+            11px 13px;
 
-        font-size: 8px;
+        margin:
+            4px 2px;
 
+        font-size: 12px;
+
+        border-radius: 11px;
     }
 
 
-    /* ==========================================
+    /* =========================================
        MAIN
-    ========================================== */
+    ========================================= */
 
-    .main {
-
-        padding:
-            17px 10px 20px;
-
-    }
-
-
+    .main,
     .dashboard {
 
         padding:
-            17px 10px 20px;
-
+            19px 11px;
     }
 
 
     .main > h1,
     .dashboard h1 {
 
-        font-size: 19px;
-
+        font-size: 20px;
     }
 
 
-    /* ==========================================
+    /* =========================================
+       WELCOME
+    ========================================= */
+
+    #welcome {
+
+        font-size: 13px;
+
+        line-height: 1.5;
+    }
+
+
+    /* =========================================
        CLOCK
-    ========================================== */
+    ========================================= */
 
     .clock {
 
-        padding:
-            17px 12px;
-
+        padding: 19px 14px;
     }
 
 
     .clock h2#time {
 
-        font-size: 27px;
-
-        letter-spacing: .5px;
-
+        font-size: 29px;
     }
 
 
     .clock #date {
 
-        font-size: 12px;
-
+        font-size: 14px;
     }
 
 
-    /* ==========================================
-       LIGHT
-    ========================================== */
+    /* =========================================
+       LIGHT CARD
+    ========================================= */
 
     .card {
 
         padding:
-            20px 12px;
-
+            22px 15px;
     }
 
 
     .card h2 {
 
-        font-size: 17px;
-
+        font-size: 18px;
     }
 
 
     #lampStatus {
 
-        font-size: 35px;
+        font-size: 37px;
 
-        margin: 13px;
-
+        margin: 14px;
     }
 
 
-    /* ==========================================
+    /* =========================================
+       TIMER
+    ========================================= */
+
+    .timer-box {
+
+        padding: 15px;
+    }
+
+
+    .timer-box h1 {
+
+        font-size: 23px;
+    }
+
+
+    /* =========================================
        BUTTON
-    ========================================== */
+    ========================================= */
 
     button {
 
-        min-width: 96px;
+        min-width: 100px;
 
-        height: 43px;
+        height: 44px;
 
         font-size: 12px;
-
     }
 
 
-    /* ==========================================
+    /* =========================================
        DASHBOARD BOX
-    ========================================== */
+    ========================================= */
 
     .box {
 
-        min-height: 118px;
+        min-height: 135px;
 
-        padding: 16px;
-
+        padding: 18px;
     }
 
 
     .box h2 {
 
-        font-size: 12px;
-
+        font-size: 13px;
     }
 
 
     .box h1 {
 
-        font-size: 23px;
-
+        font-size: 25px;
     }
 
 
-    .box h3 {
-
-        font-size: 13px;
-
-    }
-
-
-    /* ==========================================
+    /* =========================================
        STATISTICS
-    ========================================== */
+    ========================================= */
 
     .stat-box {
 
-        padding: 15px;
+        padding: 16px;
+    }
 
+
+    .stat-box h3 {
+
+        font-size: 13px;
     }
 
 
     .stat-value {
 
-        font-size: 21px;
-
+        font-size: 22px;
     }
 
 
-    /* ==========================================
+    /* =========================================
+       HISTORY
+    ========================================= */
+
+    .history-table-card {
+
+        padding: 11px;
+
+        border-radius: 13px;
+    }
+
+
+    .history-table-card h2 {
+
+        font-size: 17px;
+    }
+
+
+    /* =========================================
+       LOG
+    ========================================= */
+
+    .log {
+
+        padding: 11px;
+    }
+
+
+    .log-header h2 {
+
+        font-size: 16px;
+    }
+
+
+    .clear-log {
+
+        min-width: 90px;
+
+        height: 36px;
+
+        font-size: 11px;
+    }
+
+
+    /* =========================================
        LOGIN
-    ========================================== */
+    ========================================= */
 
     .login-card {
 
         padding:
-            25px 17px;
-
+            27px 18px;
     }
 
 
     .login-card h1 {
 
-        font-size: 22px;
-
-    }
-
-
-    /* ==========================================
-       HISTORY
-    ========================================== */
-
-    .history-table-card {
-
-        padding: 12px;
-
-    }
-
-
-    .summary-value {
-
-        font-size: 21px;
-
+        font-size: 24px;
     }
 
 }
@@ -2155,88 +1938,63 @@ select:focus {
 
 /* =====================================================
    VERY SMALL PHONE
-   360px
+   <= 360px
 ===================================================== */
 
-@media (max-width:360px) {
+@media (max-width: 360px) {
+
+
+    .sidebar {
+
+        padding:
+            14px 6px 18px;
+    }
+
+
+    .sidebar h2 {
+
+        font-size: 17px;
+    }
 
 
     .sidebar a {
 
-        min-width: 53px;
+        min-height: 42px;
 
-        font-size: 7px;
+        padding:
+            9px 10px;
 
+        font-size: 11px;
     }
 
 
     .main,
     .dashboard {
 
-        padding-left: 8px;
-
-        padding-right: 8px;
-
-    }
-
-
-    .main > h1,
-    .dashboard h1 {
-
-        font-size: 18px;
-
+        padding:
+            17px 9px;
     }
 
 
     .clock h2#time {
 
-        font-size: 24px;
-
+        font-size: 26px;
     }
 
 
     #lampStatus {
 
-        font-size: 32px;
-
+        font-size: 34px;
     }
 
 
     button {
 
-        min-width: 90px;
+        min-width: 92px;
 
-    }
+        height: 42px;
 
-}
-
-
-/* =====================================================
-   TOUCH FRIENDLY
-===================================================== */
-
-@media (hover:none) and (pointer:coarse) {
-
-
-    button {
-
-        min-height: 44px;
-
-    }
-
-
-    .sidebar a {
-
-        min-height: 44px;
-
-    }
-
-
-    input,
-    select {
-
-        min-height: 42px;
-
+        font-size: 11px;
     }
 
 }
@@ -2253,10 +2011,9 @@ select:focus-visible {
 
     outline:
         3px solid
-        rgba(37,99,235,.25);
+        rgba(37, 99, 235, .25);
 
     outline-offset: 2px;
-
 }
 
 
@@ -2264,16 +2021,13 @@ select:focus-visible {
    REDUCE MOTION
 ===================================================== */
 
-@media (prefers-reduced-motion:reduce) {
+@media (prefers-reduced-motion: reduce) {
 
     * {
 
-        scroll-behavior:
-            auto !important;
+        scroll-behavior: auto !important;
 
-        transition:
-            none !important;
-
+        transition: none !important;
     }
 
 }
