@@ -1,7 +1,7 @@
 /* =====================================================
    MANAGE USERS
    SMART CLASSROOM
-   PORTRAIT USER MANAGEMENT UI
+   RESPONSIVE USER MANAGEMENT
 ===================================================== */
 
 
@@ -69,7 +69,6 @@
     gap: 18px;
 }
 
-
 .stat-card {
     background: white;
 
@@ -91,7 +90,6 @@
     justify-content: center;
 }
 
-
 .stat-card h3 {
     color: var(--muted);
 
@@ -100,7 +98,6 @@
 
     margin-bottom: 7px;
 }
-
 
 .stat-card h1 {
     color: var(--dark);
@@ -133,7 +130,6 @@
     box-shadow: var(--shadow);
 }
 
-
 .user-card h2 {
     color: var(--dark);
 
@@ -143,12 +139,16 @@
 }
 
 
+/* =====================================================
+   ADD USER FORM
+===================================================== */
+
 .form-group {
     display: grid;
 
     grid-template-columns:
-        1.5fr
-        1.2fr
+        minmax(200px, 1.5fr)
+        minmax(180px, 1.2fr)
         180px
         120px;
 
@@ -156,7 +156,6 @@
 
     align-items: center;
 }
-
 
 .form-group input,
 .form-group select {
@@ -178,7 +177,6 @@
     background: white;
 }
 
-
 .form-group input:focus,
 .form-group select:focus {
     border-color: var(--primary);
@@ -188,11 +186,8 @@
         rgba(37, 99, 235, .08);
 }
 
-
 .form-group button {
     width: 100%;
-
-    min-width: 0;
 
     height: 43px;
 
@@ -202,7 +197,6 @@
 
     border-radius: 10px;
 }
-
 
 .form-group button:hover {
     background: var(--primary-dark);
@@ -219,7 +213,6 @@
 
     margin: 0 auto 18px;
 }
-
 
 .search-box input {
     width: 100%;
@@ -243,7 +236,6 @@
         0 4px 15px
         rgba(15, 23, 42, .04);
 }
-
 
 .search-box input:focus {
     border-color: var(--primary);
@@ -275,8 +267,9 @@
     border:
         1px solid
         rgba(226, 232, 240, .8);
-}
 
+    overflow-x: auto;
+}
 
 .user-table-card h2 {
     color: var(--dark);
@@ -288,17 +281,15 @@
 
 
 /* =====================================================
-   REMOVE NORMAL TABLE LOOK
+   DESKTOP TABLE
 ===================================================== */
 
 .user-table-card table {
     width: 100%;
 
-    border-collapse: separate;
+    border-collapse: collapse;
 
-    border-spacing: 12px;
-
-    margin: -12px 0;
+    table-layout: fixed;
 }
 
 
@@ -306,8 +297,12 @@
    TABLE HEADER
 ===================================================== */
 
+.user-table-card thead {
+    display: table-header-group;
+}
+
 .user-table-card thead th {
-    background: transparent;
+    background: #f8fafc;
 
     color: var(--muted);
 
@@ -315,122 +310,116 @@
 
     font-weight: 600;
 
-    padding: 8px;
+    padding: 14px 12px;
 
-    border: none;
-
-    text-align: center;
-}
-
-
-/* =====================================================
-   PORTRAIT USER CARD
-===================================================== */
-
-.user-table-card tbody {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(220px, 1fr));
-
-    gap: 18px;
-}
-
-
-/* =====================================================
-   EACH USER CARD
-===================================================== */
-
-.user-table-card tbody tr {
-    min-height: 230px;
-
-    background: white;
-
-    border:
+    border-bottom:
         1px solid
         var(--border);
 
-    border-radius: 17px;
-
-    box-shadow:
-        0 5px 18px
-        rgba(15, 23, 42, .06);
-
-    overflow: hidden;
-
-    display: flex;
-
-    flex-direction: column;
-
-    position: relative;
-
-    transition: .2s;
-}
-
-
-.user-table-card tbody tr:hover {
-    transform: translateY(-4px);
-
-    border-color:
-        rgba(37, 99, 235, .25);
-
-    box-shadow:
-        0 10px 25px
-        rgba(15, 23, 42, .10);
+    text-align: center;
 }
 
 
 /* =====================================================
-   CARD TOP
+   COLUMN WIDTH
+===================================================== */
+
+.user-table-card th:nth-child(1),
+.user-table-card td:nth-child(1) {
+    width: 50%;
+
+    text-align: left;
+}
+
+.user-table-card th:nth-child(2),
+.user-table-card td:nth-child(2) {
+    width: 20%;
+
+    text-align: center;
+}
+
+.user-table-card th:nth-child(3),
+.user-table-card td:nth-child(3) {
+    width: 30%;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   TABLE BODY
+===================================================== */
+
+.user-table-card tbody {
+    display: table-row-group;
+}
+
+.user-table-card tbody tr {
+    display: table-row;
+
+    min-height: 0;
+
+    background: white;
+
+    border: none;
+
+    border-bottom:
+        1px solid
+        #eef2f7;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    overflow: visible;
+
+    transition: background .2s;
+}
+
+.user-table-card tbody tr:hover {
+    transform: none;
+
+    border-color: transparent;
+
+    box-shadow: none;
+
+    background: #f8fafc;
+}
+
+
+/* =====================================================
+   REMOVE USER ICON ON DESKTOP
 ===================================================== */
 
 .user-table-card tbody tr::before {
-    content: "👤";
-
-    width: 68px;
-    height: 68px;
-
-    margin: 22px auto 8px;
-
-    border-radius: 50%;
-
-    background:
-        var(--primary-light);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 29px;
-
-    border:
-        5px solid
-        white;
-
-    box-shadow:
-        0 4px 12px
-        rgba(37, 99, 235, .12);
+    display: none;
 }
 
 
 /* =====================================================
-   USER EMAIL
+   TABLE CELLS
 ===================================================== */
 
 .user-table-card tbody td {
+    display: table-cell;
+
     border: none;
 
-    padding: 5px 15px;
-
-    text-align: center;
+    padding: 16px 12px;
 
     font-size: 13px;
 
     color: var(--text);
+
+    vertical-align: middle;
+
+    text-align: center;
 }
 
+
+/* =====================================================
+   EMAIL
+===================================================== */
 
 .user-table-card tbody td:first-child {
     font-weight: 600;
@@ -439,13 +428,11 @@
 
     word-break: break-word;
 
-    min-height: 40px;
+    min-height: 0;
 
-    display: flex;
+    display: table-cell;
 
-    align-items: center;
-
-    justify-content: center;
+    text-align: left;
 }
 
 
@@ -454,11 +441,13 @@
 ===================================================== */
 
 .user-table-card tbody td:nth-child(2) {
-    padding: 4px 15px;
+    padding: 16px 12px;
 
     color: var(--primary);
 
     font-weight: 600;
+
+    text-align: center;
 }
 
 
@@ -467,18 +456,31 @@
 ===================================================== */
 
 .user-table-card tbody td:last-child {
-    margin-top: auto;
+    margin-top: 0;
 
-    padding:
-        12px 10px 15px;
+    padding: 12px;
 
-    display: flex;
+    display: table-cell;
 
-    justify-content: center;
+    text-align: center;
+
+    vertical-align: middle;
+}
+
+
+/* =====================================================
+   ACTION BUTTON WRAPPER SUPPORT
+===================================================== */
+
+.user-table-card tbody td:last-child button {
+    display: inline-flex;
 
     align-items: center;
+    justify-content: center;
 
-    gap: 4px;
+    margin: 2px;
+
+    vertical-align: middle;
 }
 
 
@@ -488,6 +490,8 @@
 
 .user-table-card .edit-btn {
     min-width: 82px;
+
+    width: 82px;
 
     height: 35px;
 
@@ -500,6 +504,10 @@
     font-size: 11px;
 }
 
+.user-table-card .edit-btn:hover {
+    filter: brightness(.95);
+}
+
 
 /* =====================================================
    DELETE BUTTON
@@ -507,6 +515,8 @@
 
 .user-table-card .delete-btn {
     min-width: 82px;
+
+    width: 82px;
 
     height: 35px;
 
@@ -517,6 +527,10 @@
     background: var(--danger);
 
     font-size: 11px;
+}
+
+.user-table-card .delete-btn:hover {
+    filter: brightness(.95);
 }
 
 
@@ -544,7 +558,6 @@
 
     backdrop-filter: blur(4px);
 }
-
 
 .edit-modal-content {
     width: 100%;
@@ -581,7 +594,6 @@
         var(--border);
 }
 
-
 .edit-header h2 {
     color: var(--dark);
 
@@ -589,7 +601,6 @@
 
     margin-bottom: 3px;
 }
-
 
 .edit-header p {
     color: var(--muted);
@@ -622,7 +633,6 @@
     font-size: 22px;
 }
 
-
 .close-btn:hover {
     background: #e2e8f0;
 
@@ -638,7 +648,6 @@
     padding: 22px;
 }
 
-
 .edit-body label {
     display: block;
 
@@ -651,7 +660,6 @@
     margin:
         0 0 7px;
 }
-
 
 .edit-body input,
 .edit-body select {
@@ -673,7 +681,6 @@
 
     font-size: 13px;
 }
-
 
 .edit-body input:disabled {
     background: #f8fafc;
@@ -703,7 +710,6 @@
         var(--border);
 }
 
-
 .edit-footer button {
     min-width: 95px;
 
@@ -714,16 +720,13 @@
     border-radius: 9px;
 }
 
-
 .cancel-btn {
     background: #64748b;
 }
 
-
 .save-btn {
     background: var(--primary);
 }
-
 
 .save-btn:hover {
     background: var(--primary-dark);
@@ -757,9 +760,13 @@
     }
 
 
-    .user-table-card tbody {
-        grid-template-columns:
-            repeat(2, minmax(220px, 1fr));
+    .user-table-card {
+        overflow-x: auto;
+    }
+
+
+    .user-table-card table {
+        min-width: 650px;
     }
 
 }
@@ -783,6 +790,10 @@
             20px 13px 85px;
     }
 
+
+    /* =========================
+       TITLE
+    ========================= */
 
     .manage-main > h1 {
 
@@ -934,9 +945,25 @@
     }
 
 
+    /* Hide normal table header */
+
     .user-table-card thead {
 
         display: none;
+    }
+
+
+    /* Make tbody into cards */
+
+    .user-table-card table {
+
+        width: 100%;
+
+        min-width: 0;
+
+        display: block;
+
+        table-layout: auto;
     }
 
 
@@ -957,27 +984,102 @@
 
         min-height: 225px;
 
+        background: white;
+
+        border:
+            1px solid
+            var(--border);
+
         border-radius: 16px;
+
+        box-shadow:
+            0 5px 18px
+            rgba(15, 23, 42, .06);
+
+        display: flex;
+
+        flex-direction: column;
+
+        position: relative;
+
+        overflow: hidden;
+
+        transition: .2s;
     }
 
 
+    .user-table-card tbody tr:hover {
+
+        transform: translateY(-3px);
+
+        border-color:
+            rgba(37, 99, 235, .25);
+
+        box-shadow:
+            0 10px 25px
+            rgba(15, 23, 42, .10);
+
+        background: white;
+    }
+
+
+    /* User icon */
+
     .user-table-card tbody tr::before {
+
+        content: "👤";
 
         width: 62px;
 
         height: 62px;
 
-        margin-top: 20px;
+        margin: 20px auto 8px;
+
+        border-radius: 50%;
+
+        background:
+            var(--primary-light);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
 
         font-size: 26px;
+
+        border:
+            5px solid
+            white;
+
+        box-shadow:
+            0 4px 12px
+            rgba(37, 99, 235, .12);
     }
 
+
+    /* Cells */
 
     .user-table-card tbody td {
 
+        border: none;
+
+        padding:
+            5px 15px;
+
         font-size: 12px;
+
+        color: var(--text);
+
+        display: block;
+
+        width: 100%;
+
+        text-align: center;
     }
 
+
+    /* Email */
 
     .user-table-card tbody td:first-child {
 
@@ -985,13 +1087,64 @@
             5px 15px 7px;
 
         font-size: 13px;
+
+        font-weight: 600;
+
+        color: var(--dark);
+
+        word-break: break-word;
+
+        min-height: 0;
+
+        display: block;
+
+        text-align: center;
     }
 
 
+    /* Role */
+
+    .user-table-card tbody td:nth-child(2) {
+
+        padding:
+            4px 15px;
+
+        color: var(--primary);
+
+        font-weight: 600;
+
+        display: block;
+
+        text-align: center;
+    }
+
+
+    /* Actions */
+
     .user-table-card tbody td:last-child {
+
+        margin-top: auto;
 
         padding:
             11px 8px 14px;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 4px;
+
+        text-align: center;
+    }
+
+
+    .user-table-card tbody td:last-child button {
+
+        display: inline-flex;
+
+        margin: 0;
     }
 
 
