@@ -23,6 +23,10 @@
 <body>
 
 
+<!-- =====================================================
+     AUTH
+===================================================== -->
+
 <script src="auth.js"></script>
 
 
@@ -38,7 +42,9 @@
 
 
     <a href="index.html">
+
         💡 Light Control
+
     </a>
 
 
@@ -76,7 +82,6 @@
     </a>
 
 </div>
-
 
 
 <!-- =====================================================
@@ -143,7 +148,9 @@
 
 
 
-        <!-- LOCATION -->
+        <!-- =================================================
+             LOCATION SELECT
+        ================================================= -->
 
         <p>
 
@@ -180,9 +187,13 @@
 
 
 
+        <!-- =================================================
+             CURRENT LOCATION
+        ================================================= -->
+
         <p>
 
-            Lokasi Semasa:
+            📍 Lokasi Semasa:
 
             <strong id="currentLocation">
 
@@ -194,7 +205,9 @@
 
 
 
-        <!-- STATUS -->
+        <!-- =================================================
+             LIGHT STATUS
+        ================================================= -->
 
         <p>
 
@@ -211,6 +224,10 @@
 
 
 
+        <!-- =================================================
+             BUTTON
+        ================================================= -->
+
         <button
             class="on"
             onclick="lampOn()">
@@ -218,7 +235,6 @@
             ON
 
         </button>
-
 
 
         <button
@@ -231,7 +247,9 @@
 
 
 
-        <!-- TIMER -->
+        <!-- =================================================
+             TIMER
+        ================================================= -->
 
         <div class="timer-box">
 
@@ -287,7 +305,7 @@
 
         <p>
 
-            📍 Lokasi:
+            📍 Lokasi Sistem:
 
             <strong id="systemLocation">
 
@@ -306,7 +324,7 @@
 
 
 <!-- =====================================================
-     JAVASCRIPT
+     SYSTEM JAVASCRIPT
 ===================================================== -->
 
 <script
@@ -323,27 +341,47 @@
 
 
 // =====================================================
-// WELCOME USER
+// GET LOGIN USER
 // =====================================================
 
 const loginUser =
+
     JSON.parse(
+
         localStorage.getItem(
             "loginUser"
         )
+
     );
 
 
-document.getElementById(
-    "welcome"
-).innerHTML =
 
-    "Welcome, " +
+// =====================================================
+// WELCOME
+// =====================================================
 
-    (
-        loginUser?.email ||
-        "User"
+const welcome =
+
+    document.getElementById(
+        "welcome"
     );
+
+
+if (welcome) {
+
+    welcome.innerHTML =
+
+        "Welcome, " +
+
+        (
+
+            loginUser?.email ||
+
+            "User"
+
+        );
+
+}
 
 
 
@@ -352,16 +390,23 @@ document.getElementById(
 // =====================================================
 
 if (
+
     !loginUser ||
+
     loginUser.role !== "admin"
+
 ) {
 
+
     const dashboardMenu =
+
         document.getElementById(
             "dashboardMenu"
         );
 
+
     const manageMenu =
+
         document.getElementById(
             "manageMenu"
         );
@@ -387,73 +432,200 @@ if (
 
 
 // =====================================================
-// LOCATION
+// LOCATION ELEMENT
 // =====================================================
 
 const locationSelect =
+
     document.getElementById(
         "locationSelect"
     );
 
 
 const currentLocation =
+
     document.getElementById(
         "currentLocation"
     );
 
 
 const systemLocation =
+
     document.getElementById(
         "systemLocation"
     );
 
 
-// Ambil lokasi yang terakhir dipilih
 
-const savedLocation =
+// =====================================================
+// DEFAULT LOCATION
+// =====================================================
+
+const DEFAULT_LOCATION =
+    "Bilik Kuliah DB";
+
+
+
+// =====================================================
+// GET SAVED LOCATION
+// =====================================================
+
+let savedLocation =
+
     localStorage.getItem(
         "selectedLocation"
-    ) || "Bilik Kuliah DB";
-
-
-locationSelect.value =
-    savedLocation;
-
-
-currentLocation.innerHTML =
-    savedLocation;
-
-
-systemLocation.innerHTML =
-    savedLocation;
+    );
 
 
 
-// Bila user tukar bilik
+// =====================================================
+// CHECK LOCATION
+// =====================================================
 
-locationSelect.addEventListener(
-    "change",
-    function() {
+const validLocations = [
 
-        const location =
-            this.value;
+    "Bilik Kuliah DB",
+
+    "Bilik ICT 1",
+
+    "Bilik ICT 4"
+
+];
 
 
-        localStorage.setItem(
-            "selectedLocation",
-            location
-        );
 
+if (
+
+    !savedLocation ||
+
+    !validLocations.includes(
+        savedLocation
+    )
+
+) {
+
+    savedLocation =
+        DEFAULT_LOCATION;
+
+    localStorage.setItem(
+
+        "selectedLocation",
+
+        DEFAULT_LOCATION
+
+    );
+
+}
+
+
+
+// =====================================================
+// SET DROPDOWN
+// =====================================================
+
+if (locationSelect) {
+
+    locationSelect.value =
+        savedLocation;
+
+}
+
+
+
+// =====================================================
+// DISPLAY LOCATION
+// =====================================================
+
+function updateLocationDisplay(location) {
+
+
+    if (currentLocation) {
 
         currentLocation.innerHTML =
             location;
 
+    }
+
+
+    if (systemLocation) {
 
         systemLocation.innerHTML =
             location;
 
     }
+
+}
+
+
+
+// =====================================================
+// INITIAL LOCATION
+// =====================================================
+
+updateLocationDisplay(
+    savedLocation
 );
+
+
+
+// =====================================================
+// LOCATION CHANGE
+// =====================================================
+
+if (locationSelect) {
+
+
+    locationSelect.addEventListener(
+
+        "change",
+
+        function () {
+
+
+            const selectedLocation =
+                this.value;
+
+
+
+            // =========================================
+            // SAVE LOCATION
+            // =========================================
+
+            localStorage.setItem(
+
+                "selectedLocation",
+
+                selectedLocation
+
+            );
+
+
+
+            // =========================================
+            // UPDATE UI
+            // =========================================
+
+            updateLocationDisplay(
+
+                selectedLocation
+
+            );
+
+
+
+            console.log(
+
+                "📍 Lokasi dipilih:",
+
+                selectedLocation
+
+            );
+
+        }
+
+    );
+
+}
 
 
 
@@ -463,8 +635,10 @@ locationSelect.addEventListener(
 
 function updateClock() {
 
+
     const now =
         new Date();
+
 
 
     let h =
@@ -479,35 +653,61 @@ function updateClock() {
         now.getSeconds();
 
 
+
     h =
+
         h < 10
+
             ? "0" + h
+
             : h;
 
 
+
     m =
+
         m < 10
+
             ? "0" + m
+
             : m;
 
 
+
     s =
+
         s < 10
+
             ? "0" + s
+
             : s;
 
 
-    document.getElementById(
-        "time"
-    ).innerHTML =
 
-        h +
-        ":" +
-        m +
-        ":" +
-        s;
+    const timeElement =
+
+        document.getElementById(
+            "time"
+        );
 
 
+    if (timeElement) {
+
+        timeElement.innerHTML =
+
+            h +
+            ":" +
+            m +
+            ":" +
+            s;
+
+    }
+
+
+
+    // =========================================
+    // DATE
+    // =========================================
 
     const d =
         now.getDate();
@@ -521,26 +721,45 @@ function updateClock() {
         now.getFullYear();
 
 
-    document.getElementById(
-        "date"
-    ).innerHTML =
 
-        d +
-        "/" +
-        mo +
-        "/" +
-        y;
+    const dateElement =
+
+        document.getElementById(
+            "date"
+        );
+
+
+    if (dateElement) {
+
+        dateElement.innerHTML =
+
+            d +
+            "/" +
+            mo +
+            "/" +
+            y;
+
+    }
 
 }
 
 
+
+// =====================================================
+// START CLOCK
+// =====================================================
+
 setInterval(
+
     updateClock,
+
     1000
+
 );
 
 
 updateClock();
+
 
 
 </script>

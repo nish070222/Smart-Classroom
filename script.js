@@ -21,11 +21,9 @@ import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-
 import {
     getAuth
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 
 import {
     getFirestore,
@@ -69,10 +67,8 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
-
 const auth =
     getAuth(app);
-
 
 const db =
     getFirestore(app);
@@ -84,14 +80,12 @@ const db =
 
 let timer = null;
 
-
 let seconds =
     Number(
         localStorage.getItem(
             "lampTime"
         )
     ) || 0;
-
 
 let running = false;
 
@@ -105,20 +99,106 @@ const ESP32_IP =
 
 
 // =====================================================
-// GET LOCATION
+// DEFAULT LOCATION
+// =====================================================
+
+const DEFAULT_LOCATION =
+    "Bilik Kuliah DB";
+
+
+// =====================================================
+// GET SELECTED LOCATION
 // =====================================================
 
 function getSelectedLocation() {
 
-    return (
-
+    const saved =
         localStorage.getItem(
             "selectedLocation"
-        ) ||
+        );
 
-        "Bilik Kuliah DB"
+    return saved || DEFAULT_LOCATION;
 
+}
+
+
+// =====================================================
+// GET ACTIVE LOCATION
+// =====================================================
+
+function getActiveLocation() {
+
+    const active =
+        localStorage.getItem(
+            "activeLocation"
+        );
+
+    return active || getSelectedLocation();
+
+}
+
+
+// =====================================================
+// SET LOCATION
+// =====================================================
+
+function setLocation(location) {
+
+    if (!location) {
+
+        location =
+            DEFAULT_LOCATION;
+
+    }
+
+    // Lokasi yang dipilih user
+    localStorage.setItem(
+        "selectedLocation",
+        location
     );
+
+
+    // Update paparan pada page
+    const currentLocation =
+        document.getElementById(
+            "currentLocation"
+        );
+
+    if (currentLocation) {
+
+        currentLocation.innerHTML =
+            location;
+
+    }
+
+
+    const systemLocation =
+        document.getElementById(
+            "systemLocation"
+        );
+
+    if (systemLocation) {
+
+        systemLocation.innerHTML =
+            location;
+
+    }
+
+
+    const dashLocation =
+        document.getElementById(
+            "dashLocation"
+        );
+
+    if (
+        dashLocation &&
+        localStorage.getItem("lampStatus") === "ON"
+    ) {
+
+        dashLocation.innerHTML =
+            location;
+
+    }
 
 }
 
@@ -134,12 +214,10 @@ function updateTimerDisplay() {
             seconds / 3600
         );
 
-
     let minute =
         Math.floor(
             (seconds % 3600) / 60
         );
-
 
     let second =
         seconds % 60;
@@ -150,12 +228,10 @@ function updateTimerDisplay() {
             ? "0" + hour
             : hour;
 
-
     minute =
         minute < 10
             ? "0" + minute
             : minute;
-
 
     second =
         second < 10
@@ -163,7 +239,7 @@ function updateTimerDisplay() {
             : second;
 
 
-    let result =
+    const result =
         hour +
         ":" +
         minute +
@@ -175,7 +251,6 @@ function updateTimerDisplay() {
         document.getElementById(
             "timer"
         );
-
 
     if (timerBox) {
 
@@ -189,7 +264,6 @@ function updateTimerDisplay() {
         document.getElementById(
             "dashTimer"
         );
-
 
     if (dashTimer) {
 
@@ -278,11 +352,17 @@ function lampOn() {
 
 
     // =================================================
-    // SAVE ACTIVE LOCATION
+    // SIMPAN LOKASI AKTIF
     // =================================================
 
     localStorage.setItem(
         "activeLocation",
+        location
+    );
+
+
+    localStorage.setItem(
+        "selectedLocation",
         location
     );
 
@@ -328,14 +408,13 @@ function lampOn() {
 
 
     // =================================================
-    // UPDATE UI
+    // UPDATE LAMP STATUS
     // =================================================
 
     const lamp =
         document.getElementById(
             "lampStatus"
         );
-
 
     if (lamp) {
 
@@ -353,7 +432,6 @@ function lampOn() {
             "dashLamp"
         );
 
-
     if (dashLamp) {
 
         dashLamp.innerHTML =
@@ -365,43 +443,23 @@ function lampOn() {
     }
 
 
+    // =================================================
+    // UPDATE LOCATION
+    // =================================================
+
+    setLocation(
+        location
+    );
+
+
     const dashLocation =
         document.getElementById(
             "dashLocation"
         );
 
-
     if (dashLocation) {
 
         dashLocation.innerHTML =
-            location;
-
-    }
-
-
-    const currentLocation =
-        document.getElementById(
-            "currentLocation"
-        );
-
-
-    if (currentLocation) {
-
-        currentLocation.innerHTML =
-            location;
-
-    }
-
-
-    const systemLocation =
-        document.getElementById(
-            "systemLocation"
-        );
-
-
-    if (systemLocation) {
-
-        systemLocation.innerHTML =
             location;
 
     }
@@ -423,7 +481,6 @@ function lampOn() {
 
     const start =
         new Date();
-
 
     localStorage.setItem(
         "startTime",
@@ -458,11 +515,7 @@ function lampOn() {
 function lampOff() {
 
     const location =
-        localStorage.getItem(
-            "activeLocation"
-        ) ||
-
-        getSelectedLocation();
+        getActiveLocation();
 
 
     console.log(
@@ -520,7 +573,6 @@ function lampOff() {
             "lampStatus"
         );
 
-
     if (lamp) {
 
         lamp.innerHTML =
@@ -537,7 +589,6 @@ function lampOff() {
             "dashLamp"
         );
 
-
     if (dashLamp) {
 
         dashLamp.innerHTML =
@@ -553,7 +604,6 @@ function lampOff() {
         document.getElementById(
             "dashLocation"
         );
-
 
     if (dashLocation) {
 
@@ -595,12 +645,10 @@ function lampOff() {
 
     seconds = 0;
 
-
     localStorage.setItem(
         "lampTime",
         0
     );
-
 
     updateTimerDisplay();
 
@@ -613,6 +661,15 @@ function lampOff() {
         "💡 Lampu OFF",
         "Berjaya",
         location
+    );
+
+
+    // =================================================
+    // REMOVE ACTIVE LOCATION
+    // =================================================
+
+    localStorage.removeItem(
+        "activeLocation"
     );
 
 }
@@ -641,11 +698,9 @@ async function saveHistory(
             "❌ Firebase Auth User = NULL"
         );
 
-
         alert(
             "❌ Firebase Authentication tidak aktif.\n\nSila logout dan login semula."
         );
-
 
         return;
 
@@ -668,11 +723,9 @@ async function saveHistory(
             "❌ startTime tidak dijumpai"
         );
 
-
         alert(
             "❌ Masa mula lampu tidak dijumpai."
         );
-
 
         return;
 
@@ -733,12 +786,10 @@ async function saveHistory(
             ? "0" + hour
             : hour;
 
-
     minute =
         minute < 10
             ? "0" + minute
             : minute;
-
 
     second =
         second < 10
@@ -764,7 +815,6 @@ async function saveHistory(
             "❌ loginUser tidak dijumpai"
         );
 
-
         return;
 
     }
@@ -781,26 +831,21 @@ async function saveHistory(
             user.email ||
             "Unknown",
 
-
         email:
             user.email ||
             auth.currentUser.email ||
             "",
 
-
         uid:
             auth.currentUser.uid,
-
 
         role:
             user.role ||
             "user",
 
-
         location:
             location ||
-            "Bilik Kuliah DB",
-
+            getSelectedLocation(),
 
         date:
             start.getDate() +
@@ -810,7 +855,6 @@ async function saveHistory(
             ) +
             "/" +
             start.getFullYear(),
-
 
         start:
             start.getHours() +
@@ -822,7 +866,6 @@ async function saveHistory(
             ) +
             start.getMinutes(),
 
-
         end:
             end.getHours() +
             ":" +
@@ -833,14 +876,12 @@ async function saveHistory(
             ) +
             end.getMinutes(),
 
-
         duration:
             hour +
             ":" +
             minute +
             ":" +
             second,
-
 
         timestamp:
             serverTimestamp()
@@ -992,7 +1033,6 @@ function addLog(
         time:
             time,
 
-
         user:
             user
                 ? (
@@ -1001,23 +1041,18 @@ function addLog(
                 )
                 : "Unknown",
 
-
         location:
             location ||
-            "Bilik Kuliah DB",
-
+            getSelectedLocation(),
 
         activity:
             activity,
-
 
         status:
             status
 
     });
 
-
-    // Maximum 10 log
 
     if (
         logs.length > 10
@@ -1050,11 +1085,12 @@ function loadLampStatus() {
         );
 
 
+    const selectedLocation =
+        getSelectedLocation();
+
+
     const activeLocation =
-        localStorage.getItem(
-            "activeLocation"
-        ) ||
-        "Bilik Kuliah DB";
+        getActiveLocation();
 
 
     const lamp =
@@ -1074,6 +1110,42 @@ function loadLampStatus() {
             "dashLocation"
         );
 
+
+    const currentLocation =
+        document.getElementById(
+            "currentLocation"
+        );
+
+
+    const systemLocation =
+        document.getElementById(
+            "systemLocation"
+        );
+
+
+    // =================================================
+    // PAPAR LOKASI YANG DIPILIH
+    // =================================================
+
+    if (currentLocation) {
+
+        currentLocation.innerHTML =
+            selectedLocation;
+
+    }
+
+
+    if (systemLocation) {
+
+        systemLocation.innerHTML =
+            selectedLocation;
+
+    }
+
+
+    // =================================================
+    // LAMP ON
+    // =================================================
 
     if (
         status === "ON"
@@ -1113,6 +1185,10 @@ function loadLampStatus() {
 
     }
 
+
+    // =================================================
+    // LAMP OFF
+    // =================================================
 
     else {
 
@@ -1154,6 +1230,108 @@ function loadLampStatus() {
 
 
 // =====================================================
+// LOCATION SELECT EVENT
+// =====================================================
+
+function setupLocation() {
+
+    const locationSelect =
+        document.getElementById(
+            "locationSelect"
+        );
+
+
+    if (!locationSelect) {
+
+        return;
+
+    }
+
+
+    // =================================================
+    // LOAD SAVED LOCATION
+    // =================================================
+
+    const savedLocation =
+        getSelectedLocation();
+
+
+    locationSelect.value =
+        savedLocation;
+
+
+    setLocation(
+        savedLocation
+    );
+
+
+    // =================================================
+    // USER TUKAR LOKASI
+    // =================================================
+
+    locationSelect.addEventListener(
+        "change",
+        function() {
+
+            const newLocation =
+                this.value;
+
+
+            console.log(
+                "📍 Lokasi dipilih:",
+                newLocation
+            );
+
+
+            // Simpan lokasi baru
+            localStorage.setItem(
+                "selectedLocation",
+                newLocation
+            );
+
+
+            // Update UI
+            setLocation(
+                newLocation
+            );
+
+
+            // Jika lampu masih ON,
+            // lokasi aktif turut berubah
+            if (
+                localStorage.getItem(
+                    "lampStatus"
+                ) === "ON"
+            ) {
+
+                localStorage.setItem(
+                    "activeLocation",
+                    newLocation
+                );
+
+
+                const dashLocation =
+                    document.getElementById(
+                        "dashLocation"
+                    );
+
+
+                if (dashLocation) {
+
+                    dashLocation.innerHTML =
+                        newLocation;
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// =====================================================
 // PAGE LOAD
 // =====================================================
 
@@ -1167,6 +1345,9 @@ window.addEventListener(
 
 
         updateTimerDisplay();
+
+
+        setupLocation();
 
 
         loadLampStatus();
