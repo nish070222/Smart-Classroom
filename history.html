@@ -13,11 +13,198 @@
         Smart Classroom History
     </title>
 
-    <link rel="stylesheet" href="history.css">
+    <link rel="stylesheet" href="style.css">
 
-    <link
-        rel="stylesheet"
-        href="style.css">
+
+    <style>
+
+        /* =====================================
+           HISTORY SUMMARY
+           ===================================== */
+
+        .history-summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin: 25px 0;
+
+        }
+
+
+        .summary-box {
+
+            background: #ffffff;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        .summary-box h3 {
+
+            margin: 0 0 10px;
+
+            color: #555;
+
+        }
+
+
+        .summary-value {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================
+           HISTORY TABLE
+           ===================================== */
+
+        .history-table-card {
+
+            background: #ffffff;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.08);
+
+            overflow-x: auto;
+
+        }
+
+
+        .history-table-card h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse:
+                collapse;
+
+        }
+
+
+        th {
+
+            background: #f4f6f8;
+
+            color: #222;
+
+            font-weight: 600;
+
+            border-bottom:
+                2px solid #e5e5e5;
+
+            padding: 13px;
+
+            text-align: center;
+
+        }
+
+
+        td {
+
+            padding: 13px;
+
+            text-align: center;
+
+            border-bottom:
+                1px solid #eeeeee;
+
+        }
+
+
+        tr:hover td {
+
+            background: #fafafa;
+
+        }
+
+
+        /* =====================================
+           DELETE BUTTON
+           ===================================== */
+
+        .delete-btn {
+
+            border: none;
+
+            background: #e74c3c;
+
+            color: white;
+
+            padding: 8px 12px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+        }
+
+
+        .delete-btn:hover {
+
+            opacity: 0.85;
+
+        }
+
+
+        /* =====================================
+           NO RECORD
+           ===================================== */
+
+        .no-record {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #777;
+
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+           ===================================== */
+
+        @media(max-width: 800px) {
+
+            .history-summary {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
