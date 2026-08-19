@@ -3,83 +3,115 @@
 // auth.js
 // =====================================
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    // =====================================
+    // GET LOGIN USER
+    // =====================================
+
+    const loginUser = JSON.parse(
+        localStorage.getItem("loginUser")
+    );
 
 
-const loginUser = JSON.parse(
+    // =====================================
+    // CHECK LOGIN
+    // =====================================
 
-localStorage.getItem("loginUser")
+    if (!loginUser) {
 
-);
+        window.location.href = "userlogin.html";
 
+        return;
 
-
-
-
-// Kalau belum login
-
-if(!loginUser){
+    }
 
 
-window.location.href="userlogin.html";
+    // =====================================
+    // DISPLAY USER
+    // =====================================
+
+    const displayName =
+        loginUser.email || "User";
 
 
-}
+    const userName =
+        document.getElementById("userName");
 
 
+    const welcome =
+        document.getElementById("welcome");
 
 
+    if (userName) {
+
+        userName.innerHTML =
+            "👤 " + displayName;
+
+    }
 
 
-window.addEventListener("load",()=>{
+    if (welcome) {
+
+        welcome.innerHTML =
+            "Welcome, " + displayName;
+
+    }
 
 
+    // =====================================
+    // ROLE MENU
+    // =====================================
 
-let userName =
-document.getElementById("userName");
-
-
-
-let welcome =
-document.getElementById("welcome");
+    const dashboardMenu =
+        document.getElementById("dashboardMenu");
 
 
+    const manageMenu =
+        document.getElementById("manageMenu");
 
 
+    // =====================================
+    // ADMIN
+    // =====================================
 
-if(loginUser){
+    if (loginUser.role === "admin") {
 
+        if (dashboardMenu) {
 
+            dashboardMenu.style.display = "";
 
-let displayName =
-loginUser.email;
-
-
-
-if(userName){
-
-
-userName.innerHTML =
-"👤 "+displayName;
+        }
 
 
-}
+        if (manageMenu) {
+
+            manageMenu.style.display = "";
+
+        }
+
+    }
 
 
+    // =====================================
+    // USER
+    // =====================================
+
+    else {
+
+        if (dashboardMenu) {
+
+            dashboardMenu.style.display = "none";
+
+        }
 
 
-if(welcome){
+        if (manageMenu) {
 
+            manageMenu.style.display = "none";
 
-welcome.innerHTML =
-"Welcome, "+displayName;
+        }
 
-
-}
-
-
-
-}
-
-
+    }
 
 });

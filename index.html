@@ -384,53 +384,6 @@ if (welcome) {
 }
 
 
-
-// =====================================================
-// ROLE MENU
-// =====================================================
-
-if (
-
-    !loginUser ||
-
-    loginUser.role !== "admin"
-
-) {
-
-
-    const dashboardMenu =
-
-        document.getElementById(
-            "dashboardMenu"
-        );
-
-
-    const manageMenu =
-
-        document.getElementById(
-            "manageMenu"
-        );
-
-
-    if (dashboardMenu) {
-
-        dashboardMenu.style.display =
-            "none";
-
-    }
-
-
-    if (manageMenu) {
-
-        manageMenu.style.display =
-            "none";
-
-    }
-
-}
-
-
-
 // =====================================================
 // LOCATION ELEMENT
 // =====================================================
