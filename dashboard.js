@@ -8,18 +8,24 @@
 // - Kira jumlah sesi
 // - Kira jumlah penggunaan
 // - Kira penggunaan hari ini
+// - Delete semua history
 // =====================================================
 
+
+// =====================================================
+// FIREBASE IMPORT
+// =====================================================
 
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-
 import {
     getFirestore,
     collection,
-    getDocs
+    getDocs,
+    deleteDoc,
+    doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -57,7 +63,6 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
-
 const db =
     getFirestore(app);
 
@@ -67,9 +72,7 @@ const db =
 // TO SECONDS
 // =====================================================
 
-function durationToSeconds(
-    duration
-) {
+function durationToSeconds(duration) {
 
     if (!duration) {
 
@@ -82,9 +85,7 @@ function durationToSeconds(
         String(duration).split(":");
 
 
-    if (
-        parts.length !== 3
-    ) {
+    if (parts.length !== 3) {
 
         return 0;
 
@@ -94,23 +95,17 @@ function durationToSeconds(
     const hours =
         Number(parts[0]) || 0;
 
-
     const minutes =
         Number(parts[1]) || 0;
-
 
     const seconds =
         Number(parts[2]) || 0;
 
 
     return (
-
         (hours * 3600) +
-
         (minutes * 60) +
-
         seconds
-
     );
 
 }
@@ -121,16 +116,12 @@ function durationToSeconds(
 // TO HH:MM:SS
 // =====================================================
 
-function formatDuration(
-    totalSeconds
-) {
+function formatDuration(totalSeconds) {
 
     totalSeconds =
         Math.max(
             0,
-            Math.floor(
-                totalSeconds
-            )
+            Math.floor(totalSeconds)
         );
 
 
@@ -152,18 +143,11 @@ function formatDuration(
 
     return (
 
-        String(hours)
-            .padStart(2, "0")
-
-        + ":" +
-
-        String(minutes)
-            .padStart(2, "0")
-
-        + ":" +
-
-        String(seconds)
-            .padStart(2, "0")
+        String(hours).padStart(2, "0") +
+        ":" +
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0")
 
     );
 
@@ -196,25 +180,16 @@ async function loadFirebaseStatistics() {
             );
 
 
-        // =============================================
-        // VARIABLES
-        // =============================================
+        let totalSessions = 0;
 
-        let totalSessions =
-            0;
+        let totalSeconds = 0;
 
-
-        let totalSeconds =
-            0;
+        let todaySessions = 0;
 
 
-        let todaySessions =
-            0;
-
-
-        // =============================================
+        // =================================================
         // TODAY
-        // =============================================
+        // =================================================
 
         const today =
             new Date();
@@ -225,16 +200,15 @@ async function loadFirebaseStatistics() {
             today.getDate() +
             "/" +
             (
-                today.getMonth() +
-                1
+                today.getMonth() + 1
             ) +
             "/" +
             today.getFullYear();
 
 
-        // =============================================
+        // =================================================
         // READ FIRESTORE
-        // =============================================
+        // =================================================
 
         snapshot.forEach(
             function(data) {
@@ -243,21 +217,14 @@ async function loadFirebaseStatistics() {
                     data.data();
 
 
-                // TOTAL SESSION
-
                 totalSessions++;
 
 
-                // TOTAL USAGE
-
                 totalSeconds +=
-
                     durationToSeconds(
                         history.duration
                     );
 
-
-                // TODAY
 
                 if (
                     history.date ===
@@ -272,9 +239,9 @@ async function loadFirebaseStatistics() {
         );
 
 
-        // =============================================
+        // =================================================
         // DISPLAY TOTAL SESSION
-        // =============================================
+        // =================================================
 
         const totalSessionsBox =
             document.getElementById(
@@ -290,9 +257,9 @@ async function loadFirebaseStatistics() {
         }
 
 
-        // =============================================
+        // =================================================
         // DISPLAY TOTAL USAGE
-        // =============================================
+        // =================================================
 
         const totalUsageBox =
             document.getElementById(
@@ -310,9 +277,9 @@ async function loadFirebaseStatistics() {
         }
 
 
-        // =============================================
+        // =================================================
         // DISPLAY TODAY
-        // =============================================
+        // =================================================
 
         const todaySessionsBox =
             document.getElementById(
@@ -349,7 +316,6 @@ async function loadFirebaseStatistics() {
 
     }
 
-
     catch(error) {
 
         console.error(
@@ -360,6 +326,187 @@ async function loadFirebaseStatistics() {
     }
 
 }
+
+
+// =====================================================
+// DELETE ALL FIRESTORE HISTORY
+// =====================================================
+
+async function deleteAllHistory() {
+
+    try {
+
+        console.log(
+            "🗑️ Memadam semua history Firestore..."
+        );
+
+
+        const historyRef =
+            collection(
+                db,
+                "history"
+            );
+
+
+        const snapshot =
+            await getDocs(
+                historyRef
+            );
+
+
+        // =================================================
+        // DELETE EVERY DOCUMENT
+        // =================================================
+
+        const deletePromises = [];
+
+
+        snapshot.forEach(
+            function(historyDoc) {
+
+                deletePromises.push(
+
+                    deleteDoc(
+
+                        doc(
+                            db,
+                            "history",
+                            historyDoc.id
+                        )
+
+                    )
+
+                );
+
+            }
+        );
+
+
+        await Promise.all(
+            deletePromises
+        );
+
+
+        console.log(
+            "✅ Semua history Firestore berjaya dipadam"
+        );
+
+
+        // =================================================
+        // CLEAR LOCAL HISTORY
+        // =================================================
+
+        localStorage.removeItem(
+            "history"
+        );
+
+
+        // =================================================
+        // RESET STATISTICS
+        // =================================================
+
+        const totalSessions =
+            document.getElementById(
+                "totalSessions"
+            );
+
+
+        const totalUsage =
+            document.getElementById(
+                "totalUsage"
+            );
+
+
+        const todaySessions =
+            document.getElementById(
+                "todaySessions"
+            );
+
+
+        if (totalSessions) {
+
+            totalSessions.innerHTML =
+                "0";
+
+        }
+
+
+        if (totalUsage) {
+
+            totalUsage.innerHTML =
+                "00:00:00";
+
+        }
+
+
+        if (todaySessions) {
+
+            todaySessions.innerHTML =
+                "0";
+
+        }
+
+
+        // =================================================
+        // REMOVE ACTIVITY LOG
+        // =================================================
+
+        localStorage.removeItem(
+            "logs"
+        );
+
+
+        // =================================================
+        // UPDATE LOG TABLE
+        // =================================================
+
+        if (
+            typeof loadLogs ===
+            "function"
+        ) {
+
+            loadLogs();
+
+        }
+
+
+        alert(
+            "✅ Semua history dan statistik telah dikosongkan."
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "❌ Gagal memadam history:",
+            error
+        );
+
+
+        alert(
+
+            "❌ Gagal memadam history Firebase.\n\n" +
+
+            "Code: " +
+            error.code +
+
+            "\n\nMessage: " +
+            error.message
+
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// MAKE FUNCTION AVAILABLE
+// =====================================================
+
+window.deleteAllHistory =
+    deleteAllHistory;
 
 
 // =====================================================

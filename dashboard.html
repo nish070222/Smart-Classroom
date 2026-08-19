@@ -852,25 +852,27 @@ function clearLogs() {
 
     const confirmDelete =
         confirm(
-            "Adakah anda pasti mahu mengosongkan semua log aktiviti?"
+            "Adakah anda pasti mahu mengosongkan semua log, history dan statistik penggunaan?"
         );
 
 
     if (!confirmDelete) {
+
         return;
+
     }
 
 
-    localStorage.removeItem(
-        "logs"
-    );
+    if (
+        typeof deleteAllHistory ===
+        "function"
+    ) {
 
+        deleteAllHistory();
 
-    loadLogs();
+    }
 
 }
-
-
 
 // =====================================================
 // UPDATE DASHBOARD
