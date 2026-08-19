@@ -1,0 +1,686 @@
+ /* =====================================================
+    SMART CLASSROOM
+    HISTORY PAGE
+===================================================== */
+
+
+/* =====================================================
+   HISTORY SUMMARY
+===================================================== */
+
+.history-summary {
+
+    width: 100%;
+    max-width: 1100px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin: 22px auto;
+
+}
+
+
+.summary-box {
+
+    background: white;
+
+    padding: 22px;
+
+    border-radius: var(--radius);
+
+    border:
+        1px solid
+        rgba(226,232,240,.8);
+
+    box-shadow: var(--shadow);
+
+    text-align: center;
+
+    transition: .2s;
+
+}
+
+
+.summary-box:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(15,23,42,.10);
+
+}
+
+
+.summary-box h3 {
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    margin-bottom: 8px;
+
+}
+
+
+.summary-value {
+
+    color: var(--dark);
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+}
+
+
+/* =====================================================
+   HISTORY CONTAINER
+===================================================== */
+
+.history-table-card {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    background: white;
+
+    padding: 24px;
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    border:
+        1px solid
+        rgba(226,232,240,.8);
+
+    margin: 0 auto;
+
+}
+
+
+.history-table-card h2 {
+
+    color: var(--dark);
+
+    font-size: 19px;
+
+    margin:
+        0 0 20px;
+
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.history-table-card table {
+
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 10px;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.history-table-card thead th {
+
+    color: var(--muted);
+
+    background:
+        #f8fafc;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    padding: 12px 8px;
+
+    border: none;
+
+    text-align: center;
+
+}
+
+
+/* =====================================================
+   HISTORY CARD
+===================================================== */
+
+.history-table-card tbody {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(240px, 1fr));
+
+    gap: 18px;
+
+}
+
+
+/* Each record */
+
+.history-table-card tbody tr {
+
+    min-height: 275px;
+
+    background: white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(15,23,42,.06);
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    position: relative;
+
+    transition: .2s;
+
+}
+
+
+.history-table-card tbody tr:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(37,99,235,.25);
+
+    box-shadow:
+        0 10px 25px
+        rgba(15,23,42,.10);
+
+}
+
+
+/* =====================================================
+   CARD ICON
+===================================================== */
+
+.history-table-card tbody tr::before {
+
+    content: "💡";
+
+    width: 62px;
+
+    height: 62px;
+
+    margin:
+        20px auto 10px;
+
+    border-radius: 50%;
+
+    background:
+        var(--primary-light);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 27px;
+
+    border:
+        5px solid
+        white;
+
+    box-shadow:
+        0 4px 12px
+        rgba(37,99,235,.12);
+
+}
+
+
+/* =====================================================
+   TABLE CELLS
+===================================================== */
+
+.history-table-card tbody td {
+
+    border: none;
+
+    padding:
+        5px 15px;
+
+    text-align: center;
+
+    color: var(--text);
+
+    font-size: 12px;
+
+}
+
+
+/* =====================================================
+   USER
+===================================================== */
+
+.history-table-card tbody td:nth-child(1) {
+
+    color: var(--dark);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   ROLE
+===================================================== */
+
+.history-table-card tbody td:nth-child(2) {
+
+    color: var(--primary);
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.history-table-card tbody td:nth-child(3) {
+
+    color: var(--muted);
+
+}
+
+
+/* =====================================================
+   TIME
+===================================================== */
+
+.history-table-card tbody td:nth-child(4),
+.history-table-card tbody td:nth-child(5) {
+
+    color: var(--text);
+
+    font-weight: 500;
+
+}
+
+
+/* =====================================================
+   DURATION
+===================================================== */
+
+.history-table-card tbody td:nth-child(6) {
+
+    color: var(--primary);
+
+    font-weight: 700;
+
+}
+
+
+/* =====================================================
+   DELETE BUTTON
+===================================================== */
+
+.history-table-card tbody td:last-child {
+
+    margin-top: auto;
+
+    padding:
+        12px 10px 16px;
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+
+.history-table-card .delete-btn {
+
+    min-width: 100px;
+
+    width: 100px;
+
+    height: 36px;
+
+    margin: 0;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: var(--danger);
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+.history-table-card .delete-btn:hover {
+
+    background:
+        #b91c1c;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* =====================================================
+   NO RECORD
+===================================================== */
+
+.history-table-card tbody tr:has(.no-record) {
+
+    display: block;
+
+    min-height: auto;
+
+    border: none;
+
+    box-shadow: none;
+
+    background: transparent;
+
+}
+
+
+.history-table-card .no-record {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 35px 15px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    text-align: center;
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width:1100px) {
+
+    .history-table-card tbody {
+
+        grid-template-columns:
+            repeat(2, minmax(220px, 1fr));
+
+    }
+
+}
+
+
+/* =====================================================
+   PHONE
+===================================================== */
+
+@media (max-width:768px) {
+
+    .history-summary {
+
+        width: 100%;
+
+        grid-template-columns:
+            1fr;
+
+        gap: 11px;
+
+        margin:
+            16px auto;
+
+    }
+
+
+    .summary-box {
+
+        padding: 17px;
+
+        border-radius: 15px;
+
+    }
+
+
+    .summary-box h3 {
+
+        font-size: 13px;
+
+    }
+
+
+    .summary-value {
+
+        font-size: 24px;
+
+    }
+
+
+    .history-table-card {
+
+        width: 100%;
+
+        padding: 17px;
+
+        border-radius: 15px;
+
+        overflow: visible;
+
+    }
+
+
+    .history-table-card h2 {
+
+        font-size: 17px;
+
+        margin-bottom: 16px;
+
+    }
+
+
+    /* Hide table header */
+
+    .history-table-card thead {
+
+        display: none;
+
+    }
+
+
+    /* One card per row */
+
+    .history-table-card tbody {
+
+        display: grid;
+
+        grid-template-columns:
+            1fr;
+
+        gap: 13px;
+
+    }
+
+
+    .history-table-card tbody tr {
+
+        width: 100%;
+
+        min-height: 275px;
+
+        border-radius: 16px;
+
+    }
+
+
+    .history-table-card tbody tr::before {
+
+        width: 58px;
+
+        height: 58px;
+
+        margin-top: 18px;
+
+        font-size: 25px;
+
+    }
+
+
+    .history-table-card tbody td {
+
+        font-size: 11px;
+
+        padding:
+            4px 14px;
+
+    }
+
+
+    .history-table-card tbody td:nth-child(1) {
+
+        font-size: 13px;
+
+    }
+
+
+    .history-table-card .delete-btn {
+
+        min-width: 90px;
+
+        width: 90px;
+
+        height: 35px;
+
+        font-size: 10px;
+
+    }
+
+}
+
+
+/* =====================================================
+   SMALL PHONE
+===================================================== */
+
+@media (max-width:480px) {
+
+    .history-table-card {
+
+        padding: 14px;
+
+    }
+
+
+    .history-table-card tbody tr {
+
+        min-height: 270px;
+
+    }
+
+
+    .history-table-card tbody tr::before {
+
+        width: 55px;
+
+        height: 55px;
+
+        font-size: 23px;
+
+    }
+
+
+    .history-table-card tbody td {
+
+        font-size: 10px;
+
+    }
+
+
+    .history-table-card tbody td:nth-child(1) {
+
+        font-size: 12px;
+
+    }
+
+}
+
+
+/* =====================================================
+   VERY SMALL PHONE
+===================================================== */
+
+@media (max-width:360px) {
+
+    .history-table-card {
+
+        padding: 11px;
+
+    }
+
+
+    .history-table-card tbody tr {
+
+        min-height: 260px;
+
+    }
+
+
+    .history-table-card tbody td {
+
+        padding:
+            3px 10px;
+
+        font-size: 9px;
+
+    }
+
+
+    .history-table-card tbody td:nth-child(1) {
+
+        font-size: 11px;
+
+    }
+
+}
