@@ -5,13 +5,17 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>
         Smart Classroom Light Control
     </title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css">
 
 </head>
 
@@ -22,7 +26,9 @@
 <script src="auth.js"></script>
 
 
-<!-- SIDEBAR -->
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
 <div class="sidebar">
 
@@ -32,13 +38,13 @@
 
 
     <a href="index.html">
-
         💡 Light Control
-
     </a>
 
 
-    <a href="dashboard.html" id="dashboardMenu">
+    <a
+        href="dashboard.html"
+        id="dashboardMenu">
 
         📊 Dashboard
 
@@ -52,14 +58,18 @@
     </a>
 
 
-    <a href="manageusers.html" id="manageMenu">
+    <a
+        href="manageusers.html"
+        id="manageMenu">
 
         👥 Manage User
 
     </a>
 
 
-    <a href="#" onclick="logout()">
+    <a
+        href="#"
+        onclick="logout()">
 
         🚪 Logout
 
@@ -69,7 +79,9 @@
 
 
 
-<!-- MAIN -->
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
 <div class="main">
 
@@ -89,13 +101,13 @@
 
 
 
-    <!-- CLOCK -->
+    <!-- =================================================
+         CLOCK
+    ================================================= -->
 
     <div class="clock">
 
-
         🕒 Masa Sekarang
-
 
         <h2 id="time">
 
@@ -104,9 +116,7 @@
         </h2>
 
 
-
         📅 Tarikh
-
 
         <p id="date">
 
@@ -114,30 +124,83 @@
 
         </p>
 
-
     </div>
 
 
 
-    <!-- LIGHT CONTROL -->
+    <!-- =================================================
+         LIGHT CONTROL
+    ================================================= -->
 
     <div class="card">
 
 
         <h2>
 
-            💡 Lampu Makmal Tutorial
+            💡 Kawalan Lampu Bilik
 
         </h2>
 
 
+
+        <!-- LOCATION -->
+
+        <p>
+
+            📍 Pilih Lokasi Lampu:
+
+        </p>
+
+
+        <select
+            id="locationSelect"
+            class="location-select">
+
+            <option value="Bilik Kuliah DB">
+
+                🏫 Bilik Kuliah DB
+
+            </option>
+
+
+            <option value="Bilik ICT 1">
+
+                💻 Bilik ICT 1
+
+            </option>
+
+
+            <option value="Bilik ICT 4">
+
+                💻 Bilik ICT 4
+
+            </option>
+
+        </select>
+
+
+
+        <p>
+
+            Lokasi Semasa:
+
+            <strong id="currentLocation">
+
+                Bilik Kuliah DB
+
+            </strong>
+
+        </p>
+
+
+
+        <!-- STATUS -->
 
         <p>
 
             Status Lampu:
 
         </p>
-
 
 
         <h1 id="lampStatus">
@@ -180,7 +243,6 @@
             </h2>
 
 
-
             <h1 id="timer">
 
                 00:00:00
@@ -195,7 +257,9 @@
 
 
 
-    <!-- SYSTEM STATUS -->
+    <!-- =================================================
+         SYSTEM STATUS
+    ================================================= -->
 
     <div class="info">
 
@@ -205,7 +269,6 @@
             📌 Status Sistem
 
         </h2>
-
 
 
         <p>
@@ -226,7 +289,11 @@
 
             📍 Lokasi:
 
-            Makmal Tutorial
+            <strong id="systemLocation">
+
+                Bilik Kuliah DB
+
+            </strong>
 
         </p>
 
@@ -238,9 +305,16 @@
 
 
 
-<!-- JAVASCRIPT -->
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
-<script type="module" src="script.js"></script>
+<script
+    type="module"
+    src="script.js">
+</script>
+
+
 <script src="logout.js"></script>
 
 
@@ -248,104 +322,221 @@
 <script>
 
 
-// ======================
+// =====================================================
 // WELCOME USER
-// ======================
+// =====================================================
+
+const loginUser =
+    JSON.parse(
+        localStorage.getItem(
+            "loginUser"
+        )
+    );
+
 
 document.getElementById(
     "welcome"
 ).innerHTML =
 
     "Welcome, " +
-    (loginUser.email || "User");
+
+    (
+        loginUser?.email ||
+        "User"
+    );
 
 
 
-// ======================
+// =====================================================
 // ROLE MENU
-// ======================
+// =====================================================
 
-let user = JSON.parse(
+if (
+    !loginUser ||
+    loginUser.role !== "admin"
+) {
 
-    localStorage.getItem("loginUser")
+    const dashboardMenu =
+        document.getElementById(
+            "dashboardMenu"
+        );
 
-);
-
-
-if (loginUser.role != "admin") {
-
-
-    document.getElementById(
-        "dashboardMenu"
-    ).style.display = "none";
+    const manageMenu =
+        document.getElementById(
+            "manageMenu"
+        );
 
 
-    document.getElementById(
-        "manageMenu"
-    ).style.display = "none";
+    if (dashboardMenu) {
+
+        dashboardMenu.style.display =
+            "none";
+
+    }
+
+
+    if (manageMenu) {
+
+        manageMenu.style.display =
+            "none";
+
+    }
 
 }
 
 
 
-// ======================
+// =====================================================
+// LOCATION
+// =====================================================
+
+const locationSelect =
+    document.getElementById(
+        "locationSelect"
+    );
+
+
+const currentLocation =
+    document.getElementById(
+        "currentLocation"
+    );
+
+
+const systemLocation =
+    document.getElementById(
+        "systemLocation"
+    );
+
+
+// Ambil lokasi yang terakhir dipilih
+
+const savedLocation =
+    localStorage.getItem(
+        "selectedLocation"
+    ) || "Bilik Kuliah DB";
+
+
+locationSelect.value =
+    savedLocation;
+
+
+currentLocation.innerHTML =
+    savedLocation;
+
+
+systemLocation.innerHTML =
+    savedLocation;
+
+
+
+// Bila user tukar bilik
+
+locationSelect.addEventListener(
+    "change",
+    function() {
+
+        const location =
+            this.value;
+
+
+        localStorage.setItem(
+            "selectedLocation",
+            location
+        );
+
+
+        currentLocation.innerHTML =
+            location;
+
+
+        systemLocation.innerHTML =
+            location;
+
+    }
+);
+
+
+
+// =====================================================
 // CLOCK
-// ======================
+// =====================================================
 
 function updateClock() {
 
-
-    let now = new Date();
-
-
-    let h = now.getHours();
-
-    let m = now.getMinutes();
-
-    let s = now.getSeconds();
+    const now =
+        new Date();
 
 
+    let h =
+        now.getHours();
 
-    h = h < 10 ? "0" + h : h;
 
-    m = m < 10 ? "0" + m : m;
+    let m =
+        now.getMinutes();
 
-    s = s < 10 ? "0" + s : s;
 
+    let s =
+        now.getSeconds();
+
+
+    h =
+        h < 10
+            ? "0" + h
+            : h;
+
+
+    m =
+        m < 10
+            ? "0" + m
+            : m;
+
+
+    s =
+        s < 10
+            ? "0" + s
+            : s;
 
 
     document.getElementById(
         "time"
     ).innerHTML =
 
-        h + ":" + m + ":" + s;
+        h +
+        ":" +
+        m +
+        ":" +
+        s;
 
 
 
-    let d = now.getDate();
+    const d =
+        now.getDate();
 
-    let mo = now.getMonth() + 1;
 
-    let y = now.getFullYear();
+    const mo =
+        now.getMonth() + 1;
 
+
+    const y =
+        now.getFullYear();
 
 
     document.getElementById(
         "date"
     ).innerHTML =
 
-        d + "/" + mo + "/" + y;
+        d +
+        "/" +
+        mo +
+        "/" +
+        y;
 
 }
 
 
-
 setInterval(
-
     updateClock,
-
     1000
-
 );
 
 

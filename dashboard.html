@@ -20,9 +20,6 @@
 
     <style>
 
-        /* =====================================
-           DASHBOARD EXTRA STYLE
-           ===================================== */
 
         .welcome {
             margin-bottom: 25px;
@@ -40,9 +37,7 @@
         }
 
 
-        /* =====================================
-           MAIN DASHBOARD CARDS
-           ===================================== */
+        /* MAIN CARDS */
 
         .dashboard-card {
 
@@ -114,9 +109,7 @@
         }
 
 
-        /* =====================================
-           STATISTICS
-           ===================================== */
+        /* STATISTICS */
 
         .statistics {
 
@@ -167,9 +160,7 @@
         }
 
 
-        /* =====================================
-           LOG
-           ===================================== */
+        /* LOG */
 
         .log {
 
@@ -182,6 +173,8 @@
             box-shadow:
                 0 4px 12px
                 rgba(0,0,0,0.08);
+
+            overflow-x: auto;
 
         }
 
@@ -276,10 +269,6 @@
         }
 
 
-        /* =====================================
-           RESPONSIVE
-           ===================================== */
-
         @media(max-width:900px) {
 
             .dashboard-card {
@@ -326,6 +315,7 @@
 
         }
 
+
     </style>
 
 </head>
@@ -334,12 +324,10 @@
 <body>
 
 
-<!-- =====================================
-     AUTH CHECK
-     ===================================== -->
-
 <script src="auth.js"></script>
 
+
+<!-- AUTH CHECK -->
 
 <script>
 
@@ -364,9 +352,8 @@ if (
 </script>
 
 
-<!-- =====================================
-     SIDEBAR
-     ===================================== -->
+
+<!-- SIDEBAR -->
 
 <div class="sidebar">
 
@@ -376,30 +363,22 @@ if (
 
 
     <a href="index.html">
-
         💡 Light Control
-
     </a>
 
 
     <a href="dashboard.html">
-
         📊 Dashboard
-
     </a>
 
 
     <a href="history.html">
-
         📅 History
-
     </a>
 
 
     <a href="manageusers.html">
-
         👥 Manage User
-
     </a>
 
 
@@ -414,38 +393,30 @@ if (
 </div>
 
 
-<!-- =====================================
-     MAIN DASHBOARD
-     ===================================== -->
+
+<!-- MAIN -->
 
 <div class="dashboard">
 
 
-    <!-- =====================================
-         WELCOME
-         ===================================== -->
+    <!-- WELCOME -->
 
     <div class="welcome">
 
         <h1>
-
             🏫 Smart Classroom Dashboard
-
         </h1>
 
 
         <p id="welcomeText">
-
             Monitoring Sistem Admin
-
         </p>
 
     </div>
 
 
-    <!-- =====================================
-         MAIN CARDS
-         ===================================== -->
+
+    <!-- MAIN CARDS -->
 
     <div class="dashboard-card">
 
@@ -455,19 +426,16 @@ if (
         <div class="box">
 
             <h2>
-
                 ⏱ Masa Lampu Hidup
-
             </h2>
 
 
             <h1 id="dashTimer">
-
                 00:00:00
-
             </h1>
 
         </div>
+
 
 
         <!-- LAMP -->
@@ -475,41 +443,37 @@ if (
         <div class="box">
 
             <h2>
-
                 💡 Status Lampu
-
             </h2>
 
 
             <h1 id="dashLamp">
-
                 OFF
-
             </h1>
 
         </div>
 
 
-        <!-- ESP32 -->
+
+        <!-- ESP -->
 
         <div class="box">
 
             <h2>
-
                 📡 ESP32
-
             </h2>
 
 
             <h1
                 id="espStatus"
-                class="offline">
+                class="online">
 
-                CHECKING
+                🟢 ONLINE
 
             </h1>
 
         </div>
+
 
 
         <!-- LOCATION -->
@@ -517,38 +481,32 @@ if (
         <div class="box">
 
             <h2>
-
-                📍 Lokasi
-
+                📍 Lampu Dibuka Di
             </h2>
 
 
-            <h3>
+            <h3 id="dashLocation">
 
-                Makmal Tutorial
+                Bilik Kuliah DB
 
             </h3>
 
         </div>
 
+
     </div>
 
 
-    <!-- =====================================
-         STATISTICS
-         ===================================== -->
+
+    <!-- STATISTICS -->
 
     <div class="statistics">
 
 
-        <!-- TOTAL SESSION -->
-
         <div class="stat-box">
 
             <h3>
-
                 📊 Jumlah Sesi
-
             </h3>
 
 
@@ -563,14 +521,11 @@ if (
         </div>
 
 
-        <!-- TOTAL USAGE -->
 
         <div class="stat-box">
 
             <h3>
-
                 ⏱ Jumlah Penggunaan
-
             </h3>
 
 
@@ -585,14 +540,11 @@ if (
         </div>
 
 
-        <!-- TODAY -->
 
         <div class="stat-box">
 
             <h3>
-
                 📅 Penggunaan Hari Ini
-
             </h3>
 
 
@@ -606,12 +558,12 @@ if (
 
         </div>
 
+
     </div>
 
 
-    <!-- =====================================
-         ACTIVITY LOG
-         ===================================== -->
+
+    <!-- ACTIVITY LOG -->
 
     <div class="log">
 
@@ -619,9 +571,7 @@ if (
         <div class="log-header">
 
             <h2>
-
                 📋 Log Aktiviti
-
             </h2>
 
 
@@ -636,6 +586,7 @@ if (
         </div>
 
 
+
         <table>
 
             <thead>
@@ -648,6 +599,10 @@ if (
 
                     <th>
                         Pengguna
+                    </th>
+
+                    <th>
+                        Lokasi
                     </th>
 
                     <th>
@@ -669,25 +624,17 @@ if (
 
         </table>
 
+
     </div>
 
 
 </div>
 
 
-<!-- =====================================
-     SYSTEM SCRIPTS
-     ===================================== -->
 
 <script
     type="module"
     src="script.js">
-</script>
-
-
-<script
-    type="module"
-    src="dashboard.js">
 </script>
 
 
@@ -697,9 +644,9 @@ if (
 <script>
 
 
-// =====================================
-// WELCOME ADMIN
-// =====================================
+// =====================================================
+// WELCOME
+// =====================================================
 
 function updateWelcome() {
 
@@ -739,9 +686,10 @@ function updateWelcome() {
 }
 
 
-// =====================================
+
+// =====================================================
 // LAMP STATUS
-// =====================================
+// =====================================================
 
 function updateLampStatus() {
 
@@ -757,22 +705,29 @@ function updateLampStatus() {
         );
 
 
-    if (!lamp) {
+    const location =
+        document.getElementById(
+            "dashLocation"
+        );
 
-        return;
 
-    }
-
-
-    if (
-        status === "ON"
-    ) {
+    if (status === "ON") {
 
         lamp.innerHTML =
             "ON";
 
         lamp.style.color =
             "green";
+
+
+        location.innerHTML =
+            localStorage.getItem(
+                "activeLocation"
+            ) ||
+            localStorage.getItem(
+                "selectedLocation"
+            ) ||
+            "Bilik Kuliah DB";
 
     }
 
@@ -784,14 +739,19 @@ function updateLampStatus() {
         lamp.style.color =
             "red";
 
+
+        location.innerHTML =
+            "Tiada lampu dibuka";
+
     }
 
 }
 
 
-// =====================================
+
+// =====================================================
 // LOG AKTIVITI
-// =====================================
+// =====================================================
 
 function loadLogs() {
 
@@ -810,9 +770,7 @@ function loadLogs() {
 
 
     if (!table) {
-
         return;
-
     }
 
 
@@ -828,7 +786,7 @@ function loadLogs() {
             <tr>
 
                 <td
-                    colspan="4"
+                    colspan="5"
                     class="empty-log">
 
                     Tiada aktiviti direkodkan
@@ -838,7 +796,6 @@ function loadLogs() {
             </tr>
 
         `;
-
 
         return;
 
@@ -853,42 +810,30 @@ function loadLogs() {
                 <tr>
 
                     <td>
-
-                        ${
-                            log.time ||
-                            "-"
-                        }
-
+                        ${log.time || "-"}
                     </td>
 
 
                     <td>
-
-                        ${
-                            log.user ||
-                            "Unknown"
-                        }
-
+                        ${log.user || "Unknown"}
                     </td>
 
 
                     <td>
-
-                        ${
-                            log.activity ||
-                            "-"
+                        📍 ${
+                            log.location ||
+                            "Bilik Kuliah DB"
                         }
-
                     </td>
 
 
                     <td>
+                        ${log.activity || "-"}
+                    </td>
 
-                        ${
-                            log.status ||
-                            "-"
-                        }
 
+                    <td>
+                        ${log.status || "-"}
                     </td>
 
                 </tr>
@@ -901,9 +846,10 @@ function loadLogs() {
 }
 
 
-// =====================================
+
+// =====================================================
 // CLEAR LOG
-// =====================================
+// =====================================================
 
 function clearLogs() {
 
@@ -914,9 +860,7 @@ function clearLogs() {
 
 
     if (!confirmDelete) {
-
         return;
-
     }
 
 
@@ -930,9 +874,10 @@ function clearLogs() {
 }
 
 
-// =====================================
+
+// =====================================================
 // UPDATE DASHBOARD
-// =====================================
+// =====================================================
 
 function updateDashboard() {
 
@@ -943,18 +888,17 @@ function updateDashboard() {
 }
 
 
-// =====================================
-// INITIAL LOAD
-// =====================================
+
+// =====================================================
+// INITIAL
+// =====================================================
 
 updateWelcome();
 
 updateDashboard();
 
 
-// =====================================
 // AUTO UPDATE
-// =====================================
 
 setInterval(
     function() {

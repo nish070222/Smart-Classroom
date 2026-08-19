@@ -13,14 +13,13 @@
         Smart Classroom History
     </title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css">
 
 
     <style>
 
-        /* =====================================
-           HISTORY SUMMARY
-           ===================================== */
 
         .history-summary {
 
@@ -68,10 +67,6 @@
 
         }
 
-
-        /* =====================================
-           HISTORY TABLE
-           ===================================== */
 
         .history-table-card {
 
@@ -146,10 +141,6 @@
         }
 
 
-        /* =====================================
-           DELETE BUTTON
-           ===================================== */
-
         .delete-btn {
 
             border: none;
@@ -174,10 +165,6 @@
         }
 
 
-        /* =====================================
-           NO RECORD
-           ===================================== */
-
         .no-record {
 
             text-align: center;
@@ -189,11 +176,7 @@
         }
 
 
-        /* =====================================
-           RESPONSIVE
-           ===================================== */
-
-        @media(max-width: 800px) {
+        @media(max-width:800px) {
 
             .history-summary {
 
@@ -212,16 +195,11 @@
 <body>
 
 
-<!-- =====================================
-     AUTH CHECK
-     ===================================== -->
-
 <script src="auth.js"></script>
 
 
-<!-- =====================================
-     SIDEBAR
-     ===================================== -->
+
+<!-- SIDEBAR -->
 
 <div class="sidebar">
 
@@ -231,9 +209,7 @@
 
 
     <a href="index.html">
-
         💡 Light Control
-
     </a>
 
 
@@ -247,9 +223,7 @@
 
 
     <a href="history.html">
-
         📅 History
-
     </a>
 
 
@@ -273,30 +247,24 @@
 </div>
 
 
-<!-- =====================================
-     MAIN
-     ===================================== -->
+
+<!-- MAIN -->
 
 <div class="main">
 
 
     <h1>
-
         📅 Rekod Penggunaan Lampu
-
     </h1>
 
 
     <p id="welcome">
-
         Smart Classroom Control System
-
     </p>
 
 
-    <!-- =====================================
-         SUMMARY
-         ===================================== -->
+
+    <!-- SUMMARY -->
 
     <div class="history-summary">
 
@@ -304,9 +272,7 @@
         <div class="summary-box">
 
             <h3>
-
                 📊 Jumlah Sesi
-
             </h3>
 
 
@@ -321,12 +287,11 @@
         </div>
 
 
+
         <div class="summary-box">
 
             <h3>
-
                 ⏱ Jumlah Penggunaan
-
             </h3>
 
 
@@ -341,12 +306,11 @@
         </div>
 
 
+
         <div class="summary-box">
 
             <h3>
-
                 📅 Sesi Hari Ini
-
             </h3>
 
 
@@ -364,18 +328,16 @@
     </div>
 
 
-    <!-- =====================================
-         HISTORY TABLE
-         ===================================== -->
+
+    <!-- HISTORY -->
 
     <div class="history-table-card">
 
 
         <h2>
-
             📋 History Lampu
-
         </h2>
+
 
 
         <table>
@@ -389,25 +351,36 @@
                         Pengguna
                     </th>
 
+
                     <th>
                         Role
                     </th>
+
+
+                    <th>
+                        📍 Lokasi
+                    </th>
+
 
                     <th>
                         Tarikh
                     </th>
 
+
                     <th>
                         Masa Mula
                     </th>
+
 
                     <th>
                         Masa Tamat
                     </th>
 
+
                     <th>
                         Tempoh
                     </th>
+
 
                     <th>
                         Tindakan
@@ -418,12 +391,13 @@
             </thead>
 
 
+
             <tbody id="historyTable">
 
                 <tr>
 
                     <td
-                        colspan="7"
+                        colspan="8"
                         class="no-record">
 
                         ⏳ Memuatkan rekod...
@@ -437,22 +411,17 @@
 
         </table>
 
+
     </div>
 
 
 </div>
 
 
-<!-- =====================================
-     LOGOUT
-     ===================================== -->
 
 <script src="logout.js"></script>
 
 
-<!-- =====================================
-     FIREBASE HISTORY
-     ===================================== -->
 
 <script
     type="module"
@@ -460,16 +429,13 @@
 </script>
 
 
-<!-- =====================================
-     ROLE MENU + WELCOME
-     ===================================== -->
 
 <script>
 
 
-// =====================================
-// USER
-// =====================================
+// =====================================================
+// CURRENT USER
+// =====================================================
 
 const currentUser =
 
@@ -488,9 +454,10 @@ if (!currentUser) {
 }
 
 
-// =====================================
+
+// =====================================================
 // WELCOME
-// =====================================
+// =====================================================
 
 if (currentUser) {
 
@@ -511,25 +478,23 @@ if (currentUser) {
 }
 
 
-// =====================================
+
+// =====================================================
 // ROLE MENU
-// =====================================
+// =====================================================
 
 if (
     currentUser &&
     currentUser.role !== "admin"
 ) {
 
-
     const dashboardMenu =
-
         document.getElementById(
             "dashboardMenu"
         );
 
 
     const manageMenu =
-
         document.getElementById(
             "manageMenu"
         );
