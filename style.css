@@ -1,7 +1,7 @@
 /* =====================================================
    SMART CLASSROOM CONTROL SYSTEM
-   PROFESSIONAL RESPONSIVE UI
-   LAPTOP + PHONE
+   MODERN SMART CLASSROOM UI
+   LAPTOP + TABLET + PHONE
 ===================================================== */
 
 
@@ -23,10 +23,17 @@
     --primary-light: #eff6ff;
 
     --success: #16a34a;
+    --success-light: #f0fdf4;
+
     --danger: #dc2626;
+    --danger-light: #fef2f2;
+
     --warning: #d97706;
+    --warning-light: #fffbeb;
 
     --dark: #0f172a;
+    --dark-2: #1e293b;
+
     --text: #334155;
     --muted: #64748b;
 
@@ -34,13 +41,17 @@
 
     --white: #ffffff;
 
-    --background: #f1f5f9;
+    --background: #f8fafc;
 
-    --radius: 16px;
+    --radius: 18px;
 
     --shadow:
-        0 6px 20px
+        0 8px 25px
         rgba(15, 23, 42, 0.07);
+
+    --shadow-hover:
+        0 14px 35px
+        rgba(15, 23, 42, 0.11);
 
 }
 
@@ -77,9 +88,9 @@ body {
     background:
         linear-gradient(
             135deg,
-            #eff6ff 0%,
-            #f8fafc 55%,
-            #eef2ff 100%
+            #f8fbff 0%,
+            #f8fafc 50%,
+            #eef4ff 100%
         );
 
     color: var(--text);
@@ -136,7 +147,7 @@ a {
 
 
 /* =====================================================
-   LOGIN
+   LOGIN PAGE
 ===================================================== */
 
 .login-body {
@@ -149,28 +160,50 @@ a {
 
     align-items: center;
 
-    padding: 20px;
+    padding: 25px;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            #dbeafe,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #e0e7ff,
+            transparent 35%
+        ),
+        #f8fafc;
 
 }
 
 
+/* =====================================================
+   LOGIN CARD
+===================================================== */
+
 .login-card {
 
-    width: 390px;
+    width: 410px;
 
     max-width: 100%;
 
-    background: white;
+    background:
+        rgba(255,255,255,.96);
 
-    padding: 38px 35px;
+    padding: 40px 36px;
 
-    border-radius: 22px;
+    border-radius: 24px;
 
     text-align: center;
 
+    border:
+        1px solid
+        rgba(226,232,240,.8);
+
     box-shadow:
-        0 15px 40px
-        rgba(15, 23, 42, .10);
+        0 20px 55px
+        rgba(15,23,42,.12);
 
 }
 
@@ -179,7 +212,9 @@ a {
 
     color: var(--primary);
 
-    font-size: 27px;
+    font-size: 28px;
+
+    font-weight: 700;
 
     margin-bottom: 8px;
 
@@ -197,16 +232,24 @@ a {
 }
 
 
+/* =====================================================
+   LOGIN INPUT
+===================================================== */
+
 .login-card input,
 .login-card select {
 
     width: 100%;
 
-    padding: 12px 14px;
+    height: 46px;
 
-    margin: 7px 0;
+    padding:
+        0 14px;
 
-    border-radius: 10px;
+    margin:
+        6px 0;
+
+    border-radius: 11px;
 
     border:
         1px solid
@@ -218,34 +261,50 @@ a {
 
     font-size: 14px;
 
+    color: var(--text);
+
+    transition:
+        .2s ease;
+
 }
 
 
 .login-card input:focus,
 .login-card select:focus {
 
-    border-color: var(--primary);
+    border-color:
+        var(--primary);
 
     box-shadow:
-        0 0 0 3px
+        0 0 0 4px
         rgba(37,99,235,.10);
 
 }
 
 
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
 .login-btn {
 
     width: 100%;
 
-    height: 44px;
+    height: 46px;
 
-    margin: 12px 0 0;
+    margin:
+        14px 0 0;
 
     border: none;
 
-    border-radius: 10px;
+    border-radius: 11px;
 
-    background: var(--primary);
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            #3b82f6
+        );
 
     color: white;
 
@@ -255,14 +314,31 @@ a {
 
     cursor: pointer;
 
-    transition: .2s;
+    box-shadow:
+        0 6px 15px
+        rgba(37,99,235,.22);
+
+    transition:
+        .2s ease;
 
 }
 
 
 .login-btn:hover {
 
-    background: var(--primary-dark);
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary-dark),
+            var(--primary)
+        );
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 9px 20px
+        rgba(37,99,235,.27);
 
 }
 
@@ -279,7 +355,7 @@ a {
 
 
 /* =====================================================
-   SIDEBAR - LAPTOP
+   SIDEBAR
 ===================================================== */
 
 .sidebar {
@@ -289,17 +365,18 @@ a {
     left: 0;
     top: 0;
 
-    width: 235px;
+    width: 245px;
 
     height: 100vh;
 
-    padding: 22px 14px;
+    padding:
+        25px 15px;
 
     background:
         linear-gradient(
             180deg,
-            #0f172a,
-            #1e293b
+            #0f172a 0%,
+            #172554 100%
         );
 
     color: white;
@@ -309,26 +386,37 @@ a {
     overflow-y: auto;
 
     box-shadow:
-        4px 0 20px
-        rgba(15,23,42,.10);
+        5px 0 25px
+        rgba(15,23,42,.13);
 
 }
 
+
+/* =====================================================
+   SIDEBAR TITLE
+===================================================== */
 
 .sidebar h2 {
 
     text-align: center;
 
-    font-size: 20px;
+    font-size: 21px;
 
-    font-weight: 600;
+    font-weight: 700;
 
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 
     color: white;
 
+    letter-spacing:
+        .2px;
+
 }
 
+
+/* =====================================================
+   SIDEBAR LINKS
+===================================================== */
 
 .sidebar a {
 
@@ -336,19 +424,24 @@ a {
 
     align-items: center;
 
-    gap: 8px;
+    gap: 10px;
 
     color: #cbd5e1;
 
-    padding: 12px 13px;
+    padding:
+        13px 14px;
 
-    margin: 5px 0;
+    margin:
+        6px 0;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     font-size: 13px;
 
-    transition: .2s;
+    font-weight: 500;
+
+    transition:
+        all .2s ease;
 
 }
 
@@ -356,21 +449,30 @@ a {
 .sidebar a:hover {
 
     background:
-        rgba(59,130,246,.18);
+        rgba(59,130,246,.17);
 
     color: white;
 
     transform:
-        translateX(3px);
+        translateX(4px);
 
 }
 
 
 .sidebar .active {
 
-    background: var(--primary);
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #3b82f6
+        );
 
     color: white;
+
+    box-shadow:
+        0 6px 15px
+        rgba(37,99,235,.25);
 
 }
 
@@ -381,11 +483,12 @@ a {
 
 .main {
 
-    margin-left: 235px;
+    margin-left: 245px;
 
     min-height: 100vh;
 
-    padding: 32px;
+    padding:
+        38px 45px;
 
     display: flex;
 
@@ -396,13 +499,21 @@ a {
 }
 
 
+/* =====================================================
+   MAIN TITLE
+===================================================== */
+
 .main > h1 {
 
     color: var(--dark);
 
-    font-size: 29px;
+    font-size: 30px;
+
+    font-weight: 700;
 
     text-align: center;
+
+    line-height: 1.3;
 
 }
 
@@ -411,16 +522,12 @@ a {
 
     color: var(--muted);
 
-    margin-top: 6px;
+    margin-top: 7px;
 
     text-align: center;
 
 }
 
-
-/* =====================================================
-   WELCOME
-===================================================== */
 
 #welcome {
 
@@ -441,17 +548,20 @@ a {
 
 .clock {
 
-    width: 450px;
+    width: 500px;
 
     max-width: 100%;
 
-    background: white;
+    background:
+        rgba(255,255,255,.96);
 
-    padding: 24px;
+    padding:
+        25px;
 
-    margin-top: 22px;
+    margin-top: 25px;
 
-    border-radius: var(--radius);
+    border-radius:
+        var(--radius);
 
     text-align: center;
 
@@ -461,11 +571,26 @@ a {
 
     align-items: center;
 
-    box-shadow: var(--shadow);
-
     border:
         1px solid
-        rgba(226,232,240,.7);
+        var(--border);
+
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        .2s ease;
+
+}
+
+
+.clock:hover {
+
+    box-shadow:
+        var(--shadow-hover);
+
+    transform:
+        translateY(-2px);
 
 }
 
@@ -474,11 +599,15 @@ a {
 
     color: var(--primary);
 
-    font-size: 40px;
+    font-size: 43px;
 
     font-weight: 600;
 
-    margin: 12px 0;
+    margin:
+        10px 0;
+
+    letter-spacing:
+        1px;
 
 }
 
@@ -487,7 +616,7 @@ a {
 
     color: var(--text);
 
-    font-size: 15px;
+    font-size: 14px;
 
     font-weight: 500;
 
@@ -495,26 +624,45 @@ a {
 
 
 /* =====================================================
-   LIGHT CARD
+   LIGHT CONTROL CARD
 ===================================================== */
 
 .card {
 
-    width: 450px;
+    width: 500px;
 
     max-width: 100%;
 
-    background: white;
+    background:
+        rgba(255,255,255,.97);
 
-    padding: 30px;
+    padding:
+        30px;
 
     margin-top: 20px;
 
-    border-radius: var(--radius);
+    border-radius:
+        var(--radius);
 
     text-align: center;
 
-    box-shadow: var(--shadow);
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        .2s ease;
+
+}
+
+
+.card:hover {
+
+    box-shadow:
+        var(--shadow-hover);
 
 }
 
@@ -523,51 +671,153 @@ a {
 
     color: var(--dark);
 
-    font-size: 20px;
+    font-size: 21px;
 
-}
-
-
-#lampStatus {
-
-    font-size: 44px;
-
-    font-weight: 700;
-
-    color: var(--danger);
-
-    margin: 18px;
+    margin-bottom: 18px;
 
 }
 
 
 /* =====================================================
-   BUTTON
+   LOCATION SELECT
+===================================================== */
+
+.location-select {
+
+    width: 100%;
+
+    height: 46px;
+
+    padding:
+        0 13px;
+
+    margin:
+        7px 0 15px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        11px;
+
+    background:
+        white;
+
+    color:
+        var(--text);
+
+    font-size:
+        14px;
+
+    outline:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+
+}
+
+
+.location-select:hover {
+
+    border-color:
+        #93c5fd;
+
+}
+
+
+.location-select:focus {
+
+    border-color:
+        var(--primary);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(37,99,235,.09);
+
+}
+
+
+/* =====================================================
+   CURRENT LOCATION
+===================================================== */
+
+#currentLocation,
+#systemLocation {
+
+    color:
+        var(--primary);
+
+    font-weight:
+        600;
+
+}
+
+
+/* =====================================================
+   LAMP STATUS
+===================================================== */
+
+#lampStatus {
+
+    font-size: 48px;
+
+    font-weight: 700;
+
+    color:
+        var(--danger);
+
+    margin:
+        18px;
+
+    letter-spacing:
+        1px;
+
+}
+
+
+/* =====================================================
+   BUTTONS
 ===================================================== */
 
 button {
 
-    min-width: 115px;
+    min-width:
+        120px;
 
-    height: 42px;
+    height:
+        44px;
 
-    border: none;
+    border:
+        none;
 
-    border-radius: 9px;
+    border-radius:
+        11px;
 
-    margin: 6px;
+    margin:
+        6px;
 
-    padding: 0 15px;
+    padding:
+        0 18px;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    color: white;
+    color:
+        white;
 
-    font-size: 13px;
+    font-size:
+        13px;
 
-    font-weight: 600;
+    font-weight:
+        600;
 
-    transition: .2s;
+    transition:
+        all .2s ease;
 
 }
 
@@ -577,33 +827,65 @@ button:hover {
     transform:
         translateY(-2px);
 
+    box-shadow:
+        0 6px 15px
+        rgba(15,23,42,.12);
+
+}
+
+
+button:active {
+
+    transform:
+        scale(.97);
+
 }
 
 
 .on {
 
-    background: var(--success);
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #22c55e
+        );
 
 }
 
 
 .off {
 
-    background: var(--danger);
+    background:
+        linear-gradient(
+            135deg,
+            #dc2626,
+            #ef4444
+        );
 
 }
 
 
 .edit-btn {
 
-    background: var(--warning);
+    background:
+        linear-gradient(
+            135deg,
+            #d97706,
+            #f59e0b
+        );
 
 }
 
 
 .delete-btn {
 
-    background: var(--danger);
+    background:
+        linear-gradient(
+            135deg,
+            #dc2626,
+            #ef4444
+        );
 
 }
 
@@ -614,14 +896,21 @@ button:hover {
 
 .timer-box {
 
-    margin-top: 18px;
+    margin-top:
+        20px;
 
     background:
-        var(--primary-light);
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f8fbff
+        );
 
-    padding: 17px;
+    padding:
+        18px;
 
-    border-radius: 12px;
+    border-radius:
+        13px;
 
     border:
         1px solid
@@ -630,54 +919,111 @@ button:hover {
 }
 
 
+.timer-box h2 {
+
+    color:
+        var(--text);
+
+    font-size:
+        15px;
+
+    margin-bottom:
+        6px;
+
+}
+
+
 .timer-box h1 {
 
-    color: var(--primary);
+    color:
+        var(--primary);
 
-    font-size: 26px;
+    font-size:
+        28px;
+
+    font-weight:
+        700;
 
 }
 
 
 /* =====================================================
-   INFO
+   SYSTEM INFO
 ===================================================== */
 
 .info {
 
-    width: 450px;
+    width:
+        500px;
 
-    max-width: 100%;
+    max-width:
+        100%;
 
-    background: white;
+    background:
+        rgba(255,255,255,.97);
 
-    padding: 22px;
+    padding:
+        23px;
 
-    margin-top: 20px;
+    margin-top:
+        20px;
 
-    border-radius: var(--radius);
+    border-radius:
+        var(--radius);
 
-    text-align: center;
+    text-align:
+        center;
 
-    box-shadow: var(--shadow);
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+.info h2 {
+
+    color:
+        var(--dark);
+
+    font-size:
+        19px;
+
+    margin-bottom:
+        14px;
+
+}
+
+
+.info p {
+
+    margin:
+        8px 0;
 
 }
 
 
 .online {
 
-    color: var(--success);
+    color:
+        var(--success);
 
-    font-weight: 600;
+    font-weight:
+        600;
 
 }
 
 
 .offline {
 
-    color: var(--danger);
+    color:
+        var(--danger);
 
-    font-weight: 600;
+    font-weight:
+        600;
 
 }
 
@@ -688,41 +1034,57 @@ button:hover {
 
 .dashboard {
 
-    min-height: 100vh;
+    min-height:
+        100vh;
 
-    margin-left: 235px;
+    margin-left:
+        245px;
 
-    padding: 32px;
+    padding:
+        38px 45px;
 
 }
 
 
+/* =====================================================
+   DASHBOARD HEADER
+===================================================== */
+
 .dashboard .welcome {
 
-    max-width: 1200px;
+    max-width:
+        1200px;
 
     margin:
-        0 auto 24px;
+        0 auto 25px;
 
 }
 
 
 .dashboard h1 {
 
-    color: var(--dark);
+    color:
+        var(--dark);
 
-    font-size: 28px;
+    font-size:
+        30px;
+
+    font-weight:
+        700;
 
 }
 
 
 .dashboard .welcome p {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    margin-top: 5px;
+    margin-top:
+        6px;
 
-    font-size: 14px;
+    font-size:
+        14px;
 
 }
 
@@ -733,77 +1095,112 @@ button:hover {
 
 .dashboard-card {
 
-    max-width: 1200px;
+    max-width:
+        1200px;
 
     margin:
         0 auto 22px;
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
-        repeat(4,1fr);
+        repeat(4, 1fr);
 
-    gap: 17px;
+    gap:
+        18px;
 
 }
 
 
 .box {
 
-    background: white;
+    background:
+        rgba(255,255,255,.97);
 
-    min-height: 165px;
+    min-height:
+        170px;
 
-    padding: 22px;
+    padding:
+        24px;
 
-    border-radius: var(--radius);
+    border-radius:
+        var(--radius);
 
-    text-align: center;
+    text-align:
+        center;
 
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    align-items: center;
+    align-items:
+        center;
 
     border:
         1px solid
-        rgba(226,232,240,.8);
+        var(--border);
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        all .2s ease;
+
+}
+
+
+.box:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        var(--shadow-hover);
 
 }
 
 
 .box h2 {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 15px;
+    font-size:
+        14px;
 
-    font-weight: 600;
+    font-weight:
+        600;
 
-    margin-bottom: 12px;
+    margin-bottom:
+        12px;
 
 }
 
 
 .box h1 {
 
-    font-size: 27px;
+    font-size:
+        28px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
 }
 
 
 .box h3 {
 
-    color: var(--text);
+    color:
+        var(--text);
 
-    font-size: 15px;
+    font-size:
+        15px;
 
 }
 
@@ -814,56 +1211,89 @@ button:hover {
 
 .statistics {
 
-    max-width: 1200px;
+    max-width:
+        1200px;
 
-    width: 100%;
+    width:
+        100%;
 
     margin:
         0 auto 22px;
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(3,1fr);
 
-    gap: 17px;
+    gap:
+        18px;
 
 }
 
 
 .stat-box {
 
-    background: white;
+    background:
+        rgba(255,255,255,.97);
 
-    padding: 20px;
+    padding:
+        22px;
 
-    border-radius: var(--radius);
+    border-radius:
+        var(--radius);
 
-    box-shadow: var(--shadow);
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        .2s ease;
+
+}
+
+
+.stat-box:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        var(--shadow-hover);
 
 }
 
 
 .stat-box h3 {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 14px;
+    font-size:
+        14px;
 
-    font-weight: 500;
+    font-weight:
+        500;
 
 }
 
 
 .stat-value {
 
-    font-size: 27px;
+    font-size:
+        28px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    color: var(--dark);
+    color:
+        var(--dark);
 
-    margin-top: 8px;
+    margin-top:
+        8px;
 
 }
 
@@ -874,58 +1304,81 @@ button:hover {
 
 .log {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 1200px;
+    max-width:
+        1200px;
 
-    background: white;
+    background:
+        rgba(255,255,255,.97);
 
-    padding: 20px;
+    padding:
+        22px;
 
-    border-radius: var(--radius);
+    border-radius:
+        var(--radius);
 
-    margin: 0 auto;
+    margin:
+        0 auto;
 
-    box-shadow: var(--shadow);
+    border:
+        1px solid
+        var(--border);
 
-    overflow-x: auto;
+    box-shadow:
+        var(--shadow);
+
+    overflow-x:
+        auto;
 
 }
 
 
 .log-header {
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    align-items: center;
+    align-items:
+        center;
 
-    margin-bottom: 15px;
+    margin-bottom:
+        16px;
 
 }
 
 
 .log-header h2 {
 
-    font-size: 19px;
+    font-size:
+        20px;
 
-    color: var(--dark);
+    color:
+        var(--dark);
 
 }
 
 
 .clear-log {
 
-    width: auto;
+    width:
+        auto;
 
-    min-width: 105px;
+    min-width:
+        110px;
 
-    height: 37px;
+    height:
+        38px;
 
-    margin: 0;
+    margin:
+        0;
 
-    background: var(--danger);
+    background:
+        var(--danger);
 
 }
 
@@ -936,43 +1389,55 @@ button:hover {
 
 table {
 
-    width: 100%;
+    width:
+        100%;
 
-    border-collapse: collapse;
+    border-collapse:
+        collapse;
 
 }
 
 
 th {
 
-    background: #f8fafc;
+    background:
+        #f8fafc;
 
-    color: var(--text);
+    color:
+        var(--text);
 
-    font-size: 13px;
+    font-size:
+        13px;
 
-    font-weight: 600;
+    font-weight:
+        600;
 
-    padding: 12px;
+    padding:
+        13px;
 
     border-bottom:
         2px solid
         var(--border);
 
-    white-space: nowrap;
+    white-space:
+        nowrap;
 
 }
 
 
 td {
 
-    padding: 12px;
+    padding:
+        13px;
 
-    text-align: center;
+    text-align:
+        center;
 
-    color: #475569;
+    color:
+        #475569;
 
-    font-size: 13px;
+    font-size:
+        13px;
 
     border-bottom:
         1px solid
@@ -981,9 +1446,18 @@ td {
 }
 
 
+tr {
+
+    transition:
+        .15s ease;
+
+}
+
+
 tr:hover td {
 
-    background: #f8fafc;
+    background:
+        #f8fafc;
 
 }
 
@@ -994,53 +1468,86 @@ tr:hover td {
 
 .history-summary {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 1000px;
+    max-width:
+        1000px;
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(3,1fr);
 
-    gap: 17px;
+    gap:
+        18px;
 
-    margin: 22px auto;
+    margin:
+        22px auto;
 
 }
 
 
 .summary-box {
 
-    background: white;
+    background:
+        rgba(255,255,255,.97);
 
-    padding: 20px;
+    padding:
+        21px;
 
-    border-radius: var(--radius);
+    border-radius:
+        var(--radius);
 
-    box-shadow: var(--shadow);
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        .2s ease;
+
+}
+
+
+.summary-box:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        var(--shadow-hover);
 
 }
 
 
 .summary-box h3 {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 14px;
+    font-size:
+        14px;
 
 }
 
 
 .summary-value {
 
-    font-size: 27px;
+    font-size:
+        28px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    color: var(--dark);
+    color:
+        var(--dark);
 
-    margin-top: 8px;
+    margin-top:
+        8px;
 
 }
 
@@ -1051,46 +1558,81 @@ tr:hover td {
 
 .history-table-card {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 1100px;
+    max-width:
+        1100px;
 
-    background: white;
+    background:
+        rgba(255,255,255,.97);
 
-    padding: 22px;
+    padding:
+        23px;
 
-    border-radius: var(--radius);
+    border-radius:
+        var(--radius);
 
-    margin: 0 auto;
+    margin:
+        0 auto;
 
-    box-shadow: var(--shadow);
+    border:
+        1px solid
+        var(--border);
 
-    overflow-x: auto;
+    box-shadow:
+        var(--shadow);
+
+    overflow-x:
+        auto;
 
 }
 
 
 .history-table-card h2 {
 
-    margin-bottom: 18px;
+    margin-bottom:
+        18px;
 
-    font-size: 19px;
+    font-size:
+        20px;
 
-    color: var(--dark);
+    color:
+        var(--dark);
 
 }
 
 
 .history-table-card table {
 
-    min-width: 800px;
+    min-width:
+        800px;
 
 }
 
 
 .history-table-card td {
 
-    white-space: nowrap;
+    white-space:
+        nowrap;
+
+}
+
+
+/* =====================================================
+   NO RECORD
+===================================================== */
+
+.no-record {
+
+    padding:
+        35px !important;
+
+    color:
+        var(--muted) !important;
+
+    text-align:
+        center !important;
 
 }
 
@@ -1101,19 +1643,30 @@ tr:hover td {
 
 .user-form {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 600px;
+    max-width:
+        620px;
 
-    background: white;
+    background:
+        rgba(255,255,255,.97);
 
-    padding: 25px;
+    padding:
+        28px;
 
-    border-radius: var(--radius);
+    border-radius:
+        var(--radius);
 
-    text-align: center;
+    text-align:
+        center;
 
-    box-shadow: var(--shadow);
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow:
+        var(--shadow);
 
 }
 
@@ -1121,21 +1674,30 @@ tr:hover td {
 .user-form input,
 .user-form select {
 
-    width: 250px;
+    width:
+        250px;
 
-    max-width: 100%;
+    max-width:
+        100%;
 
-    padding: 11px 13px;
+    height:
+        44px;
 
-    margin: 6px;
+    padding:
+        0 13px;
 
-    border-radius: 10px;
+    margin:
+        6px;
+
+    border-radius:
+        10px;
 
     border:
         1px solid
         var(--border);
 
-    outline: none;
+    outline:
+        none;
 
 }
 
@@ -1150,15 +1712,21 @@ select {
     padding:
         11px 13px;
 
-    border-radius: 10px;
+    border-radius:
+        10px;
 
     border:
         1px solid
         var(--border);
 
-    outline: none;
+    outline:
+        none;
 
-    font-size: 14px;
+    font-size:
+        14px;
+
+    color:
+        var(--text);
 
 }
 
@@ -1170,7 +1738,7 @@ select:focus {
         var(--primary);
 
     box-shadow:
-        0 0 0 3px
+        0 0 0 4px
         rgba(37,99,235,.08);
 
 }
@@ -1180,7 +1748,7 @@ select:focus {
    TABLET
 ===================================================== */
 
-@media (max-width:1000px) {
+@media (max-width:1100px) {
 
     .dashboard-card {
 
@@ -1189,10 +1757,17 @@ select:focus {
 
     }
 
-    .statistics {
+    .main {
 
-        grid-template-columns:
-            repeat(2,1fr);
+        padding:
+            32px 25px;
+
+    }
+
+    .dashboard {
+
+        padding:
+            32px 25px;
 
     }
 
@@ -1205,123 +1780,144 @@ select:focus {
 
 @media (max-width:768px) {
 
-
-    /* ==========================================
-       BODY
-    ========================================== */
-
     body {
 
-        font-size: 13px;
+        font-size:
+            13px;
 
-        padding-bottom: 72px;
+        padding-bottom:
+            72px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        MOBILE NAVBAR
-    ========================================== */
+    ================================================ */
 
     .sidebar {
 
-        position: fixed;
+        position:
+            fixed;
 
-        left: 0;
+        left:
+            0;
 
-        bottom: 0;
+        bottom:
+            0;
 
-        top: auto;
+        top:
+            auto;
 
-        width: 100%;
+        width:
+            100%;
 
-        height: 64px;
+        height:
+            66px;
 
-        padding: 6px 5px;
+        padding:
+            5px;
 
-        display: flex;
+        display:
+            flex;
 
-        align-items: center;
+        align-items:
+            center;
 
-        justify-content: space-around;
+        justify-content:
+            space-around;
 
         background:
-            rgba(15,23,42,.97);
+            rgba(15,23,42,.98);
 
         border-top:
             1px solid
             rgba(255,255,255,.08);
 
         box-shadow:
-            0 -5px 20px
-            rgba(0,0,0,.15);
+            0 -6px 20px
+            rgba(0,0,0,.16);
 
-        overflow-x: auto;
+        overflow-x:
+            auto;
 
-        overflow-y: hidden;
+        overflow-y:
+            hidden;
 
-        z-index: 9999;
+        z-index:
+            9999;
 
     }
 
-
-    /* Hide SmartClass title */
 
     .sidebar h2 {
 
-        display: none;
+        display:
+            none;
 
     }
 
-
-    /* Navigation links */
 
     .sidebar a {
 
         flex:
             0 0 auto;
 
-        width: auto;
+        width:
+            auto;
 
-        min-width: 62px;
+        min-width:
+            62px;
 
-        height: 52px;
+        height:
+            54px;
 
-        margin: 0 2px;
+        margin:
+            0 2px;
 
-        padding: 5px 8px;
+        padding:
+            5px 8px;
 
-        display: flex;
+        display:
+            flex;
 
-        flex-direction: column;
+        flex-direction:
+            column;
 
-        justify-content: center;
+        justify-content:
+            center;
 
-        align-items: center;
+        align-items:
+            center;
 
-        gap: 2px;
+        gap:
+            2px;
 
-        border-radius: 10px;
+        border-radius:
+            10px;
 
-        color: #cbd5e1;
+        color:
+            #cbd5e1;
 
-        font-size: 9px;
+        font-size:
+            9px;
 
-        line-height: 1.1;
+        line-height:
+            1.1;
 
-        white-space: nowrap;
+        white-space:
+            nowrap;
 
-        text-align: center;
+        text-align:
+            center;
 
     }
 
 
     .sidebar a:hover {
 
-        transform: none;
-
-        background:
-            rgba(59,130,246,.18);
+        transform:
+            none;
 
     }
 
@@ -1331,209 +1927,204 @@ select:focus {
         background:
             var(--primary);
 
-        color: white;
-
-        box-shadow:
-            0 3px 10px
-            rgba(37,99,235,.30);
+        color:
+            white;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        MAIN
-    ========================================== */
+    ================================================ */
 
     .main {
 
-        width: 100%;
+        width:
+            100%;
 
-        margin-left: 0;
+        margin-left:
+            0;
 
         padding:
-            20px 13px 25px;
+            22px 14px 28px;
 
     }
 
 
     .main > h1 {
 
-        font-size: 22px;
+        font-size:
+            22px;
 
-        line-height: 1.3;
-
-    }
-
-
-    .main > p {
-
-        font-size: 12px;
+        line-height:
+            1.3;
 
     }
 
-
-    /* ==========================================
-       WELCOME
-    ========================================== */
 
     #welcome {
 
-        font-size: 13px;
-
-        margin-top: 5px;
+        font-size:
+            13px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        CLOCK
-    ========================================== */
+    ================================================ */
 
     .clock {
 
-        width: 100%;
+        width:
+            100%;
 
-        padding: 20px 15px;
+        padding:
+            21px 15px;
 
-        margin-top: 16px;
-
-        border-radius: 15px;
+        margin-top:
+            17px;
 
     }
 
 
     .clock h2#time {
 
-        font-size: 31px;
-
-        margin: 9px 0;
-
-        letter-spacing: 1px;
+        font-size:
+            32px;
 
     }
 
 
     .clock #date {
 
-        font-size: 13px;
+        font-size:
+            13px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        LIGHT CARD
-    ========================================== */
+    ================================================ */
 
     .card {
 
-        width: 100%;
+        width:
+            100%;
 
-        padding: 22px 15px;
+        padding:
+            23px 15px;
 
-        margin-top: 15px;
-
-        border-radius: 15px;
+        margin-top:
+            15px;
 
     }
 
 
     .card h2 {
 
-        font-size: 18px;
+        font-size:
+            18px;
 
     }
 
 
     #lampStatus {
 
-        font-size: 38px;
+        font-size:
+            39px;
 
-        margin: 15px;
+        margin:
+            15px;
 
     }
 
 
-    /* ==========================================
+    .location-select {
+
+        height:
+            44px;
+
+        font-size:
+            13px;
+
+    }
+
+
+    /* ================================================
        BUTTON
-    ========================================== */
+    ================================================ */
 
     button {
 
-        min-width: 105px;
+        min-width:
+            105px;
 
-        height: 44px;
+        height:
+            44px;
 
-        margin: 5px 3px;
-
-        border-radius: 10px;
-
-        font-size: 13px;
-
-        -webkit-tap-highlight-color:
-            transparent;
+        margin:
+            5px 3px;
 
     }
 
 
-    button:active {
-
-        transform:
-            scale(.96);
-
-    }
-
-
-    /* ==========================================
+    /* ================================================
        TIMER
-    ========================================== */
+    ================================================ */
 
     .timer-box {
 
-        margin-top: 15px;
+        margin-top:
+            15px;
 
-        padding: 15px;
-
-        border-radius: 12px;
+        padding:
+            15px;
 
     }
 
 
     .timer-box h1 {
 
-        font-size: 24px;
+        font-size:
+            24px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        INFO
-    ========================================== */
+    ================================================ */
 
     .info {
 
-        width: 100%;
+        width:
+            100%;
 
-        padding: 18px;
+        padding:
+            18px;
 
-        margin-top: 15px;
-
-        border-radius: 15px;
+        margin-top:
+            15px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        DASHBOARD
-    ========================================== */
+    ================================================ */
 
     .dashboard {
 
-        width: 100%;
+        width:
+            100%;
 
-        margin-left: 0;
+        margin-left:
+            0;
 
         padding:
-            20px 13px 25px;
+            22px 14px 28px;
 
     }
 
@@ -1548,304 +2139,298 @@ select:focus {
 
     .dashboard h1 {
 
-        font-size: 21px;
-
-        line-height: 1.35;
-
-    }
-
-
-    .dashboard .welcome p {
-
-        font-size: 12px;
+        font-size:
+            22px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        DASHBOARD CARDS
-    ========================================== */
+    ================================================ */
 
     .dashboard-card {
 
-        width: 100%;
+        width:
+            100%;
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
 
-        gap: 12px;
+        gap:
+            12px;
 
-        margin-bottom: 15px;
+        margin-bottom:
+            15px;
 
     }
 
 
     .box {
 
-        width: 100%;
+        width:
+            100%;
 
-        min-height: 125px;
+        min-height:
+            125px;
 
-        padding: 18px;
-
-        border-radius: 15px;
+        padding:
+            18px;
 
     }
 
 
     .box h2 {
 
-        font-size: 13px;
-
-        margin-bottom: 8px;
+        font-size:
+            13px;
 
     }
 
 
     .box h1 {
 
-        font-size: 25px;
+        font-size:
+            25px;
 
     }
 
 
-    .box h3 {
-
-        font-size: 14px;
-
-    }
-
-
-    /* ==========================================
+    /* ================================================
        STATISTICS
-    ========================================== */
+    ================================================ */
 
     .statistics {
 
-        width: 100%;
+        width:
+            100%;
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
 
-        gap: 12px;
-
-        margin-bottom: 15px;
+        gap:
+            12px;
 
     }
 
 
     .stat-box {
 
-        padding: 17px;
-
-        border-radius: 15px;
-
-    }
-
-
-    .stat-box h3 {
-
-        font-size: 13px;
+        padding:
+            17px;
 
     }
 
 
     .stat-value {
 
-        font-size: 23px;
+        font-size:
+            24px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        LOG
-    ========================================== */
+    ================================================ */
 
     .log {
 
-        width: 100%;
+        width:
+            100%;
 
-        padding: 15px;
-
-        border-radius: 15px;
+        padding:
+            15px;
 
     }
 
 
     .log-header {
 
-        gap: 10px;
-
-        margin-bottom: 12px;
+        gap:
+            10px;
 
     }
 
 
     .log-header h2 {
 
-        font-size: 17px;
+        font-size:
+            17px;
 
     }
 
 
     .clear-log {
 
-        min-width: 85px;
+        min-width:
+            85px;
 
-        height: 35px;
+        height:
+            35px;
 
-        font-size: 11px;
-
-        padding: 0 8px;
+        font-size:
+            11px;
 
     }
 
 
     .log table {
 
-        min-width: 600px;
+        min-width:
+            600px;
 
     }
 
 
     th {
 
-        padding: 10px;
+        padding:
+            10px;
 
-        font-size: 11px;
+        font-size:
+            11px;
 
     }
 
 
     td {
 
-        padding: 10px;
+        padding:
+            10px;
 
-        font-size: 11px;
+        font-size:
+            11px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        HISTORY SUMMARY
-    ========================================== */
+    ================================================ */
 
     .history-summary {
 
-        width: 100%;
+        width:
+            100%;
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
 
-        gap: 12px;
+        gap:
+            12px;
 
-        margin: 15px auto;
+        margin:
+            15px auto;
 
     }
 
 
     .summary-box {
 
-        padding: 17px;
-
-        border-radius: 15px;
-
-    }
-
-
-    .summary-box h3 {
-
-        font-size: 13px;
+        padding:
+            17px;
 
     }
 
 
     .summary-value {
 
-        font-size: 23px;
+        font-size:
+            24px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        HISTORY TABLE
-    ========================================== */
+    ================================================ */
 
     .history-table-card {
 
-        width: 100%;
+        width:
+            100%;
 
-        padding: 14px;
-
-        border-radius: 15px;
-
-        overflow-x: auto;
+        padding:
+            14px;
 
     }
 
 
     .history-table-card h2 {
 
-        font-size: 17px;
-
-        margin-bottom: 14px;
+        font-size:
+            17px;
 
     }
 
 
     .history-table-card table {
 
-        min-width: 760px;
+        min-width:
+            760px;
 
     }
 
 
     .history-table-card th {
 
-        font-size: 11px;
+        font-size:
+            11px;
 
-        padding: 10px;
+        padding:
+            10px;
 
     }
 
 
     .history-table-card td {
 
-        font-size: 11px;
+        font-size:
+            11px;
 
-        padding: 10px;
+        padding:
+            10px;
 
     }
 
 
-    /* ==========================================
-       DELETE / EDIT BUTTON
-    ========================================== */
+    /* ================================================
+       DELETE / EDIT
+    ================================================ */
 
     .delete-btn,
     .edit-btn {
 
-        min-width: 75px;
+        min-width:
+            75px;
 
-        width: 75px;
+        width:
+            75px;
 
-        height: 34px;
+        height:
+            34px;
 
-        font-size: 11px;
+        font-size:
+            11px;
 
-        margin: 2px;
+        margin:
+            2px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        MANAGE USER
-    ========================================== */
+    ================================================ */
 
     .user-form {
 
-        width: 100%;
+        width:
+            100%;
 
-        padding: 18px;
-
-        border-radius: 15px;
+        padding:
+            19px;
 
     }
 
@@ -1853,50 +2438,48 @@ select:focus {
     .user-form input,
     .user-form select {
 
-        width: 100%;
+        width:
+            100%;
 
-        margin: 6px 0;
+        margin:
+            6px 0;
 
-        height: 42px;
+        height:
+            43px;
 
     }
 
 
-    /* ==========================================
+    /* ================================================
        LOGIN
-    ========================================== */
+    ================================================ */
 
     .login-body {
 
-        padding: 15px;
+        padding:
+            15px;
 
     }
 
 
     .login-card {
 
-        width: 100%;
+        width:
+            100%;
 
-        max-width: 370px;
+        max-width:
+            380px;
 
         padding:
-            28px 20px;
-
-        border-radius: 18px;
+            30px 20px;
 
     }
 
 
     .login-card h1 {
 
-        font-size: 24px;
-
-    }
-
-
-    .login-card p {
-
-        font-size: 12px;
+        font-size:
+            24px;
 
     }
 
@@ -1904,16 +2487,19 @@ select:focus {
     .login-card input,
     .login-card select {
 
-        height: 44px;
+        height:
+            44px;
 
-        font-size: 13px;
+        font-size:
+            13px;
 
     }
 
 
     .login-btn {
 
-        height: 45px;
+        height:
+            45px;
 
     }
 
@@ -1922,55 +2508,44 @@ select:focus {
 
 /* =====================================================
    SMALL PHONE
-   480px
 ===================================================== */
 
 @media (max-width:480px) {
 
-
     body {
 
-        padding-bottom: 68px;
+        padding-bottom:
+            68px;
 
     }
 
 
-    /* ==========================================
-       NAVBAR
-    ========================================== */
-
     .sidebar {
 
-        height: 62px;
-
-        padding:
-            5px 3px;
+        height:
+            62px;
 
     }
 
 
     .sidebar a {
 
-        min-width: 58px;
+        min-width:
+            58px;
 
-        height: 50px;
+        height:
+            50px;
 
-        padding:
-            4px 5px;
-
-        font-size: 8px;
+        font-size:
+            8px;
 
     }
 
 
-    /* ==========================================
-       MAIN
-    ========================================== */
-
     .main {
 
         padding:
-            17px 10px 20px;
+            18px 10px 22px;
 
     }
 
@@ -1978,7 +2553,7 @@ select:focus {
     .dashboard {
 
         padding:
-            17px 10px 20px;
+            18px 10px 22px;
 
     }
 
@@ -1986,42 +2561,27 @@ select:focus {
     .main > h1,
     .dashboard h1 {
 
-        font-size: 19px;
+        font-size:
+            19px;
 
     }
 
 
-    /* ==========================================
-       CLOCK
-    ========================================== */
-
     .clock {
 
         padding:
-            17px 12px;
+            18px 12px;
 
     }
 
 
     .clock h2#time {
 
-        font-size: 27px;
-
-        letter-spacing: .5px;
-
-    }
-
-
-    .clock #date {
-
-        font-size: 12px;
+        font-size:
+            28px;
 
     }
 
-
-    /* ==========================================
-       LIGHT
-    ========================================== */
 
     .card {
 
@@ -2033,120 +2593,70 @@ select:focus {
 
     .card h2 {
 
-        font-size: 17px;
+        font-size:
+            17px;
 
     }
 
 
     #lampStatus {
 
-        font-size: 35px;
-
-        margin: 13px;
+        font-size:
+            36px;
 
     }
 
-
-    /* ==========================================
-       BUTTON
-    ========================================== */
 
     button {
 
-        min-width: 96px;
+        min-width:
+            96px;
 
-        height: 43px;
+        height:
+            43px;
 
-        font-size: 12px;
+        font-size:
+            12px;
 
     }
 
-
-    /* ==========================================
-       DASHBOARD BOX
-    ========================================== */
 
     .box {
 
-        min-height: 118px;
-
-        padding: 16px;
-
-    }
-
-
-    .box h2 {
-
-        font-size: 12px;
+        min-height:
+            118px;
 
     }
 
 
     .box h1 {
 
-        font-size: 23px;
-
-    }
-
-
-    .box h3 {
-
-        font-size: 13px;
-
-    }
-
-
-    /* ==========================================
-       STATISTICS
-    ========================================== */
-
-    .stat-box {
-
-        padding: 15px;
+        font-size:
+            23px;
 
     }
 
 
     .stat-value {
 
-        font-size: 21px;
+        font-size:
+            22px;
 
     }
 
 
-    /* ==========================================
-       LOGIN
-    ========================================== */
-
     .login-card {
 
         padding:
-            25px 17px;
+            26px 17px;
 
     }
 
 
     .login-card h1 {
 
-        font-size: 22px;
-
-    }
-
-
-    /* ==========================================
-       HISTORY
-    ========================================== */
-
-    .history-table-card {
-
-        padding: 12px;
-
-    }
-
-
-    .summary-value {
-
-        font-size: 21px;
+        font-size:
+            22px;
 
     }
 
@@ -2155,17 +2665,17 @@ select:focus {
 
 /* =====================================================
    VERY SMALL PHONE
-   360px
 ===================================================== */
 
 @media (max-width:360px) {
 
-
     .sidebar a {
 
-        min-width: 53px;
+        min-width:
+            53px;
 
-        font-size: 7px;
+        font-size:
+            7px;
 
     }
 
@@ -2173,9 +2683,11 @@ select:focus {
     .main,
     .dashboard {
 
-        padding-left: 8px;
+        padding-left:
+            8px;
 
-        padding-right: 8px;
+        padding-right:
+            8px;
 
     }
 
@@ -2183,28 +2695,32 @@ select:focus {
     .main > h1,
     .dashboard h1 {
 
-        font-size: 18px;
+        font-size:
+            18px;
 
     }
 
 
     .clock h2#time {
 
-        font-size: 24px;
+        font-size:
+            24px;
 
     }
 
 
     #lampStatus {
 
-        font-size: 32px;
+        font-size:
+            32px;
 
     }
 
 
     button {
 
-        min-width: 90px;
+        min-width:
+            90px;
 
     }
 
@@ -2217,17 +2733,18 @@ select:focus {
 
 @media (hover:none) and (pointer:coarse) {
 
-
     button {
 
-        min-height: 44px;
+        min-height:
+            44px;
 
     }
 
 
     .sidebar a {
 
-        min-height: 44px;
+        min-height:
+            44px;
 
     }
 
@@ -2235,7 +2752,8 @@ select:focus {
     input,
     select {
 
-        min-height: 42px;
+        min-height:
+            42px;
 
     }
 
@@ -2255,7 +2773,8 @@ select:focus-visible {
         3px solid
         rgba(37,99,235,.25);
 
-    outline-offset: 2px;
+    outline-offset:
+        2px;
 
 }
 
@@ -2272,6 +2791,9 @@ select:focus-visible {
             auto !important;
 
         transition:
+            none !important;
+
+        animation:
             none !important;
 
     }
