@@ -520,76 +520,38 @@ function stopTimer() {
 
 }
 
-
 // =====================================================
-// SEND COMMAND TO ESP32
-// THROUGH FIRESTORE
+// SEND COMMAND TO ESP32 THROUGH FIRESTORE
+// (TEST TANPA ESP32)
 // =====================================================
 
-async function sendESP32Command(
-    command
-) {
+async function sendESP32Command(command) {
 
-    console.log(
-        "📡 Hantar command ESP32:",
-        command
-    );
-
+    console.log("📡 Hantar command:", command);
 
     try {
 
-        await updateDoc(
-            ESP32_DOCUMENT,
-            {
+        await updateDoc(ESP32_DOCUMENT, {
+            command: command,
+            lampStatus: command, // ON / OFF
+            status: command === "ON" ? "ONLINE" : "OFFLINE",
+            updatedAt: serverTimestamp()
+        });
 
-                command:
-                    command,
-
-                updatedAt:
-                    serverTimestamp()
-
-            }
-        );
-
-
-        console.log(
-            "✅ Command berjaya dihantar:",
-            command
-        );
-
+        console.log("✅ Firestore dikemaskini.");
 
         return true;
 
-    }
+    } catch (error) {
 
+        console.error("❌ Firebase Error:", error);
 
-    catch (error) {
-
-        console.error(
-            "❌ Firebase ESP32 Error:",
-            error
-        );
-
-
-        alert(
-
-            "❌ Gagal menghantar arahan kepada ESP32.\n\n" +
-
-            "Code: " +
-            error.code +
-
-            "\n\nMessage: " +
-            error.message
-
-        );
-
+        alert("Gagal hantar command: " + error.message);
 
         return false;
 
     }
-
 }
-
 
 // =====================================================
 // LAMP ON
