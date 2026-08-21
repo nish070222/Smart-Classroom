@@ -3,165 +3,115 @@
 // auth.js
 // =====================================
 
-import {
-    auth
-} from "./firebase.js";
+document.addEventListener("DOMContentLoaded", function () {
 
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    // =====================================
+    // GET LOGIN USER
+    // =====================================
 
-
-// =====================================
-// CHECK FIREBASE LOGIN
-// =====================================
-
-onAuthStateChanged(
-    auth,
-    function(firebaseUser) {
-
-        console.log(
-            "🔥 Firebase Auth:",
-            firebaseUser
-        );
+    const loginUser = JSON.parse(
+        localStorage.getItem("loginUser")
+    );
 
 
-        // =================================
-        // USER BELUM LOGIN
-        // =================================
+    // =====================================
+    // CHECK LOGIN
+    // =====================================
 
-        if (!firebaseUser) {
+    if (!loginUser) {
 
-            window.location.href =
-                "userlogin.html";
+        window.location.href = "userlogin.html";
 
-            return;
+        return;
 
-        }
-
-
-        // =================================
-        // GET LOCAL USER
-        // =================================
-
-        const loginUser =
-            JSON.parse(
-                localStorage.getItem(
-                    "loginUser"
-                )
-            );
+    }
 
 
-        // =================================
-        // DISPLAY USER
-        // =================================
+    // =====================================
+    // DISPLAY USER
+    // =====================================
 
-        const displayName =
-            firebaseUser.email ||
-            "User";
-
-
-        const userName =
-            document.getElementById(
-                "userName"
-            );
+    const displayName =
+        loginUser.email || "User";
 
 
-        const welcome =
-            document.getElementById(
-                "welcome"
-            );
+    const userName =
+        document.getElementById("userName");
 
 
-        if (userName) {
-
-            userName.innerHTML =
-                "👤 " +
-                displayName;
-
-        }
+    const welcome =
+        document.getElementById("welcome");
 
 
-        if (welcome) {
+    if (userName) {
 
-            welcome.innerHTML =
-                "Welcome, " +
-                displayName;
+        userName.innerHTML =
+            "👤 " + displayName;
+
+    }
+
+
+    if (welcome) {
+
+        welcome.innerHTML =
+            "Welcome, " + displayName;
+
+    }
+
+
+    // =====================================
+    // ROLE MENU
+    // =====================================
+
+    const dashboardMenu =
+        document.getElementById("dashboardMenu");
+
+
+    const manageMenu =
+        document.getElementById("manageMenu");
+
+
+    // =====================================
+    // ADMIN
+    // =====================================
+
+    if (loginUser.role === "admin") {
+
+        if (dashboardMenu) {
+
+            dashboardMenu.style.display = "";
 
         }
 
 
-        // =================================
-        // ROLE
-        // =================================
+        if (manageMenu) {
 
-        const role =
-            loginUser
-                ? loginUser.role
-                : "user";
-
-
-        const dashboardMenu =
-            document.getElementById(
-                "dashboardMenu"
-            );
-
-
-        const manageMenu =
-            document.getElementById(
-                "manageMenu"
-            );
-
-
-        // =================================
-        // ADMIN
-        // =================================
-
-        if (
-            role === "admin"
-        ) {
-
-            if (dashboardMenu) {
-
-                dashboardMenu.style.display =
-                    "";
-
-            }
-
-
-            if (manageMenu) {
-
-                manageMenu.style.display =
-                    "";
-
-            }
-
-        }
-
-
-        // =================================
-        // USER
-        // =================================
-
-        else {
-
-            if (dashboardMenu) {
-
-                dashboardMenu.style.display =
-                    "none";
-
-            }
-
-
-            if (manageMenu) {
-
-                manageMenu.style.display =
-                    "none";
-
-            }
+            manageMenu.style.display = "";
 
         }
 
     }
-);
+
+
+    // =====================================
+    // USER
+    // =====================================
+
+    else {
+
+        if (dashboardMenu) {
+
+            dashboardMenu.style.display = "none";
+
+        }
+
+
+        if (manageMenu) {
+
+            manageMenu.style.display = "none";
+
+        }
+
+    }
+
+});
