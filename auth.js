@@ -3,115 +3,165 @@
 // auth.js
 // =====================================
 
-document.addEventListener("DOMContentLoaded", function () {
+import {
+    auth
+} from "./firebase.js";
 
-    // =====================================
-    // GET LOGIN USER
-    // =====================================
-
-    const loginUser = JSON.parse(
-        localStorage.getItem("loginUser")
-    );
-
-
-    // =====================================
-    // CHECK LOGIN
-    // =====================================
-
-    if (!loginUser) {
-
-        window.location.href = "userlogin.html";
-
-        return;
-
-    }
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-    // =====================================
-    // DISPLAY USER
-    // =====================================
+// =====================================
+// CHECK FIREBASE LOGIN
+// =====================================
 
-    const displayName =
-        loginUser.email || "User";
+onAuthStateChanged(
+    auth,
+    function(firebaseUser) {
 
-
-    const userName =
-        document.getElementById("userName");
-
-
-    const welcome =
-        document.getElementById("welcome");
+        console.log(
+            "🔥 Firebase Auth:",
+            firebaseUser
+        );
 
 
-    if (userName) {
+        // =================================
+        // USER BELUM LOGIN
+        // =================================
 
-        userName.innerHTML =
-            "👤 " + displayName;
+        if (!firebaseUser) {
 
-    }
+            window.location.href =
+                "userlogin.html";
 
-
-    if (welcome) {
-
-        welcome.innerHTML =
-            "Welcome, " + displayName;
-
-    }
-
-
-    // =====================================
-    // ROLE MENU
-    // =====================================
-
-    const dashboardMenu =
-        document.getElementById("dashboardMenu");
-
-
-    const manageMenu =
-        document.getElementById("manageMenu");
-
-
-    // =====================================
-    // ADMIN
-    // =====================================
-
-    if (loginUser.role === "admin") {
-
-        if (dashboardMenu) {
-
-            dashboardMenu.style.display = "";
+            return;
 
         }
 
 
-        if (manageMenu) {
+        // =================================
+        // GET LOCAL USER
+        // =================================
 
-            manageMenu.style.display = "";
+        const loginUser =
+            JSON.parse(
+                localStorage.getItem(
+                    "loginUser"
+                )
+            );
+
+
+        // =================================
+        // DISPLAY USER
+        // =================================
+
+        const displayName =
+            firebaseUser.email ||
+            "User";
+
+
+        const userName =
+            document.getElementById(
+                "userName"
+            );
+
+
+        const welcome =
+            document.getElementById(
+                "welcome"
+            );
+
+
+        if (userName) {
+
+            userName.innerHTML =
+                "👤 " +
+                displayName;
+
+        }
+
+
+        if (welcome) {
+
+            welcome.innerHTML =
+                "Welcome, " +
+                displayName;
+
+        }
+
+
+        // =================================
+        // ROLE
+        // =================================
+
+        const role =
+            loginUser
+                ? loginUser.role
+                : "user";
+
+
+        const dashboardMenu =
+            document.getElementById(
+                "dashboardMenu"
+            );
+
+
+        const manageMenu =
+            document.getElementById(
+                "manageMenu"
+            );
+
+
+        // =================================
+        // ADMIN
+        // =================================
+
+        if (
+            role === "admin"
+        ) {
+
+            if (dashboardMenu) {
+
+                dashboardMenu.style.display =
+                    "";
+
+            }
+
+
+            if (manageMenu) {
+
+                manageMenu.style.display =
+                    "";
+
+            }
+
+        }
+
+
+        // =================================
+        // USER
+        // =================================
+
+        else {
+
+            if (dashboardMenu) {
+
+                dashboardMenu.style.display =
+                    "none";
+
+            }
+
+
+            if (manageMenu) {
+
+                manageMenu.style.display =
+                    "none";
+
+            }
 
         }
 
     }
-
-
-    // =====================================
-    // USER
-    // =====================================
-
-    else {
-
-        if (dashboardMenu) {
-
-            dashboardMenu.style.display = "none";
-
-        }
-
-
-        if (manageMenu) {
-
-            manageMenu.style.display = "none";
-
-        }
-
-    }
-
-});
+);

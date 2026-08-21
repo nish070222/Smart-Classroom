@@ -5,7 +5,6 @@
 // Fungsi:
 // - Kawal Lampu melalui Firebase
 // - ESP32 melalui Internet
-// - ESP32 Status ONLINE / OFFLINE
 // - Timer
 // - History Firestore
 // - Lokasi Bilik
@@ -32,8 +31,7 @@ import {
     addDoc,
     serverTimestamp,
     doc,
-    updateDoc,
-    onSnapshot
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -44,7 +42,7 @@ import {
 const firebaseConfig = {
 
     apiKey:
-        "API_KEY_KAU_YANG_SEKARANG",
+        "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
 
     authDomain:
         "smart-classroom-351a3.firebaseapp.com",
@@ -65,20 +63,6 @@ const firebaseConfig = {
 
 
 // =====================================================
-// INITIALIZE FIREBASE
-// =====================================================
-
-const app =
-    initializeApp(firebaseConfig);
-
-const auth =
-    getAuth(app);
-
-const db =
-    getFirestore(app);
-
-
-// =====================================================
 // ESP32 FIRESTORE DOCUMENT
 // =====================================================
 
@@ -88,168 +72,6 @@ const ESP32_DOCUMENT =
         "devices",
         "esp32"
     );
-
-
-// =====================================================
-// ESP32 REALTIME STATUS
-// =====================================================
-
-function listenESP32Status() {
-
-    onSnapshot(
-        ESP32_DOCUMENT,
-
-        function(snapshot) {
-
-            // =========================================
-            // DOCUMENT TAK WUJUD
-            // =========================================
-
-            if (!snapshot.exists()) {
-
-                console.log(
-                    "⚠️ devices/esp32 tidak wujud"
-                );
-
-                updateESP32Status(
-                    "OFFLINE"
-                );
-
-                return;
-
-            }
-
-
-            // =========================================
-            // AMBIL DATA FIRESTORE
-            // =========================================
-
-            const data =
-                snapshot.data();
-
-
-            const status =
-                data.status ||
-                "OFFLINE";
-
-
-            console.log(
-                "📡 ESP32 Status:",
-                status
-            );
-
-
-            // =========================================
-            // UPDATE WEBSITE
-            // =========================================
-
-            updateESP32Status(
-                status
-            );
-
-        },
-
-
-        function(error) {
-
-            console.error(
-                "❌ ESP32 Status Error:",
-                error
-            );
-
-
-            updateESP32Status(
-                "OFFLINE"
-            );
-
-        }
-    );
-
-}
-
-
-// =====================================================
-// UPDATE ESP32 STATUS UI
-// =====================================================
-
-function updateESP32Status(
-    status
-) {
-
-    const espStatus =
-        document.getElementById(
-            "espStatus"
-        );
-
-
-    // =========================================
-    // ELEMENT TAK JUMPA
-    // =========================================
-
-    if (!espStatus) {
-
-        console.log(
-            "⚠️ #espStatus tidak dijumpai"
-        );
-
-        return;
-
-    }
-
-
-    const currentStatus =
-        String(
-            status || "OFFLINE"
-        ).toUpperCase();
-
-
-    // =========================================
-    // ONLINE
-    // =========================================
-
-    if (
-        currentStatus ===
-        "ONLINE"
-    ) {
-
-        espStatus.innerHTML =
-            "🟢 ONLINE";
-
-
-        espStatus.classList.remove(
-            "offline"
-        );
-
-
-        espStatus.classList.add(
-            "online"
-        );
-
-    }
-
-
-    // =========================================
-    // OFFLINE
-    // =========================================
-
-    else {
-
-        espStatus.innerHTML =
-            "🔴 OFFLINE";
-
-
-        espStatus.classList.remove(
-            "online"
-        );
-
-
-        espStatus.classList.add(
-            "offline"
-        );
-
-    }
-
-}
 
 
 // =====================================================
@@ -287,7 +109,6 @@ function getSelectedLocation() {
             "selectedLocation"
         );
 
-
     return saved ||
         DEFAULT_LOCATION;
 
@@ -304,7 +125,6 @@ function getActiveLocation() {
         localStorage.getItem(
             "activeLocation"
         );
-
 
     return active ||
         getSelectedLocation();
@@ -339,7 +159,6 @@ function setLocation(
             "currentLocation"
         );
 
-
     if (currentLocation) {
 
         currentLocation.innerHTML =
@@ -353,7 +172,6 @@ function setLocation(
             "systemLocation"
         );
 
-
     if (systemLocation) {
 
         systemLocation.innerHTML =
@@ -366,7 +184,6 @@ function setLocation(
         document.getElementById(
             "dashLocation"
         );
-
 
     if (
         dashLocation &&
@@ -394,12 +211,10 @@ function updateTimerDisplay() {
             seconds / 3600
         );
 
-
     let minute =
         Math.floor(
             (seconds % 3600) / 60
         );
-
 
     let second =
         seconds % 60;
@@ -410,12 +225,10 @@ function updateTimerDisplay() {
             ? "0" + hour
             : hour;
 
-
     minute =
         minute < 10
             ? "0" + minute
             : minute;
-
 
     second =
         second < 10
@@ -436,7 +249,6 @@ function updateTimerDisplay() {
             "timer"
         );
 
-
     if (timerBox) {
 
         timerBox.innerHTML =
@@ -449,7 +261,6 @@ function updateTimerDisplay() {
         document.getElementById(
             "dashTimer"
         );
-
 
     if (dashTimer) {
 
@@ -522,8 +333,7 @@ function stopTimer() {
 
 
 // =====================================================
-// SEND COMMAND TO ESP32
-// THROUGH FIRESTORE
+// SEND COMMAND TO ESP32 THROUGH FIRESTORE
 // =====================================================
 
 async function sendESP32Command(
@@ -535,6 +345,38 @@ async function sendESP32Command(
         command
     );
 
+
+    // =================================================
+    // CHECK FIREBASE AUTH
+    // =================================================
+
+    if (!auth.currentUser) {
+
+        console.error(
+            "❌ Firebase Auth User = NULL"
+        );
+
+
+        alert(
+            "❌ Firebase Authentication tidak aktif.\n\n" +
+            "Sila logout dan login semula."
+        );
+
+
+        return false;
+
+    }
+
+
+    console.log(
+        "✅ Firebase User:",
+        auth.currentUser.email
+    );
+
+
+    // =================================================
+    // SEND FIRESTORE COMMAND
+    // =================================================
 
     try {
 
@@ -607,9 +449,9 @@ async function lampOn() {
     );
 
 
-    // =========================================
-    // HANTAR COMMAND
-    // =========================================
+    // =================================================
+    // SEND FIREBASE COMMAND
+    // =================================================
 
     const sent =
         await sendESP32Command(
@@ -624,9 +466,9 @@ async function lampOn() {
     }
 
 
-    // =========================================
-    // SIMPAN LOKASI
-    // =========================================
+    // =================================================
+    // SIMPAN LOKASI AKTIF
+    // =================================================
 
     localStorage.setItem(
         "activeLocation",
@@ -640,21 +482,19 @@ async function lampOn() {
     );
 
 
-    // =========================================
+    // =================================================
     // UPDATE LAMP STATUS
-    // =========================================
+    // =================================================
 
     const lamp =
         document.getElementById(
             "lampStatus"
         );
 
-
     if (lamp) {
 
         lamp.innerHTML =
             "ON";
-
 
         lamp.style.color =
             "green";
@@ -667,12 +507,10 @@ async function lampOn() {
             "dashLamp"
         );
 
-
     if (dashLamp) {
 
         dashLamp.innerHTML =
             "ON";
-
 
         dashLamp.style.color =
             "green";
@@ -680,9 +518,9 @@ async function lampOn() {
     }
 
 
-    // =========================================
+    // =================================================
     // UPDATE LOCATION
-    // =========================================
+    // =================================================
 
     setLocation(
         location
@@ -694,7 +532,6 @@ async function lampOn() {
             "dashLocation"
         );
 
-
     if (dashLocation) {
 
         dashLocation.innerHTML =
@@ -703,9 +540,9 @@ async function lampOn() {
     }
 
 
-    // =========================================
+    // =================================================
     // SAVE STATUS
-    // =========================================
+    // =================================================
 
     localStorage.setItem(
         "lampStatus",
@@ -713,9 +550,9 @@ async function lampOn() {
     );
 
 
-    // =========================================
+    // =================================================
     // SAVE START TIME
-    // =========================================
+    // =================================================
 
     const start =
         new Date();
@@ -727,9 +564,9 @@ async function lampOn() {
     );
 
 
-    // =========================================
+    // =================================================
     // LOG
-    // =========================================
+    // =================================================
 
     addLog(
         "💡 Lampu ON",
@@ -738,9 +575,9 @@ async function lampOn() {
     );
 
 
-    // =========================================
+    // =================================================
     // TIMER
-    // =========================================
+    // =================================================
 
     startTimer();
 
@@ -763,9 +600,9 @@ async function lampOff() {
     );
 
 
-    // =========================================
-    // HANTAR COMMAND
-    // =========================================
+    // =================================================
+    // SEND FIREBASE COMMAND
+    // =================================================
 
     const sent =
         await sendESP32Command(
@@ -780,21 +617,19 @@ async function lampOff() {
     }
 
 
-    // =========================================
+    // =================================================
     // UPDATE UI
-    // =========================================
+    // =================================================
 
     const lamp =
         document.getElementById(
             "lampStatus"
         );
 
-
     if (lamp) {
 
         lamp.innerHTML =
             "OFF";
-
 
         lamp.style.color =
             "red";
@@ -807,12 +642,10 @@ async function lampOff() {
             "dashLamp"
         );
 
-
     if (dashLamp) {
 
         dashLamp.innerHTML =
             "OFF";
-
 
         dashLamp.style.color =
             "red";
@@ -825,7 +658,6 @@ async function lampOff() {
             "dashLocation"
         );
 
-
     if (dashLocation) {
 
         dashLocation.innerHTML =
@@ -834,9 +666,9 @@ async function lampOff() {
     }
 
 
-    // =========================================
+    // =================================================
     // SAVE STATUS
-    // =========================================
+    // =================================================
 
     localStorage.setItem(
         "lampStatus",
@@ -844,25 +676,25 @@ async function lampOff() {
     );
 
 
-    // =========================================
+    // =================================================
     // STOP TIMER
-    // =========================================
+    // =================================================
 
     stopTimer();
 
 
-    // =========================================
+    // =================================================
     // SAVE HISTORY
-    // =========================================
+    // =================================================
 
     await saveHistory(
         location
     );
 
 
-    // =========================================
+    // =================================================
     // RESET TIMER
-    // =========================================
+    // =================================================
 
     seconds = 0;
 
@@ -876,9 +708,9 @@ async function lampOff() {
     updateTimerDisplay();
 
 
-    // =========================================
+    // =================================================
     // LOG
-    // =========================================
+    // =================================================
 
     addLog(
         "💡 Lampu OFF",
@@ -887,9 +719,9 @@ async function lampOff() {
     );
 
 
-    // =========================================
+    // =================================================
     // REMOVE ACTIVE LOCATION
-    // =========================================
+    // =================================================
 
     localStorage.removeItem(
         "activeLocation"
@@ -911,9 +743,9 @@ async function saveHistory(
     );
 
 
-    // =========================================
+    // =================================================
     // FIREBASE AUTH
-    // =========================================
+    // =================================================
 
     if (!auth.currentUser) {
 
@@ -923,7 +755,8 @@ async function saveHistory(
 
 
         alert(
-            "❌ Firebase Authentication tidak aktif.\n\nSila logout dan login semula."
+            "❌ Firebase Authentication tidak aktif.\n\n" +
+            "Sila logout dan login semula."
         );
 
 
@@ -932,9 +765,9 @@ async function saveHistory(
     }
 
 
-    // =========================================
+    // =================================================
     // START TIME
-    // =========================================
+    // =================================================
 
     const startValue =
         localStorage.getItem(
@@ -965,17 +798,17 @@ async function saveHistory(
         );
 
 
-    // =========================================
+    // =================================================
     // END TIME
-    // =========================================
+    // =================================================
 
     const end =
         new Date();
 
 
-    // =========================================
+    // =================================================
     // DURATION
-    // =========================================
+    // =================================================
 
     let total =
         Math.floor(
@@ -1013,12 +846,10 @@ async function saveHistory(
             ? "0" + hour
             : hour;
 
-
     minute =
         minute < 10
             ? "0" + minute
             : minute;
-
 
     second =
         second < 10
@@ -1026,9 +857,9 @@ async function saveHistory(
             : second;
 
 
-    // =========================================
+    // =================================================
     // USER
-    // =========================================
+    // =================================================
 
     const user =
         JSON.parse(
@@ -1050,9 +881,9 @@ async function saveHistory(
     }
 
 
-    // =========================================
+    // =================================================
     // FIRESTORE DATA
-    // =========================================
+    // =================================================
 
     const historyData = {
 
@@ -1125,9 +956,9 @@ async function saveHistory(
     );
 
 
-    // =========================================
+    // =================================================
     // SEND FIRESTORE
-    // =========================================
+    // =================================================
 
     try {
 
@@ -1150,9 +981,9 @@ async function saveHistory(
         );
 
 
-        // =========================================
+        // =================================================
         // BACKUP LOCAL
-        // =========================================
+        // =================================================
 
         let localHistory =
             JSON.parse(
@@ -1175,9 +1006,9 @@ async function saveHistory(
         );
 
 
-        // =========================================
+        // =================================================
         // REMOVE START TIME
-        // =========================================
+        // =================================================
 
         localStorage.removeItem(
             "startTime"
@@ -1353,9 +1184,9 @@ function loadLampStatus() {
         );
 
 
-    // =========================================
+    // =================================================
     // PAPAR LOKASI
-    // =========================================
+    // =================================================
 
     if (currentLocation) {
 
@@ -1373,9 +1204,9 @@ function loadLampStatus() {
     }
 
 
-    // =========================================
+    // =================================================
     // LAMP ON
-    // =========================================
+    // =================================================
 
     if (
         status === "ON"
@@ -1385,7 +1216,6 @@ function loadLampStatus() {
 
             lamp.innerHTML =
                 "ON";
-
 
             lamp.style.color =
                 "green";
@@ -1397,7 +1227,6 @@ function loadLampStatus() {
 
             dashLamp.innerHTML =
                 "ON";
-
 
             dashLamp.style.color =
                 "green";
@@ -1418,9 +1247,9 @@ function loadLampStatus() {
     }
 
 
-    // =========================================
+    // =================================================
     // LAMP OFF
-    // =========================================
+    // =================================================
 
     else {
 
@@ -1428,7 +1257,6 @@ function loadLampStatus() {
 
             lamp.innerHTML =
                 "OFF";
-
 
             lamp.style.color =
                 "red";
@@ -1440,7 +1268,6 @@ function loadLampStatus() {
 
             dashLamp.innerHTML =
                 "OFF";
-
 
             dashLamp.style.color =
                 "red";
@@ -1482,9 +1309,9 @@ function setupLocation() {
     }
 
 
-    // =========================================
+    // =================================================
     // LOAD SAVED LOCATION
-    // =========================================
+    // =================================================
 
     const savedLocation =
         getSelectedLocation();
@@ -1499,9 +1326,9 @@ function setupLocation() {
     );
 
 
-    // =========================================
+    // =================================================
     // USER TUKAR LOKASI
-    // =========================================
+    // =================================================
 
     locationSelect.addEventListener(
         "change",
@@ -1576,18 +1403,9 @@ window.addEventListener(
 
         updateTimerDisplay();
 
-
         setupLocation();
 
-
         loadLampStatus();
-
-
-        // =========================================
-        // ESP32 REALTIME STATUS
-        // =========================================
-
-        listenESP32Status();
 
     }
 );
