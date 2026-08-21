@@ -3,8 +3,8 @@
 // script.js
 //
 // Fungsi:
-// - Kawal Lampu
-// - ESP32
+// - Kawal Lampu melalui Firebase
+// - ESP32 melalui Internet
 // - Timer
 // - History Firestore
 // - Lokasi Bilik
@@ -29,7 +29,9 @@ import {
     getFirestore,
     collection,
     addDoc,
-    serverTimestamp
+    serverTimestamp,
+    doc,
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -75,6 +77,18 @@ const db =
 
 
 // =====================================================
+// ESP32 FIRESTORE DOCUMENT
+// =====================================================
+
+const ESP32_DOCUMENT =
+    doc(
+        db,
+        "devices",
+        "esp32"
+    );
+
+
+// =====================================================
 // TIMER
 // =====================================================
 
@@ -88,14 +102,6 @@ let seconds =
     ) || 0;
 
 let running = false;
-
-
-// =====================================================
-// ESP32 IP
-// =====================================================
-
-const ESP32_IP =
-    "192.168.4.1";
 
 
 // =====================================================
@@ -117,7 +123,8 @@ function getSelectedLocation() {
             "selectedLocation"
         );
 
-    return saved || DEFAULT_LOCATION;
+    return saved ||
+        DEFAULT_LOCATION;
 
 }
 
@@ -133,7 +140,8 @@ function getActiveLocation() {
             "activeLocation"
         );
 
-    return active || getSelectedLocation();
+    return active ||
+        getSelectedLocation();
 
 }
 
@@ -142,7 +150,9 @@ function getActiveLocation() {
 // SET LOCATION
 // =====================================================
 
-function setLocation(location) {
+function setLocation(
+    location
+) {
 
     if (!location) {
 
@@ -151,14 +161,13 @@ function setLocation(location) {
 
     }
 
-    // Lokasi yang dipilih user
+
     localStorage.setItem(
         "selectedLocation",
         location
     );
 
 
-    // Update paparan pada page
     const currentLocation =
         document.getElementById(
             "currentLocation"
@@ -192,7 +201,9 @@ function setLocation(location) {
 
     if (
         dashLocation &&
-        localStorage.getItem("lampStatus") === "ON"
+        localStorage.getItem(
+            "lampStatus"
+        ) === "ON"
     ) {
 
         dashLocation.innerHTML =
@@ -336,10 +347,78 @@ function stopTimer() {
 
 
 // =====================================================
+// SEND COMMAND TO ESP32 THROUGH FIRESTORE
+// =====================================================
+
+async function sendESP32Command(
+    command
+) {
+
+    console.log(
+        "📡 Hantar command ESP32:",
+        command
+    );
+
+
+    try {
+
+        await updateDoc(
+            ESP32_DOCUMENT,
+            {
+
+                command:
+                    command,
+
+                updatedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        console.log(
+            "✅ Command berjaya dihantar:",
+            command
+        );
+
+
+        return true;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "❌ Firebase ESP32 Error:",
+            error
+        );
+
+
+        alert(
+
+            "❌ Gagal menghantar arahan kepada ESP32.\n\n" +
+
+            "Code: " +
+            error.code +
+
+            "\n\nMessage: " +
+            error.message
+
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+// =====================================================
 // LAMP ON
 // =====================================================
 
-function lampOn() {
+async function lampOn() {
 
     const location =
         getSelectedLocation();
@@ -349,6 +428,23 @@ function lampOn() {
         "💡 Lampu ON:",
         location
     );
+
+
+    // =================================================
+    // SEND FIREBASE COMMAND
+    // =================================================
+
+    const sent =
+        await sendESP32Command(
+            "ON"
+        );
+
+
+    if (!sent) {
+
+        return;
+
+    }
 
 
     // =================================================
@@ -364,46 +460,6 @@ function lampOn() {
     localStorage.setItem(
         "selectedLocation",
         location
-    );
-
-
-    // =================================================
-    // ESP32
-    // =================================================
-
-    fetch(
-        "http://" +
-        ESP32_IP +
-        "/lamp/on"
-    )
-
-    .then(
-        function(response) {
-
-            return response.text();
-
-        }
-    )
-
-    .then(
-        function(data) {
-
-            console.log(
-                "ESP32:",
-                data
-            );
-
-        }
-    )
-
-    .catch(
-        function(error) {
-
-            console.log(
-                "⚠️ ESP32 tidak disambung"
-            );
-
-        }
     );
 
 
@@ -482,6 +538,7 @@ function lampOn() {
     const start =
         new Date();
 
+
     localStorage.setItem(
         "startTime",
         start.toISOString()
@@ -512,7 +569,7 @@ function lampOn() {
 // LAMP OFF
 // =====================================================
 
-function lampOff() {
+async function lampOff() {
 
     const location =
         getActiveLocation();
@@ -525,43 +582,20 @@ function lampOff() {
 
 
     // =================================================
-    // ESP32
+    // SEND FIREBASE COMMAND
     // =================================================
 
-    fetch(
-        "http://" +
-        ESP32_IP +
-        "/lamp/off"
-    )
+    const sent =
+        await sendESP32Command(
+            "OFF"
+        );
 
-    .then(
-        function(response) {
 
-            return response.text();
+    if (!sent) {
 
-        }
-    )
+        return;
 
-    .then(
-        function(data) {
-
-            console.log(
-                "ESP32:",
-                data
-            );
-
-        }
-    )
-
-    .catch(
-        function(error) {
-
-            console.log(
-                "⚠️ ESP32 tidak disambung"
-            );
-
-        }
-    );
+    }
 
 
     // =================================================
@@ -634,7 +668,7 @@ function lampOff() {
     // SAVE HISTORY
     // =================================================
 
-    saveHistory(
+    await saveHistory(
         location
     );
 
@@ -645,10 +679,12 @@ function lampOff() {
 
     seconds = 0;
 
+
     localStorage.setItem(
         "lampTime",
         0
     );
+
 
     updateTimerDisplay();
 
@@ -698,9 +734,11 @@ async function saveHistory(
             "❌ Firebase Auth User = NULL"
         );
 
+
         alert(
             "❌ Firebase Authentication tidak aktif.\n\nSila logout dan login semula."
         );
+
 
         return;
 
@@ -723,9 +761,11 @@ async function saveHistory(
             "❌ startTime tidak dijumpai"
         );
 
+
         alert(
             "❌ Masa mula lampu tidak dijumpai."
         );
+
 
         return;
 
@@ -814,6 +854,7 @@ async function saveHistory(
         console.error(
             "❌ loginUser tidak dijumpai"
         );
+
 
         return;
 
@@ -1124,7 +1165,7 @@ function loadLampStatus() {
 
 
     // =================================================
-    // PAPAR LOKASI YANG DIPILIH
+    // PAPAR LOKASI
     // =================================================
 
     if (currentLocation) {
@@ -1283,21 +1324,17 @@ function setupLocation() {
             );
 
 
-            // Simpan lokasi baru
             localStorage.setItem(
                 "selectedLocation",
                 newLocation
             );
 
 
-            // Update UI
             setLocation(
                 newLocation
             );
 
 
-            // Jika lampu masih ON,
-            // lokasi aktif turut berubah
             if (
                 localStorage.getItem(
                     "lampStatus"
@@ -1346,9 +1383,7 @@ window.addEventListener(
 
         updateTimerDisplay();
 
-
         setupLocation();
-
 
         loadLampStatus();
 
