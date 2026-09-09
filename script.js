@@ -3,11 +3,12 @@
 // script.js
 //
 // Fungsi:
-// - Kawal Lampu melalui Firebase
-// - ESP32 melalui Internet
-// - Timer
+// - Kawal lampu melalui Firebase
+// - Setiap bilik mempunyai status sendiri
+// - ESP32 melalui Firestore
+// - Timer setiap bilik
 // - History Firestore
-// - Lokasi Bilik
+// - Lokasi bilik
 // - Backup History LocalStorage
 // - Log Aktiviti
 // =====================================================
@@ -31,7 +32,7 @@ import {
     addDoc,
     serverTimestamp,
     doc,
-    updateDoc
+    setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -61,6 +62,7 @@ const firebaseConfig = {
 
 };
 
+
 // =====================================================
 // INITIALIZE FIREBASE
 // =====================================================
@@ -76,39 +78,58 @@ const db =
 
 
 // =====================================================
-// ESP32 FIRESTORE DOCUMENT
-// =====================================================
-
-const ESP32_DOCUMENT =
-    doc(
-        db,
-        "devices",
-        "esp32"
-    );
-
-
-// =====================================================
-// TIMER
-// =====================================================
-
-let timer = null;
-
-let seconds =
-    Number(
-        localStorage.getItem(
-            "lampTime"
-        )
-    ) || 0;
-
-let running = false;
-
-
-// =====================================================
 // DEFAULT LOCATION
 // =====================================================
 
 const DEFAULT_LOCATION =
     "Bilik Kuliah DB";
+
+
+// =====================================================
+// SEMUA LOKASI
+// =====================================================
+
+const LOCATIONS = [
+
+    "Bilik Kuliah DB",
+
+    "Bilik ICT 1",
+
+    "Bilik ICT 4"
+
+];
+
+
+// =====================================================
+// LOCATION ID
+// =====================================================
+
+function getLocationId(location) {
+
+    return location
+        .toLowerCase()
+        .replace(/\s+/g, "_")
+        .replace(/[^a-z0-9_]/g, "");
+
+}
+
+
+// =====================================================
+// FIRESTORE DOCUMENT MENGIKUT BILIK
+// =====================================================
+
+function getRoomDocument(location) {
+
+    const locationId =
+        getLocationId(location);
+
+    return doc(
+        db,
+        "devices",
+        locationId
+    );
+
+}
 
 
 // =====================================================
@@ -122,25 +143,16 @@ function getSelectedLocation() {
             "selectedLocation"
         );
 
-    return saved ||
-        DEFAULT_LOCATION;
+    if (
+        saved &&
+        LOCATIONS.includes(saved)
+    ) {
 
-}
+        return saved;
 
+    }
 
-// =====================================================
-// GET ACTIVE LOCATION
-// =====================================================
-
-function getActiveLocation() {
-
-    const active =
-        localStorage.getItem(
-            "activeLocation"
-        );
-
-    return active ||
-        getSelectedLocation();
+    return DEFAULT_LOCATION;
 
 }
 
@@ -149,11 +161,12 @@ function getActiveLocation() {
 // SET LOCATION
 // =====================================================
 
-function setLocation(
-    location
-) {
+function setLocation(location) {
 
-    if (!location) {
+    if (
+        !location ||
+        !LOCATIONS.includes(location)
+    ) {
 
         location =
             DEFAULT_LOCATION;
@@ -192,45 +205,195 @@ function setLocation(
 
     }
 
+}
 
-    const dashLocation =
-        document.getElementById(
-            "dashLocation"
-        );
 
-    if (
-        dashLocation &&
+// =====================================================
+// ROOM STATUS STORAGE
+// =====================================================
+
+function getRoomStatuses() {
+
+    return JSON.parse(
         localStorage.getItem(
-            "lampStatus"
-        ) === "ON"
-    ) {
+            "roomStatuses"
+        )
+    ) || {};
 
-        dashLocation.innerHTML =
-            location;
+}
 
-    }
+
+function saveRoomStatuses(statuses) {
+
+    localStorage.setItem(
+        "roomStatuses",
+        JSON.stringify(statuses)
+    );
+
+}
+
+
+function getRoomStatus(location) {
+
+    const statuses =
+        getRoomStatuses();
+
+    return statuses[location] || "OFF";
+
+}
+
+
+function setRoomStatus(
+    location,
+    status
+) {
+
+    const statuses =
+        getRoomStatuses();
+
+    statuses[location] =
+        status;
+
+    saveRoomStatuses(
+        statuses
+    );
 
 }
 
 
 // =====================================================
-// TIMER DISPLAY
+// ROOM START TIME STORAGE
 // =====================================================
 
-function updateTimerDisplay() {
+function getRoomStartTimes() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "roomStartTimes"
+        )
+    ) || {};
+
+}
+
+
+function saveRoomStartTimes(
+    startTimes
+) {
+
+    localStorage.setItem(
+        "roomStartTimes",
+        JSON.stringify(
+            startTimes
+        )
+    );
+
+}
+
+
+function getRoomStartTime(location) {
+
+    const startTimes =
+        getRoomStartTimes();
+
+    return startTimes[location] || null;
+
+}
+
+
+function setRoomStartTime(
+    location,
+    time
+) {
+
+    const startTimes =
+        getRoomStartTimes();
+
+    startTimes[location] =
+        time;
+
+    saveRoomStartTimes(
+        startTimes
+    );
+
+}
+
+
+function removeRoomStartTime(
+    location
+) {
+
+    const startTimes =
+        getRoomStartTimes();
+
+    delete startTimes[location];
+
+    saveRoomStartTimes(
+        startTimes
+    );
+
+}
+
+
+// =====================================================
+// TIMER
+// =====================================================
+
+let timer = null;
+
+
+// =====================================================
+// GET TIMER SECONDS
+// =====================================================
+
+function getTimerSeconds(location) {
+
+    const startTime =
+        getRoomStartTime(location);
+
+    if (!startTime) {
+
+        return 0;
+
+    }
+
+
+    const start =
+        new Date(startTime);
+
+    const now =
+        new Date();
+
+    const total =
+        Math.floor(
+            (now - start) / 1000
+        );
+
+
+    return total > 0
+        ? total
+        : 0;
+
+}
+
+
+// =====================================================
+// FORMAT TIMER
+// =====================================================
+
+function formatTime(totalSeconds) {
 
     let hour =
         Math.floor(
-            seconds / 3600
+            totalSeconds / 3600
         );
 
     let minute =
         Math.floor(
-            (seconds % 3600) / 60
+            (totalSeconds % 3600) / 60
         );
 
     let second =
-        seconds % 60;
+        totalSeconds % 60;
 
 
     hour =
@@ -249,12 +412,34 @@ function updateTimerDisplay() {
             : second;
 
 
-    const result =
+    return (
         hour +
         ":" +
         minute +
         ":" +
-        second;
+        second
+    );
+
+}
+
+
+// =====================================================
+// UPDATE TIMER DISPLAY
+// =====================================================
+
+function updateTimerDisplay() {
+
+    const location =
+        getSelectedLocation();
+
+    const seconds =
+        getTimerSeconds(
+            location
+        );
+
+
+    const result =
+        formatTime(seconds);
 
 
     const timerBox =
@@ -291,28 +476,16 @@ function updateTimerDisplay() {
 
 function startTimer() {
 
-    if (running) {
+    if (timer) {
 
-        return;
+        clearInterval(timer);
 
     }
-
-
-    running = true;
 
 
     timer =
         setInterval(
             function() {
-
-                seconds++;
-
-
-                localStorage.setItem(
-                    "lampTime",
-                    seconds
-                );
-
 
                 updateTimerDisplay();
 
@@ -337,30 +510,30 @@ function stopTimer() {
 
     }
 
-
     timer = null;
-
-    running = false;
 
 }
 
 
 // =====================================================
-// SEND COMMAND TO ESP32 THROUGH FIRESTORE
+// SEND COMMAND KE BILIK TERTENTU
 // =====================================================
 
 async function sendESP32Command(
-    command
+    command,
+    location
 ) {
 
     console.log(
-        "📡 Hantar command ESP32:",
-        command
+        "📡 Hantar command:",
+        command,
+        "Lokasi:",
+        location
     );
 
 
     // =================================================
-    // CHECK FIREBASE AUTH
+    // CHECK AUTH
     // =================================================
 
     if (!auth.currentUser) {
@@ -381,35 +554,71 @@ async function sendESP32Command(
     }
 
 
-    console.log(
-        "✅ Firebase User:",
-        auth.currentUser.email
-    );
-
-
     // =================================================
-    // SEND FIRESTORE COMMAND
+    // CHECK LOCATION
     // =================================================
+
+    if (
+        !location ||
+        !LOCATIONS.includes(location)
+    ) {
+
+        alert(
+            "❌ Lokasi bilik tidak sah."
+        );
+
+        return false;
+
+    }
+
 
     try {
 
-        await updateDoc(
-            ESP32_DOCUMENT,
+        // =============================================
+        // DOKUMEN IKUT LOKASI
+        // =============================================
+
+        const roomDocument =
+            getRoomDocument(
+                location
+            );
+
+
+        // =============================================
+        // SIMPAN COMMAND
+        // =============================================
+
+        await setDoc(
+
+            roomDocument,
+
             {
 
+                location:
+                    location,
+
                 command:
+                    command,
+
+                status:
                     command,
 
                 updatedAt:
                     serverTimestamp()
 
+            },
+
+            {
+                merge: true
             }
+
         );
 
 
         console.log(
             "✅ Command berjaya dihantar:",
-            command
+            command,
+            location
         );
 
 
@@ -463,12 +672,32 @@ async function lampOn() {
 
 
     // =================================================
-    // SEND FIREBASE COMMAND
+    // CHECK STATUS BILIK
+    // =================================================
+
+    if (
+        getRoomStatus(location) === "ON"
+    ) {
+
+        alert(
+            "💡 Lampu " +
+            location +
+            " sudah ON."
+        );
+
+        return;
+
+    }
+
+
+    // =================================================
+    // HANTAR COMMAND
     // =================================================
 
     const sent =
         await sendESP32Command(
-            "ON"
+            "ON",
+            location
         );
 
 
@@ -480,100 +709,31 @@ async function lampOn() {
 
 
     // =================================================
-    // SIMPAN LOKASI AKTIF
+    // SAVE STATUS BILIK
     // =================================================
 
-    localStorage.setItem(
-        "activeLocation",
-        location
-    );
-
-
-    localStorage.setItem(
-        "selectedLocation",
-        location
-    );
-
-
-    // =================================================
-    // UPDATE LAMP STATUS
-    // =================================================
-
-    const lamp =
-        document.getElementById(
-            "lampStatus"
-        );
-
-    if (lamp) {
-
-        lamp.innerHTML =
-            "ON";
-
-        lamp.style.color =
-            "green";
-
-    }
-
-
-    const dashLamp =
-        document.getElementById(
-            "dashLamp"
-        );
-
-    if (dashLamp) {
-
-        dashLamp.innerHTML =
-            "ON";
-
-        dashLamp.style.color =
-            "green";
-
-    }
-
-
-    // =================================================
-    // UPDATE LOCATION
-    // =================================================
-
-    setLocation(
-        location
-    );
-
-
-    const dashLocation =
-        document.getElementById(
-            "dashLocation"
-        );
-
-    if (dashLocation) {
-
-        dashLocation.innerHTML =
-            location;
-
-    }
-
-
-    // =================================================
-    // SAVE STATUS
-    // =================================================
-
-    localStorage.setItem(
-        "lampStatus",
+    setRoomStatus(
+        location,
         "ON"
     );
 
 
     // =================================================
-    // SAVE START TIME
+    // SAVE START TIME BILIK
     // =================================================
 
-    const start =
-        new Date();
+    setRoomStartTime(
+        location,
+        new Date().toISOString()
+    );
 
 
-    localStorage.setItem(
-        "startTime",
-        start.toISOString()
+    // =================================================
+    // UPDATE UI
+    // =================================================
+
+    updateLampUI(
+        location
     );
 
 
@@ -604,7 +764,7 @@ async function lampOn() {
 async function lampOff() {
 
     const location =
-        getActiveLocation();
+        getSelectedLocation();
 
 
     console.log(
@@ -614,12 +774,32 @@ async function lampOff() {
 
 
     // =================================================
-    // SEND FIREBASE COMMAND
+    // CHECK STATUS
+    // =================================================
+
+    if (
+        getRoomStatus(location) === "OFF"
+    ) {
+
+        alert(
+            "💡 Lampu " +
+            location +
+            " sudah OFF."
+        );
+
+        return;
+
+    }
+
+
+    // =================================================
+    // HANTAR COMMAND
     // =================================================
 
     const sent =
         await sendESP32Command(
-            "OFF"
+            "OFF",
+            location
         );
 
 
@@ -628,72 +808,6 @@ async function lampOff() {
         return;
 
     }
-
-
-    // =================================================
-    // UPDATE UI
-    // =================================================
-
-    const lamp =
-        document.getElementById(
-            "lampStatus"
-        );
-
-    if (lamp) {
-
-        lamp.innerHTML =
-            "OFF";
-
-        lamp.style.color =
-            "red";
-
-    }
-
-
-    const dashLamp =
-        document.getElementById(
-            "dashLamp"
-        );
-
-    if (dashLamp) {
-
-        dashLamp.innerHTML =
-            "OFF";
-
-        dashLamp.style.color =
-            "red";
-
-    }
-
-
-    const dashLocation =
-        document.getElementById(
-            "dashLocation"
-        );
-
-    if (dashLocation) {
-
-        dashLocation.innerHTML =
-            "Tiada lampu dibuka";
-
-    }
-
-
-    // =================================================
-    // SAVE STATUS
-    // =================================================
-
-    localStorage.setItem(
-        "lampStatus",
-        "OFF"
-    );
-
-
-    // =================================================
-    // STOP TIMER
-    // =================================================
-
-    stopTimer();
 
 
     // =================================================
@@ -706,19 +820,31 @@ async function lampOff() {
 
 
     // =================================================
-    // RESET TIMER
+    // UPDATE STATUS
     // =================================================
 
-    seconds = 0;
-
-
-    localStorage.setItem(
-        "lampTime",
-        0
+    setRoomStatus(
+        location,
+        "OFF"
     );
 
 
-    updateTimerDisplay();
+    // =================================================
+    // REMOVE START TIME
+    // =================================================
+
+    removeRoomStartTime(
+        location
+    );
+
+
+    // =================================================
+    // UPDATE UI
+    // =================================================
+
+    updateLampUI(
+        location
+    );
 
 
     // =================================================
@@ -733,12 +859,121 @@ async function lampOff() {
 
 
     // =================================================
-    // REMOVE ACTIVE LOCATION
+    // UPDATE TIMER
     // =================================================
 
-    localStorage.removeItem(
-        "activeLocation"
-    );
+    updateTimerDisplay();
+
+}
+
+
+// =====================================================
+// UPDATE LAMP UI
+// =====================================================
+
+function updateLampUI(location) {
+
+    const status =
+        getRoomStatus(
+            location
+        );
+
+
+    const lamp =
+        document.getElementById(
+            "lampStatus"
+        );
+
+
+    const dashLamp =
+        document.getElementById(
+            "dashLamp"
+        );
+
+
+    const dashLocation =
+        document.getElementById(
+            "dashLocation"
+        );
+
+
+    // =================================================
+    // ON
+    // =================================================
+
+    if (status === "ON") {
+
+        if (lamp) {
+
+            lamp.innerHTML =
+                "ON";
+
+            lamp.style.color =
+                "green";
+
+        }
+
+
+        if (dashLamp) {
+
+            dashLamp.innerHTML =
+                "ON";
+
+            dashLamp.style.color =
+                "green";
+
+        }
+
+
+        if (dashLocation) {
+
+            dashLocation.innerHTML =
+                location;
+
+        }
+
+    }
+
+
+    // =================================================
+    // OFF
+    // =================================================
+
+    else {
+
+        if (lamp) {
+
+            lamp.innerHTML =
+                "OFF";
+
+            lamp.style.color =
+                "red";
+
+        }
+
+
+        if (dashLamp) {
+
+            dashLamp.innerHTML =
+                "OFF";
+
+            dashLamp.style.color =
+                "red";
+
+        }
+
+
+        if (dashLocation) {
+
+            dashLocation.innerHTML =
+                "Tiada lampu dibuka";
+
+        }
+
+    }
+
+
+    updateTimerDisplay();
 
 }
 
@@ -752,12 +987,13 @@ async function saveHistory(
 ) {
 
     console.log(
-        "🔥 SAVE HISTORY START"
+        "🔥 SAVE HISTORY START:",
+        location
     );
 
 
     // =================================================
-    // FIREBASE AUTH
+    // AUTH
     // =================================================
 
     if (!auth.currentUser) {
@@ -765,13 +1001,6 @@ async function saveHistory(
         console.error(
             "❌ Firebase Auth User = NULL"
         );
-
-
-        alert(
-            "❌ Firebase Authentication tidak aktif.\n\n" +
-            "Sila logout dan login semula."
-        );
-
 
         return;
 
@@ -783,22 +1012,17 @@ async function saveHistory(
     // =================================================
 
     const startValue =
-        localStorage.getItem(
-            "startTime"
+        getRoomStartTime(
+            location
         );
 
 
     if (!startValue) {
 
         console.error(
-            "❌ startTime tidak dijumpai"
+            "❌ Start time tidak dijumpai:",
+            location
         );
-
-
-        alert(
-            "❌ Masa mula lampu tidak dijumpai."
-        );
-
 
         return;
 
@@ -810,10 +1034,6 @@ async function saveHistory(
             startValue
         );
 
-
-    // =================================================
-    // END TIME
-    // =================================================
 
     const end =
         new Date();
@@ -838,36 +1058,10 @@ async function saveHistory(
     }
 
 
-    let hour =
-        Math.floor(
-            total / 3600
+    const duration =
+        formatTime(
+            total
         );
-
-
-    let minute =
-        Math.floor(
-            (total % 3600) / 60
-        );
-
-
-    let second =
-        total % 60;
-
-
-    hour =
-        hour < 10
-            ? "0" + hour
-            : hour;
-
-    minute =
-        minute < 10
-            ? "0" + minute
-            : minute;
-
-    second =
-        second < 10
-            ? "0" + second
-            : second;
 
 
     // =================================================
@@ -888,14 +1082,13 @@ async function saveHistory(
             "❌ loginUser tidak dijumpai"
         );
 
-
         return;
 
     }
 
 
     // =================================================
-    // FIRESTORE DATA
+    // HISTORY DATA
     // =================================================
 
     const historyData = {
@@ -918,8 +1111,7 @@ async function saveHistory(
             "user",
 
         location:
-            location ||
-            getSelectedLocation(),
+            location,
 
         date:
             start.getDate() +
@@ -951,11 +1143,7 @@ async function saveHistory(
             end.getMinutes(),
 
         duration:
-            hour +
-            ":" +
-            minute +
-            ":" +
-            second,
+            duration,
 
         timestamp:
             serverTimestamp()
@@ -970,7 +1158,7 @@ async function saveHistory(
 
 
     // =================================================
-    // SEND FIRESTORE
+    // FIRESTORE
     // =================================================
 
     try {
@@ -989,7 +1177,7 @@ async function saveHistory(
 
 
         console.log(
-            "✅ HISTORY BERJAYA DISIMPAN!",
+            "✅ HISTORY BERJAYA:",
             docRef.id
         );
 
@@ -1019,27 +1207,18 @@ async function saveHistory(
         );
 
 
-        // =================================================
-        // REMOVE START TIME
-        // =================================================
-
-        localStorage.removeItem(
-            "startTime"
-        );
-
-
-        alert(
-            "✅ History berjaya disimpan!\n\n📍 " +
+        console.log(
+            "📍 History disimpan:",
             location
         );
 
     }
 
 
-    catch(error) {
+    catch (error) {
 
         console.error(
-            "❌ FIRESTORE ERROR:",
+            "❌ FIRESTORE HISTORY ERROR:",
             error
         );
 
@@ -1153,152 +1332,18 @@ function addLog(
 
 function loadLampStatus() {
 
-    const status =
-        localStorage.getItem(
-            "lampStatus"
-        );
-
-
-    const selectedLocation =
+    const location =
         getSelectedLocation();
 
 
-    const activeLocation =
-        getActiveLocation();
+    setLocation(
+        location
+    );
 
 
-    const lamp =
-        document.getElementById(
-            "lampStatus"
-        );
-
-
-    const dashLamp =
-        document.getElementById(
-            "dashLamp"
-        );
-
-
-    const dashLocation =
-        document.getElementById(
-            "dashLocation"
-        );
-
-
-    const currentLocation =
-        document.getElementById(
-            "currentLocation"
-        );
-
-
-    const systemLocation =
-        document.getElementById(
-            "systemLocation"
-        );
-
-
-    // =================================================
-    // PAPAR LOKASI
-    // =================================================
-
-    if (currentLocation) {
-
-        currentLocation.innerHTML =
-            selectedLocation;
-
-    }
-
-
-    if (systemLocation) {
-
-        systemLocation.innerHTML =
-            selectedLocation;
-
-    }
-
-
-    // =================================================
-    // LAMP ON
-    // =================================================
-
-    if (
-        status === "ON"
-    ) {
-
-        if (lamp) {
-
-            lamp.innerHTML =
-                "ON";
-
-            lamp.style.color =
-                "green";
-
-        }
-
-
-        if (dashLamp) {
-
-            dashLamp.innerHTML =
-                "ON";
-
-            dashLamp.style.color =
-                "green";
-
-        }
-
-
-        if (dashLocation) {
-
-            dashLocation.innerHTML =
-                activeLocation;
-
-        }
-
-
-        startTimer();
-
-    }
-
-
-    // =================================================
-    // LAMP OFF
-    // =================================================
-
-    else {
-
-        if (lamp) {
-
-            lamp.innerHTML =
-                "OFF";
-
-            lamp.style.color =
-                "red";
-
-        }
-
-
-        if (dashLamp) {
-
-            dashLamp.innerHTML =
-                "OFF";
-
-            dashLamp.style.color =
-                "red";
-
-        }
-
-
-        if (dashLocation) {
-
-            dashLocation.innerHTML =
-                "Tiada lampu dibuka";
-
-        }
-
-
-        stopTimer();
-
-    }
+    updateLampUI(
+        location
+    );
 
 }
 
@@ -1323,7 +1368,7 @@ function setupLocation() {
 
 
     // =================================================
-    // LOAD SAVED LOCATION
+    // LOAD LOCATION
     // =================================================
 
     const savedLocation =
@@ -1340,11 +1385,13 @@ function setupLocation() {
 
 
     // =================================================
-    // USER TUKAR LOKASI
+    // LOCATION CHANGE
     // =================================================
 
     locationSelect.addEventListener(
+
         "change",
+
         function() {
 
             const newLocation =
@@ -1357,45 +1404,28 @@ function setupLocation() {
             );
 
 
-            localStorage.setItem(
-                "selectedLocation",
-                newLocation
-            );
-
-
             setLocation(
                 newLocation
             );
 
 
-            if (
-                localStorage.getItem(
-                    "lampStatus"
-                ) === "ON"
-            ) {
+            // =========================================
+            // PAPAR STATUS BILIK YANG DIPILIH
+            // =========================================
 
-                localStorage.setItem(
-                    "activeLocation",
-                    newLocation
-                );
+            updateLampUI(
+                newLocation
+            );
 
 
-                const dashLocation =
-                    document.getElementById(
-                        "dashLocation"
-                    );
+            // =========================================
+            // UPDATE TIMER BILIK TERSEBUT
+            // =========================================
 
-
-                if (dashLocation) {
-
-                    dashLocation.innerHTML =
-                        newLocation;
-
-                }
-
-            }
+            updateTimerDisplay();
 
         }
+
     );
 
 }
@@ -1406,21 +1436,24 @@ function setupLocation() {
 // =====================================================
 
 window.addEventListener(
+
     "load",
+
     function() {
 
         console.log(
-            "Smart Classroom script loaded"
+            "🚀 Smart Classroom script loaded"
         );
 
-
-        updateTimerDisplay();
 
         setupLocation();
 
         loadLampStatus();
 
+        startTimer();
+
     }
+
 );
 
 
