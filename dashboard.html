@@ -20,7 +20,6 @@
 
     <style>
 
-
         .welcome {
             margin-bottom: 25px;
         }
@@ -44,7 +43,7 @@
             display: grid;
 
             grid-template-columns:
-                repeat(4, 1fr);
+                repeat(3, 1fr);
 
             gap: 20px;
 
@@ -82,13 +81,6 @@
         .box h1 {
 
             font-size: 28px;
-
-            margin: 0;
-
-        }
-
-
-        .box h3 {
 
             margin: 0;
 
@@ -315,7 +307,6 @@
 
         }
 
-
     </style>
 
 </head>
@@ -332,6 +323,7 @@
 <script>
 
 let loginUser =
+
     JSON.parse(
         localStorage.getItem(
             "loginUser"
@@ -350,7 +342,6 @@ if (
 }
 
 </script>
-
 
 
 <!-- SIDEBAR -->
@@ -393,7 +384,6 @@ if (
 </div>
 
 
-
 <!-- MAIN -->
 
 <div class="dashboard">
@@ -413,7 +403,6 @@ if (
         </p>
 
     </div>
-
 
 
     <!-- MAIN CARDS -->
@@ -437,7 +426,6 @@ if (
         </div>
 
 
-
         <!-- LAMP -->
 
         <div class="box">
@@ -452,7 +440,6 @@ if (
             </h1>
 
         </div>
-
 
 
         <!-- ESP -->
@@ -475,27 +462,7 @@ if (
         </div>
 
 
-
-        <!-- LOCATION -->
-
-        <div class="box">
-
-            <h2>
-                📍 Lampu Dibuka Di
-            </h2>
-
-
-            <h3 id="dashLocation">
-
-                Bilik Kuliah DB
-
-            </h3>
-
-        </div>
-
-
     </div>
-
 
 
     <!-- STATISTICS -->
@@ -521,7 +488,6 @@ if (
         </div>
 
 
-
         <div class="stat-box">
 
             <h3>
@@ -538,7 +504,6 @@ if (
             </div>
 
         </div>
-
 
 
         <div class="stat-box">
@@ -560,7 +525,6 @@ if (
 
 
     </div>
-
 
 
     <!-- ACTIVITY LOG -->
@@ -586,7 +550,6 @@ if (
         </div>
 
 
-
         <table>
 
             <thead>
@@ -597,17 +560,16 @@ if (
                         Masa
                     </th>
 
+
                     <th>
                         Pengguna
                     </th>
 
-                    <th>
-                        Lokasi
-                    </th>
 
                     <th>
                         Aktiviti
                     </th>
+
 
                     <th>
                         Status
@@ -631,12 +593,22 @@ if (
 </div>
 
 
+<script
+    type="module"
+    src="script.js">
+</script>
 
-<script type="module" src="script.js"> </script>
 
-<script type="module" src="dashboard.js"> </script>
+<script
+    type="module"
+    src="dashboard.js">
+</script>
 
-<script src="logout.js"> </script>
+
+<script
+    src="logout.js">
+</script>
+
 
 <script>
 
@@ -648,6 +620,7 @@ if (
 function updateWelcome() {
 
     const user =
+
         JSON.parse(
             localStorage.getItem(
                 "loginUser"
@@ -656,6 +629,7 @@ function updateWelcome() {
 
 
     const welcome =
+
         document.getElementById(
             "welcomeText"
         );
@@ -683,7 +657,6 @@ function updateWelcome() {
 }
 
 
-
 // =====================================================
 // LAMP STATUS
 // =====================================================
@@ -691,20 +664,23 @@ function updateWelcome() {
 function updateLampStatus() {
 
     const status =
+
         localStorage.getItem(
             "lampStatus"
         ) || "OFF";
 
 
     const lamp =
+
         document.getElementById(
             "dashLamp"
         );
 
 
-    const location =
+    const timer =
+
         document.getElementById(
-            "dashLocation"
+            "dashTimer"
         );
 
 
@@ -716,16 +692,6 @@ function updateLampStatus() {
         lamp.style.color =
             "green";
 
-
-        location.innerHTML =
-            localStorage.getItem(
-                "activeLocation"
-            ) ||
-            localStorage.getItem(
-                "selectedLocation"
-            ) ||
-            "Bilik Kuliah DB";
-
     }
 
     else {
@@ -736,14 +702,16 @@ function updateLampStatus() {
         lamp.style.color =
             "red";
 
+        if (timer) {
 
-        location.innerHTML =
-            "Tiada lampu dibuka";
+            timer.innerHTML =
+                "00:00:00";
+
+        }
 
     }
 
 }
-
 
 
 // =====================================================
@@ -753,6 +721,7 @@ function updateLampStatus() {
 function loadLogs() {
 
     const logs =
+
         JSON.parse(
             localStorage.getItem(
                 "logs"
@@ -761,13 +730,16 @@ function loadLogs() {
 
 
     const table =
+
         document.getElementById(
             "activityLog"
         );
 
 
     if (!table) {
+
         return;
+
     }
 
 
@@ -783,7 +755,7 @@ function loadLogs() {
             <tr>
 
                 <td
-                    colspan="5"
+                    colspan="4"
                     class="empty-log">
 
                     Tiada aktiviti direkodkan
@@ -800,6 +772,7 @@ function loadLogs() {
 
 
     logs.forEach(
+
         function(log) {
 
             table.innerHTML += `
@@ -817,14 +790,6 @@ function loadLogs() {
 
 
                     <td>
-                        📍 ${
-                            log.location ||
-                            "Bilik Kuliah DB"
-                        }
-                    </td>
-
-
-                    <td>
                         ${log.activity || "-"}
                     </td>
 
@@ -838,10 +803,10 @@ function loadLogs() {
             `;
 
         }
+
     );
 
 }
-
 
 
 // =====================================================
@@ -851,6 +816,7 @@ function loadLogs() {
 function clearLogs() {
 
     const confirmDelete =
+
         confirm(
             "Adakah anda pasti mahu mengosongkan semua log, history dan statistik penggunaan?"
         );
@@ -874,6 +840,7 @@ function clearLogs() {
 
 }
 
+
 // =====================================================
 // UPDATE DASHBOARD
 // =====================================================
@@ -887,7 +854,6 @@ function updateDashboard() {
 }
 
 
-
 // =====================================================
 // INITIAL
 // =====================================================
@@ -897,15 +863,20 @@ updateWelcome();
 updateDashboard();
 
 
+// =====================================================
 // AUTO UPDATE
+// =====================================================
 
 setInterval(
+
     function() {
 
         updateDashboard();
 
     },
+
     1000
+
 );
 
 </script>

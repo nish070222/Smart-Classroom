@@ -6,7 +6,6 @@
 // Fungsi:
 // - Ambil history Firestore
 // - Papar history
-// - Papar lokasi bilik
 // - Kira jumlah sesi
 // - Kira jumlah penggunaan
 // - Kira sesi hari ini
@@ -277,7 +276,7 @@ async function loadHistory() {
         <tr>
 
             <td
-                colspan="8"
+                colspan="7"
                 class="no-record">
 
                 ⏳ Memuatkan history...
@@ -339,11 +338,15 @@ async function loadHistory() {
         const todayDate =
 
             today.getDate() +
+
             "/" +
+
             (
                 today.getMonth() + 1
             ) +
+
             "/" +
+
             today.getFullYear();
 
 
@@ -360,7 +363,7 @@ async function loadHistory() {
                 <tr>
 
                     <td
-                        colspan="8"
+                        colspan="7"
                         class="no-record">
 
                         Tiada rekod penggunaan lampu
@@ -385,14 +388,14 @@ async function loadHistory() {
 
 
         // =================================================
-        // CLEAR
+        // CLEAR TABLE
         // =================================================
 
         table.innerHTML = "";
 
 
         // =================================================
-        // DISPLAY
+        // DISPLAY HISTORY
         // =================================================
 
         snapshot.forEach(
@@ -442,16 +445,7 @@ async function loadHistory() {
 
 
                 // =========================================
-                // LOCATION
-                // =========================================
-
-                const location =
-                    history.location ||
-                    "Bilik Kuliah DB";
-
-
-                // =========================================
-                // DELETE
+                // DELETE BUTTON
                 // =========================================
 
                 let deleteButton =
@@ -459,6 +453,7 @@ async function loadHistory() {
 
 
                 if (
+                    user &&
                     user.role === "admin"
                 ) {
 
@@ -491,6 +486,61 @@ async function loadHistory() {
 
 
                 // =========================================
+                // USER
+                // =========================================
+
+                const username =
+                    history.user ||
+                    history.email ||
+                    "Unknown";
+
+
+                // =========================================
+                // ROLE
+                // =========================================
+
+                const role =
+                    history.role ||
+                    "user";
+
+
+                // =========================================
+                // DATE
+                // =========================================
+
+                const date =
+                    history.date ||
+                    "-";
+
+
+                // =========================================
+                // START
+                // =========================================
+
+                const start =
+                    history.start ||
+                    "-";
+
+
+                // =========================================
+                // END
+                // =========================================
+
+                const end =
+                    history.end ||
+                    "-";
+
+
+                // =========================================
+                // DURATION
+                // =========================================
+
+                const duration =
+                    history.duration ||
+                    "-";
+
+
+                // =========================================
                 // ROW
                 // =========================================
 
@@ -501,68 +551,42 @@ async function loadHistory() {
 
                         <td>
 
-                            👤 ${
-                                history.user ||
-                                history.email ||
-                                "Unknown"
-                            }
+                            👤 ${username}
 
                         </td>
 
 
                         <td>
 
-                            ${
-                                history.role ||
-                                "user"
-                            }
+                            ${role}
 
                         </td>
 
 
                         <td>
 
-                            📍 ${location}
+                            ${date}
 
                         </td>
 
 
                         <td>
 
-                            ${
-                                history.date ||
-                                "-"
-                            }
+                            ${start}
 
                         </td>
 
 
                         <td>
 
-                            ${
-                                history.start ||
-                                "-"
-                            }
+                            ${end}
 
                         </td>
 
 
                         <td>
 
-                            ${
-                                history.end ||
-                                "-"
-                            }
-
-                        </td>
-
-
-                        <td>
-
-                            ${
-                                history.duration ||
-                                "-"
-                            }
+                            ${duration}
 
                         </td>
 
@@ -583,7 +607,7 @@ async function loadHistory() {
 
 
         // =================================================
-        // SUMMARY
+        // UPDATE SUMMARY
         // =================================================
 
         updateSummary(
@@ -612,7 +636,7 @@ async function loadHistory() {
             <tr>
 
                 <td
-                    colspan="8"
+                    colspan="7"
                     class="no-record">
 
                     ❌ Gagal mengambil data Firebase
