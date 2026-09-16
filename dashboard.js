@@ -1,3 +1,4 @@
+```javascript
 // =====================================================
 // SMART CLASSROOM
 // DASHBOARD FIREBASE STATISTICS
@@ -8,6 +9,7 @@
 // - Kira jumlah sesi
 // - Kira jumlah penggunaan
 // - Kira penggunaan hari ini
+// - Papar status ESP32
 // - Delete semua history
 // =====================================================
 
@@ -25,7 +27,8 @@ import {
     collection,
     getDocs,
     deleteDoc,
-    doc
+    doc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -65,6 +68,14 @@ const app =
 
 const db =
     getFirestore(app);
+
+
+// =====================================================
+// DEFAULT LOCATION
+// =====================================================
+
+const DEFAULT_LOCATION =
+    "Bilik Kuliah DB";
 
 
 // =====================================================
@@ -211,16 +222,32 @@ async function loadFirebaseStatistics() {
         // =================================================
 
         snapshot.forEach(
+
             function(data) {
 
                 const history =
                     data.data();
 
 
+                // =========================================
+                // HANYA BILIK KULIAH DB
+                // =========================================
+
+                if (
+                    history.location &&
+                    history.location !== DEFAULT_LOCATION
+                ) {
+
+                    return;
+
+                }
+
+
                 totalSessions++;
 
 
                 totalSeconds +=
+
                     durationToSeconds(
                         history.duration
                     );
@@ -236,6 +263,7 @@ async function loadFirebaseStatistics() {
                 }
 
             }
+
         );
 
 
@@ -316,12 +344,138 @@ async function loadFirebaseStatistics() {
 
     }
 
+
     catch(error) {
 
         console.error(
             "❌ Firebase Statistics Error:",
             error
         );
+
+    }
+
+}
+
+
+// =====================================================
+// LOAD ESP32 STATUS
+// =====================================================
+
+async function loadESP32Status() {
+
+    try {
+
+        console.log(
+            "📡 Membaca status ESP32..."
+        );
+
+
+        const espDocument =
+            doc(
+                db,
+                "devices",
+                "esp32"
+            );
+
+
+        const snapshot =
+            await getDoc(
+                espDocument
+            );
+
+
+        const espStatus =
+            document.getElementById(
+                "espStatus"
+            );
+
+
+        if (!espStatus) {
+
+            return;
+
+        }
+
+
+        // =================================================
+        // DOCUMENT TAK WUJUD
+        // =================================================
+
+        if (!snapshot.exists()) {
+
+            espStatus.innerHTML =
+                "🔴 OFFLINE";
+
+            espStatus.style.color =
+                "red";
+
+            return;
+
+        }
+
+
+        const data =
+            snapshot.data();
+
+
+        // =================================================
+        // STATUS ESP32
+        // =================================================
+
+        if (
+            data.status === "ONLINE"
+        ) {
+
+            espStatus.innerHTML =
+                "🟢 ONLINE";
+
+            espStatus.style.color =
+                "green";
+
+        }
+
+        else {
+
+            espStatus.innerHTML =
+                "🔴 OFFLINE";
+
+            espStatus.style.color =
+                "red";
+
+        }
+
+
+        console.log(
+            "📡 ESP32 Status:",
+            data.status
+        );
+
+    }
+
+
+    catch(error) {
+
+        console.error(
+            "❌ ESP32 Status Error:",
+            error
+        );
+
+
+        const espStatus =
+            document.getElementById(
+                "espStatus"
+            );
+
+
+        if (espStatus) {
+
+            espStatus.innerHTML =
+                "🔴 OFFLINE";
+
+            espStatus.style.color =
+                "red";
+
+        }
 
     }
 
@@ -362,6 +516,7 @@ async function deleteAllHistory() {
 
 
         snapshot.forEach(
+
             function(historyDoc) {
 
                 deletePromises.push(
@@ -379,6 +534,7 @@ async function deleteAllHistory() {
                 );
 
             }
+
         );
 
 
@@ -406,118 +562,5 @@ async function deleteAllHistory() {
         // =================================================
 
         const totalSessions =
-            document.getElementById(
-                "totalSessions"
-            );
-
-
-        const totalUsage =
-            document.getElementById(
-                "totalUsage"
-            );
-
-
-        const todaySessions =
-            document.getElementById(
-                "todaySessions"
-            );
-
-
-        if (totalSessions) {
-
-            totalSessions.innerHTML =
-                "0";
-
-        }
-
-
-        if (totalUsage) {
-
-            totalUsage.innerHTML =
-                "00:00:00";
-
-        }
-
-
-        if (todaySessions) {
-
-            todaySessions.innerHTML =
-                "0";
-
-        }
-
-
-        // =================================================
-        // REMOVE ACTIVITY LOG
-        // =================================================
-
-        localStorage.removeItem(
-            "logs"
-        );
-
-
-        // =================================================
-        // UPDATE LOG TABLE
-        // =================================================
-
-        if (
-            typeof loadLogs ===
-            "function"
-        ) {
-
-            loadLogs();
-
-        }
-
-
-        alert(
-            "✅ Semua history dan statistik telah dikosongkan."
-        );
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "❌ Gagal memadam history:",
-            error
-        );
-
-
-        alert(
-
-            "❌ Gagal memadam history Firebase.\n\n" +
-
-            "Code: " +
-            error.code +
-
-            "\n\nMessage: " +
-            error.message
-
-        );
-
-    }
-
-}
-
-
-// =====================================================
-// MAKE FUNCTION AVAILABLE
-// =====================================================
-
-window.deleteAllHistory =
-    deleteAllHistory;
-
-
-// =====================================================
-// PAGE LOAD
-// =====================================================
-
-window.addEventListener(
-    "load",
-    function() {
-
-        loadFirebaseStatistics();
-
-    }
-);
+            document.ge
+```

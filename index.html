@@ -1,27 +1,28 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-    <title>
-        E-Smart
-    </title>
+<title>
+    E-Smart
+</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css">
+<link
+    rel="stylesheet"
+    href="style.css">
+```
 
 </head>
 
-
 <body>
-
 
 <!-- =====================================================
      AUTH
@@ -29,60 +30,60 @@
 
 <script src="auth.js"></script>
 
-
 <!-- =====================================================
      SIDEBAR
 ===================================================== -->
 
 <div class="sidebar">
 
-    <h2>
-        🏫 E-Smart
-    </h2>
+```
+<h2>
+    🏫 E-Smart
+</h2>
 
 
-    <a href="index.html">
+<a href="index.html">
 
-        💡 Light Control
+    💡 Light Control
 
-    </a>
-
-
-    <a
-        href="dashboard.html"
-        id="dashboardMenu">
-
-        📊 Dashboard
-
-    </a>
+</a>
 
 
-    <a href="history.html">
+<a
+    href="dashboard.html"
+    id="dashboardMenu">
 
-        📅 History
+    📊 Dashboard
 
-    </a>
-
-
-    <a
-        href="manageusers.html"
-        id="manageMenu">
-
-        👥 Manage User
-
-    </a>
+</a>
 
 
-    <a
-        href="#"
-        onclick="logout()">
+<a href="history.html">
 
-        🚪 Logout
+    📅 History
 
-    </a>
+</a>
+
+
+<a
+    href="manageusers.html"
+    id="manageMenu">
+
+    👥 Manage User
+
+</a>
+
+
+<a
+    href="#"
+    onclick="logout()">
+
+    🚪 Logout
+
+</a>
+```
 
 </div>
-
 
 <!-- =====================================================
      MAIN
@@ -90,230 +91,143 @@
 
 <div class="main">
 
+```
+<h1>
 
-    <h1>
+    E-Smart
 
-        E-Smart
-
-    </h1>
+</h1>
 
 
-    <p id="welcome">
+<p id="welcome">
 
-        Welcome
+    Welcome
+
+</p>
+
+
+
+<!-- =================================================
+     CLOCK
+================================================= -->
+
+<div class="clock">
+
+    🕒 Masa Sekarang
+
+    <h2 id="time">
+
+        00:00:00
+
+    </h2>
+
+
+    📅 Tarikh
+
+    <p id="date">
+
+        -
+
+    </p>
+
+</div>
+
+
+
+<!-- =================================================
+     LIGHT CONTROL
+================================================= -->
+
+<div class="card">
+
+
+    <h2>
+
+        💡 Kawalan Lampu Bilik
+
+    </h2>
+
+
+
+    <!-- =================================================
+         LOCATION
+    ================================================= -->
+
+    <p>
+
+        📍 Lokasi Lampu:
+
+        <strong id="currentLocation">
+
+            Bilik Kuliah DB
+
+        </strong>
 
     </p>
 
 
 
     <!-- =================================================
-         CLOCK
+         LIGHT STATUS
     ================================================= -->
 
-    <div class="clock">
+    <p>
 
-        🕒 Masa Sekarang
+        Status Lampu:
 
-        <h2 id="time">
+    </p>
+
+
+    <h1 id="lampStatus">
+
+        OFF
+
+    </h1>
+
+
+
+    <!-- =================================================
+         BUTTON
+    ================================================= -->
+
+    <button
+        class="on"
+        onclick="lampOn()">
+
+        ON
+
+    </button>
+
+
+    <button
+        class="off"
+        onclick="lampOff()">
+
+        OFF
+
+    </button>
+
+
+
+    <!-- =================================================
+         TIMER
+    ================================================= -->
+
+    <div class="timer-box">
+
+
+        <h2>
+
+            ⏱ Tempoh Lampu Hidup
+
+        </h2>
+
+
+        <h1 id="timer">
 
             00:00:00
 
-        </h2>
-
-
-        📅 Tarikh
-
-        <p id="date">
-
-            -
-
-        </p>
-
-    </div>
-
-
-
-    <!-- =================================================
-         LIGHT CONTROL
-    ================================================= -->
-
-    <div class="card">
-
-
-        <h2>
-
-            💡 Kawalan Lampu Bilik
-
-        </h2>
-
-
-
-        <!-- =================================================
-             LOCATION SELECT
-        ================================================= -->
-
-        <p>
-
-            📍 Pilih Lokasi Lampu:
-
-        </p>
-
-
-        <select
-            id="locationSelect"
-            class="location-select">
-
-            <option value="Bilik Kuliah DB">
-
-                🏫 Bilik Kuliah DB
-
-            </option>
-
-
-            <option value="Bilik ICT 1">
-
-                💻 Bilik ICT 1
-
-            </option>
-
-
-            <option value="Bilik ICT 4">
-
-                💻 Bilik ICT 4
-
-            </option>
-
-        </select>
-
-
-
-        <!-- =================================================
-             CURRENT LOCATION
-        ================================================= -->
-
-        <p>
-
-            📍 Lokasi Semasa:
-
-            <strong id="currentLocation">
-
-                Bilik Kuliah DB
-
-            </strong>
-
-        </p>
-
-
-
-        <!-- =================================================
-             LIGHT STATUS
-        ================================================= -->
-
-        <p>
-
-            Status Lampu:
-
-        </p>
-
-
-        <h1 id="lampStatus">
-
-            OFF
-
         </h1>
-
-
-
-        <!-- =================================================
-             BUTTON
-        ================================================= -->
-
-        <button
-            class="on"
-            onclick="lampOn()">
-
-            ON
-
-        </button>
-
-
-        <button
-            class="off"
-            onclick="lampOff()">
-
-            OFF
-
-        </button>
-
-
-
-        <!-- =================================================
-             TIMER
-        ================================================= -->
-
-        <div class="timer-box">
-
-
-            <h2>
-
-                ⏱ Tempoh Lampu Hidup
-
-            </h2>
-
-
-            <h1 id="timer">
-
-                00:00:00
-
-            </h1>
-
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- =================================================
-         SYSTEM STATUS
-    ================================================= -->
-
-    <div class="info">
-
-
-        <h2>
-
-            📌 Status Sistem
-
-        </h2>
-
-
-        <p>
-
-            ESP32:
-
-            <span class="online">
-
-                🟢 ONLINE
-
-            </span>
-
-        </p>
-
-
-
-        <p>
-
-            📍 Lokasi Sistem:
-
-            <strong id="systemLocation">
-
-                Bilik Kuliah DB
-
-            </strong>
-
-        </p>
 
 
     </div>
@@ -322,6 +236,52 @@
 </div>
 
 
+
+<!-- =================================================
+     SYSTEM STATUS
+================================================= -->
+
+<div class="info">
+
+
+    <h2>
+
+        📌 Status Sistem
+
+    </h2>
+
+
+    <p>
+
+        ESP32:
+
+        <span class="online">
+
+            🟢 ONLINE
+
+        </span>
+
+    </p>
+
+
+
+    <p>
+
+        📍 Lokasi Sistem:
+
+        <strong id="systemLocation">
+
+            Bilik Kuliah DB
+
+        </strong>
+
+    </p>
+
+
+</div>
+```
+
+</div>
 
 <!-- =====================================================
      SYSTEM JAVASCRIPT
@@ -332,10 +292,7 @@
     src="script.js">
 </script>
 
-
 <script src="logout.js"></script>
-
-
 
 <script>
 
@@ -380,203 +337,6 @@ if (welcome) {
             "User"
 
         );
-
-}
-
-
-// =====================================================
-// LOCATION ELEMENT
-// =====================================================
-
-const locationSelect =
-
-    document.getElementById(
-        "locationSelect"
-    );
-
-
-const currentLocation =
-
-    document.getElementById(
-        "currentLocation"
-    );
-
-
-const systemLocation =
-
-    document.getElementById(
-        "systemLocation"
-    );
-
-
-
-// =====================================================
-// DEFAULT LOCATION
-// =====================================================
-
-const DEFAULT_LOCATION =
-    "Bilik Kuliah DB";
-
-
-
-// =====================================================
-// GET SAVED LOCATION
-// =====================================================
-
-let savedLocation =
-
-    localStorage.getItem(
-        "selectedLocation"
-    );
-
-
-
-// =====================================================
-// CHECK LOCATION
-// =====================================================
-
-const validLocations = [
-
-    "Bilik Kuliah DB",
-
-    "Bilik ICT 1",
-
-    "Bilik ICT 4"
-
-];
-
-
-
-if (
-
-    !savedLocation ||
-
-    !validLocations.includes(
-        savedLocation
-    )
-
-) {
-
-    savedLocation =
-        DEFAULT_LOCATION;
-
-    localStorage.setItem(
-
-        "selectedLocation",
-
-        DEFAULT_LOCATION
-
-    );
-
-}
-
-
-
-// =====================================================
-// SET DROPDOWN
-// =====================================================
-
-if (locationSelect) {
-
-    locationSelect.value =
-        savedLocation;
-
-}
-
-
-
-// =====================================================
-// DISPLAY LOCATION
-// =====================================================
-
-function updateLocationDisplay(location) {
-
-
-    if (currentLocation) {
-
-        currentLocation.innerHTML =
-            location;
-
-    }
-
-
-    if (systemLocation) {
-
-        systemLocation.innerHTML =
-            location;
-
-    }
-
-}
-
-
-
-// =====================================================
-// INITIAL LOCATION
-// =====================================================
-
-updateLocationDisplay(
-    savedLocation
-);
-
-
-
-// =====================================================
-// LOCATION CHANGE
-// =====================================================
-
-if (locationSelect) {
-
-
-    locationSelect.addEventListener(
-
-        "change",
-
-        function () {
-
-
-            const selectedLocation =
-                this.value;
-
-
-
-            // =========================================
-            // SAVE LOCATION
-            // =========================================
-
-            localStorage.setItem(
-
-                "selectedLocation",
-
-                selectedLocation
-
-            );
-
-
-
-            // =========================================
-            // UPDATE UI
-            // =========================================
-
-            updateLocationDisplay(
-
-                selectedLocation
-
-            );
-
-
-
-            console.log(
-
-                "📍 Lokasi dipilih:",
-
-                selectedLocation
-
-            );
-
-        }
-
-    );
 
 }
 
@@ -714,9 +474,7 @@ setInterval(
 updateClock();
 
 
-
 </script>
-
 
 </body>
 
