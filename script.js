@@ -881,7 +881,7 @@ function updateLampUI(location) {
 
     const lamp =
         document.getElementById(
-            "lampStatus"
+            "lampStatis"
         );
 
 
@@ -1330,7 +1330,7 @@ function addLog(
 // LOAD LAMP STATUS
 // =====================================================
 
-function loadLampStatus() {
+function loadLampStatis() {
 
     const location =
         getSelectedLocation();
@@ -1448,7 +1448,7 @@ window.addEventListener(
 
         setupLocation();
 
-        loadLampStatus();
+        loadLampStatis();
 
         startTimer();
 
