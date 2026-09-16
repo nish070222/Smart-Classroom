@@ -117,18 +117,13 @@ function getLocationId(location) {
 // =====================================================
 // FIRESTORE DOCUMENT MENGIKUT BILIK
 // =====================================================
-
 function getRoomDocument(location) {
-
-    const locationId =
-        getLocationId(location);
 
     return doc(
         db,
         "devices",
-        locationId
+        "esp32"
     );
-
 }
 
 
