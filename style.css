@@ -206,6 +206,11 @@ a {
         rgba(15,23,42,.12);
 
 }
+.kv-logo {
+    width: 90px;
+    display: block;
+    margin: 0 auto 15px;
+}
 
 
 .login-card h1 {
