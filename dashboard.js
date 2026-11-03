@@ -1,16 +1,12 @@
-```javascript
 // =====================================================
 // SMART CLASSROOM
-// DASHBOARD FIREBASE STATISTICS
+// DASHBOARD DAILY STATISTICS
 // dashboard.js
 //
 // Fungsi:
-// - Ambil history dari Firestore
-// - Kira jumlah sesi
-// - Kira jumlah penggunaan
-// - Kira penggunaan hari ini
+// - Papar statistik penggunaan hari ini sahaja
 // - Papar status ESP32
-// - Delete semua history
+// - Admin boleh kosongkan history
 // =====================================================
 
 
@@ -19,7 +15,9 @@
 // =====================================================
 
 import {
-    initializeApp
+    initializeApp,
+    getApp,
+    getApps
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -63,24 +61,48 @@ const firebaseConfig = {
 // INITIALIZE FIREBASE
 // =====================================================
 
-const app =
-    initializeApp(firebaseConfig);
+const app = getApps().length > 0
+    ? getApp()
+    : initializeApp(firebaseConfig);
 
-const db =
-    getFirestore(app);
+const db = getFirestore(app);
 
 
 // =====================================================
 // DEFAULT LOCATION
 // =====================================================
 
-const DEFAULT_LOCATION =
-    "Bilik Kuliah DB";
+const DEFAULT_LOCATION = "Bilik Kuliah DB";
 
 
 // =====================================================
-// CONVERT HH:MM:SS
-// TO SECONDS
+// GET TODAY DATE
+// FORMAT: D/M/YYYY
+// =====================================================
+
+function getTodayString() {
+
+    const today = new Date();
+
+    return (
+
+        today.getDate() +
+
+        "/" +
+
+        (today.getMonth() + 1) +
+
+        "/" +
+
+        today.getFullYear()
+
+    );
+
+}
+
+
+// =====================================================
+// DURATION TO SECONDS
 // =====================================================
 
 function durationToSeconds(duration) {
@@ -91,17 +113,14 @@ function durationToSeconds(duration) {
 
     }
 
-
     const parts =
         String(duration).split(":");
-
 
     if (parts.length !== 3) {
 
         return 0;
 
     }
-
 
     const hours =
         Number(parts[0]) || 0;
@@ -112,19 +131,21 @@ function durationToSeconds(duration) {
     const seconds =
         Number(parts[2]) || 0;
 
-
     return (
+
         (hours * 3600) +
+
         (minutes * 60) +
+
         seconds
+
     );
 
 }
 
 
 // =====================================================
-// FORMAT SECONDS
-// TO HH:MM:SS
+// FORMAT DURATION
 // =====================================================
 
 function formatDuration(totalSeconds) {
@@ -135,29 +156,27 @@ function formatDuration(totalSeconds) {
             Math.floor(totalSeconds)
         );
 
-
     const hours =
-        Math.floor(
-            totalSeconds / 3600
-        );
-
+        Math.floor(totalSeconds / 3600);
 
     const minutes =
         Math.floor(
             (totalSeconds % 3600) / 60
         );
 
-
     const seconds =
         totalSeconds % 60;
-
 
     return (
 
         String(hours).padStart(2, "0") +
+
         ":" +
+
         String(minutes).padStart(2, "0") +
+
         ":" +
+
         String(seconds).padStart(2, "0")
 
     );
@@ -167,6 +186,7 @@ function formatDuration(totalSeconds) {
 
 // =====================================================
 // LOAD FIREBASE STATISTICS
+// STATISTIK HARI INI SAHAJA
 // =====================================================
 
 async function loadFirebaseStatistics() {
@@ -174,101 +194,93 @@ async function loadFirebaseStatistics() {
     try {
 
         console.log(
-            "🔥 Mengambil statistik Firebase..."
+            "Mengambil statistik penggunaan hari ini..."
         );
 
-
         const historyRef =
-            collection(
-                db,
-                "history"
-            );
-
+            collection(db, "history");
 
         const snapshot =
-            await getDocs(
-                historyRef
-            );
+            await getDocs(historyRef);
 
-
-        let totalSessions = 0;
-
-        let totalSeconds = 0;
+        const todayString =
+            getTodayString();
 
         let todaySessions = 0;
 
-
-        // =================================================
-        // TODAY
-        // =================================================
-
-        const today =
-            new Date();
-
-
-        const todayString =
-
-            today.getDate() +
-            "/" +
-            (
-                today.getMonth() + 1
-            ) +
-            "/" +
-            today.getFullYear();
+        let todaySeconds = 0;
 
 
         // =================================================
         // READ FIRESTORE
         // =================================================
 
-        snapshot.forEach(
+        snapshot.forEach(function(record) {
 
-            function(data) {
-
-                const history =
-                    data.data();
+            const history =
+                record.data();
 
 
-                // =========================================
-                // HANYA BILIK KULIAH DB
-                // =========================================
+            // =============================================
+            // FILTER LOCATION
+            // =============================================
 
-                if (
-                    history.location &&
-                    history.location !== DEFAULT_LOCATION
-                ) {
+            if (
+                history.location &&
+                history.location !== DEFAULT_LOCATION
+            ) {
 
-                    return;
-
-                }
-
-
-                totalSessions++;
-
-
-                totalSeconds +=
-
-                    durationToSeconds(
-                        history.duration
-                    );
-
-
-                if (
-                    history.date ===
-                    todayString
-                ) {
-
-                    todaySessions++;
-
-                }
+                return;
 
             }
 
-        );
+
+            // =============================================
+            // FILTER TARIKH HARI INI
+            // =============================================
+
+            if (
+                history.date !== todayString
+            ) {
+
+                return;
+
+            }
+
+
+            // =============================================
+            // KIRA SESI HARI INI
+            // =============================================
+
+            todaySessions++;
+
+
+            // =============================================
+            // KIRA TEMPOH PENGGUNAAN HARI INI
+            // =============================================
+
+            todaySeconds +=
+                durationToSeconds(
+                    history.duration
+                );
+
+        });
 
 
         // =================================================
-        // DISPLAY TOTAL SESSION
+        // KIRA PURATA TEMPOH SESI
+        // =================================================
+
+        const averageSeconds =
+            todaySessions > 0
+                ? Math.round(
+                    todaySeconds / todaySessions
+                )
+                : 0;
+
+
+        // =================================================
+        // PAPAR JUMLAH SESI HARI INI
         // =================================================
 
         const totalSessionsBox =
@@ -276,17 +288,16 @@ async function loadFirebaseStatistics() {
                 "totalSessions"
             );
 
-
         if (totalSessionsBox) {
 
-            totalSessionsBox.innerHTML =
-                totalSessions;
+            totalSessionsBox.textContent =
+                todaySessions;
 
         }
 
 
         // =================================================
-        // DISPLAY TOTAL USAGE
+        // PAPAR JUMLAH PENGGUNAAN HARI INI
         // =================================================
 
         const totalUsageBox =
@@ -294,63 +305,90 @@ async function loadFirebaseStatistics() {
                 "totalUsage"
             );
 
-
         if (totalUsageBox) {
 
-            totalUsageBox.innerHTML =
+            totalUsageBox.textContent =
                 formatDuration(
-                    totalSeconds
+                    todaySeconds
                 );
 
         }
 
 
         // =================================================
-        // DISPLAY TODAY
+        // PAPAR PURATA TEMPOH SESI HARI INI
         // =================================================
 
-        const todaySessionsBox =
+        const todayAverageBox =
             document.getElementById(
-                "todaySessions"
+                "todayAverage"
             );
 
+        if (todayAverageBox) {
 
-        if (todaySessionsBox) {
-
-            todaySessionsBox.innerHTML =
-                todaySessions;
+            todayAverageBox.textContent =
+                formatDuration(
+                    averageSeconds
+                );
 
         }
 
 
+        // =================================================
+        // CONSOLE
+        // =================================================
+
         console.log(
-            "📊 Total Sessions:",
-            totalSessions
+            "Tarikh statistik:",
+            todayString
         );
 
-
         console.log(
-            "⏱ Total Usage:",
-            formatDuration(
-                totalSeconds
-            )
-        );
-
-
-        console.log(
-            "📅 Today Sessions:",
+            "Jumlah sesi hari ini:",
             todaySessions
+        );
+
+        console.log(
+            "Jumlah penggunaan hari ini:",
+            formatDuration(todaySeconds)
+        );
+
+        console.log(
+            "Purata tempoh sesi:",
+            formatDuration(averageSeconds)
         );
 
     }
 
-
     catch(error) {
 
         console.error(
-            "❌ Firebase Statistics Error:",
+            "Firebase Statistics Error:",
             error
         );
+
+
+        const totalSessionsBox =
+            document.getElementById("totalSessions");
+
+        const totalUsageBox =
+            document.getElementById("totalUsage");
+
+        const todayAverageBox =
+            document.getElementById("todayAverage");
+
+
+        if (totalSessionsBox) {
+            totalSessionsBox.textContent = "Ralat";
+        }
+
+        if (totalUsageBox) {
+            totalUsageBox.textContent = "--:--:--";
+        }
+
+        if (todayAverageBox) {
+            todayAverageBox.textContent = "--:--:--";
+        }
 
     }
 
@@ -363,10 +401,19 @@ async function loadFirebaseStatistics() {
 
 async function loadESP32Status() {
 
+    const espStatus =
+        document.getElementById("espStatus");
+
+    if (!espStatus) {
+
+        return;
+
+    }
+
     try {
 
         console.log(
-            "📡 Membaca status ESP32..."
+            "Membaca status ESP32..."
         );
 
 
@@ -379,35 +426,14 @@ async function loadESP32Status() {
 
 
         const snapshot =
-            await getDoc(
-                espDocument
-            );
+            await getDoc(espDocument);
 
-
-        const espStatus =
-            document.getElementById(
-                "espStatus"
-            );
-
-
-        if (!espStatus) {
-
-            return;
-
-        }
-
-
-        // =================================================
-        // DOCUMENT TAK WUJUD
-        // =================================================
 
         if (!snapshot.exists()) {
 
-            espStatus.innerHTML =
-                "🔴 OFFLINE";
+            espStatus.textContent = "OFFLINE";
 
-            espStatus.style.color =
-                "red";
+            espStatus.style.color = "red";
 
             return;
 
@@ -418,64 +444,40 @@ async function loadESP32Status() {
             snapshot.data();
 
 
-        // =================================================
-        // STATUS ESP32
-        // =================================================
+        if (data.status === "ONLINE") {
 
-        if (
-            data.status === "ONLINE"
-        ) {
+            espStatus.textContent = "ONLINE";
 
-            espStatus.innerHTML =
-                "🟢 ONLINE";
-
-            espStatus.style.color =
-                "green";
+            espStatus.style.color = "green";
 
         }
 
         else {
 
-            espStatus.innerHTML =
-                "🔴 OFFLINE";
+            espStatus.textContent = "OFFLINE";
 
-            espStatus.style.color =
-                "red";
+            espStatus.style.color = "red";
 
         }
 
 
         console.log(
-            "📡 ESP32 Status:",
+            "ESP32 Status:",
             data.status
         );
 
     }
 
-
     catch(error) {
 
         console.error(
-            "❌ ESP32 Status Error:",
+            "ESP32 Status Error:",
             error
         );
 
+        espStatus.textContent = "OFFLINE";
 
-        const espStatus =
-            document.getElementById(
-                "espStatus"
-            );
-
-
-        if (espStatus) {
-
-            espStatus.innerHTML =
-                "🔴 OFFLINE";
-
-            espStatus.style.color =
-                "red";
-
-        }
+        espStatus.style.color = "red";
 
     }
 
@@ -488,79 +490,190 @@ async function loadESP32Status() {
 
 async function deleteAllHistory() {
 
+    const currentUser =
+        JSON.parse(
+            localStorage.getItem("loginUser") || "null"
+        );
+
+
+    if (
+        !currentUser ||
+        currentUser.role !== "admin"
+    ) {
+
+        alert(
+            "Hanya Admin boleh mengosongkan history."
+        );
+
+        return;
+
+    }
+
+
     try {
 
         console.log(
-            "🗑️ Memadam semua history Firestore..."
+            "Memadam semua history Firestore..."
         );
 
 
         const historyRef =
-            collection(
-                db,
-                "history"
-            );
+            collection(db, "history");
 
 
         const snapshot =
-            await getDocs(
-                historyRef
-            );
+            await getDocs(historyRef);
 
-
-        // =================================================
-        // DELETE EVERY DOCUMENT
-        // =================================================
 
         const deletePromises = [];
 
 
-        snapshot.forEach(
+        snapshot.forEach(function(historyDoc) {
 
-            function(historyDoc) {
+            deletePromises.push(
 
-                deletePromises.push(
+                deleteDoc(
 
-                    deleteDoc(
-
-                        doc(
-                            db,
-                            "history",
-                            historyDoc.id
-                        )
-
+                    doc(
+                        db,
+                        "history",
+                        historyDoc.id
                     )
 
-                );
+                )
 
-            }
+            );
 
+        });
+
+
+        await Promise.all(deletePromises);
+
+
+        localStorage.removeItem("history");
+
+        localStorage.removeItem("logs");
+
+
+        await loadFirebaseStatistics();
+
+
+        const activityLog =
+            document.getElementById("activityLog");
+
+
+        if (activityLog) {
+
+            activityLog.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="4"
+                        class="empty-log">
+
+                        Tiada aktiviti direkodkan
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+
+        alert(
+            "Semua history dan log berjaya dikosongkan."
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Delete History Error:",
+            error
         );
 
 
-        await Promise.all(
-            deletePromises
+        alert(
+
+            "Gagal mengosongkan history.\n\n" +
+
+            (error.code || "") +
+
+            "\n" +
+
+            error.message
+
         );
 
+    }
 
-        console.log(
-            "✅ Semua history Firestore berjaya dipadam"
-        );
-
-
-        // =================================================
-        // CLEAR LOCAL HISTORY
-        // =================================================
-
-        localStorage.removeItem(
-            "history"
-        );
+}
 
 
-        // =================================================
-        // RESET STATISTICS
-        // =================================================
+// =====================================================
+// MAKE FUNCTION AVAILABLE
+// =====================================================
 
-        const totalSessions =
-            document.ge
-```
+window.deleteAllHistory =
+    deleteAllHistory;
+
+
+// =====================================================
+// INITIAL DASHBOARD
+// =====================================================
+
+loadFirebaseStatistics();
+
+loadESP32Status();
+
+
+// =====================================================
+// AUTO UPDATE STATISTICS
+// SETIAP 1 MINIT
+// =====================================================
+
+setInterval(
+
+    loadFirebaseStatistics,
+
+    60 * 1000
+
+);
+
+
+// =====================================================
+// AUTO UPDATE ESP32
+// SETIAP 15 SAAT
+// =====================================================
+
+setInterval(
+
+    loadESP32Status,
+
+    15 * 1000
+
+);
+
+
+// =====================================================
+// UPDATE WHEN RETURN TO DASHBOARD
+// =====================================================
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (!document.hidden) {
+
+            loadFirebaseStatistics();
+
+            loadESP32Status();
+
+        }
+
+    }
+);
