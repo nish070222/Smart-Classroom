@@ -18,296 +18,150 @@
         href="style.css">
 
 
-    <style>
+    
+<style id="minimalist-design-only">
+/* MINIMALIST DESIGN ONLY */
+
+:root {
+    --minimal-bg: #f5f7fb;
+    --minimal-card: #ffffff;
+    --minimal-text: #182235;
+    --minimal-muted: #778196;
+    --minimal-border: #e8edf4;
+    --minimal-shadow: 0 5px 18px rgba(27, 42, 75, 0.045);
+}
+
+body {
+    background-color: var(--minimal-bg);
+    color: var(--minimal-text);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar {
+    background-color: #182235;
+    color: #ffffff;
+}
+
+.sidebar h2 {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.sidebar a {
+    color: #cbd3e1;
+    border-radius: 10px;
+    transition: background-color .18s ease, color .18s ease;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, .09);
+    color: #ffffff;
+}
+
+/* DASHBOARD CARDS */
+.box,
+.stat-box,
+.log {
+    background-color: var(--minimal-card);
+    border: 1px solid var(--minimal-border);
+    border-radius: 14px;
+    box-shadow: var(--minimal-shadow);
+}
+
+.box,
+.stat-box {
+    transition: box-shadow .18s ease, border-color .18s ease;
+}
+
+.box:hover,
+.stat-box:hover {
+    box-shadow: 0 8px 22px rgba(27, 42, 75, .07);
+    border-color: #dce4f2;
+}
+
+/* WELCOME */
+.welcome h1 {
+    color: var(--minimal-text);
+    letter-spacing: -.45px;
+}
+
+.welcome p,
+.stat-box h3,
+.box h2 {
+    color: var(--minimal-muted);
+}
+
+/* STATUS */
+#dashLamp {
+    font-weight: 700;
+}
+
+.online {
+    color: #15966b;
+}
+
+.offline {
+    color: #d94b4b;
+}
+
+/* ACTIVITY LOG */
+.log {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #f7f9fd;
+    color: #69758b;
+    font-weight: 600;
+}
+
+th,
+td {
+    border-bottom: 1px solid var(--minimal-border);
+}
+
+tbody tr:hover {
+    background-color: #fafbfe;
+}
+
+.empty-log {
+    color: var(--minimal-muted);
+}
+
+/* CLEAR LOG BUTTON */
+.clear-log {
+    background-color: #fff1f1;
+    color: #c94343;
+    border: 1px solid #f8dddd;
+    border-radius: 8px;
+    transition: background-color .18s ease;
+}
+
+.clear-log:hover {
+    background-color: #ffe5e5;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .box,
+    .stat-box,
+    .log {
+        border-radius: 12px;
+    }
+
+    th,
+    td {
+        white-space: nowrap;
+    }
+}
+</style>
 
-        .welcome {
-            margin-bottom: 25px;
-        }
-
-
-        .welcome h1 {
-            margin-bottom: 5px;
-        }
-
-
-        .welcome p {
-            margin-top: 0;
-            color: #666;
-        }
-
-
-        /* MAIN CARDS */
-
-        .dashboard-card {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
-
-            margin-bottom: 25px;
-
-        }
-
-
-        .box {
-
-            background: white;
-
-            padding: 25px;
-
-            border-radius: 15px;
-
-            box-shadow:
-                0 4px 12px
-                rgba(0,0,0,0.08);
-
-            text-align: center;
-
-        }
-
-
-        .box h2 {
-
-            font-size: 18px;
-
-            margin-bottom: 15px;
-
-        }
-
-
-        .box h1 {
-
-            font-size: 28px;
-
-            margin: 0;
-
-        }
-
-
-        .online {
-
-            color: green;
-
-        }
-
-
-        .offline {
-
-            color: red;
-
-        }
-
-
-        /* STATISTICS */
-
-        .statistics {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
-
-            margin-bottom: 25px;
-
-        }
-
-
-        .stat-box {
-
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 15px;
-
-            box-shadow:
-                0 4px 12px
-                rgba(0,0,0,0.08);
-
-        }
-
-
-        .stat-box h3 {
-
-            margin-top: 0;
-
-            color: #555;
-
-        }
-
-
-        .stat-value {
-
-            font-size: 30px;
-
-            font-weight: bold;
-
-            margin-top: 10px;
-
-        }
-
-
-        /* LOG */
-
-        .log {
-
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 15px;
-
-            box-shadow:
-                0 4px 12px
-                rgba(0,0,0,0.08);
-
-            overflow-x: auto;
-
-        }
-
-
-        .log-header {
-
-            display: flex;
-
-            justify-content:
-                space-between;
-
-            align-items: center;
-
-            margin-bottom: 15px;
-
-        }
-
-
-        .log-header h2 {
-
-            margin: 0;
-
-        }
-
-
-        .clear-log {
-
-            border: none;
-
-            background: #e74c3c;
-
-            color: white;
-
-            padding: 8px 14px;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
-        }
-
-
-        .clear-log:hover {
-
-            opacity: 0.85;
-
-        }
-
-
-        table {
-
-            width: 100%;
-
-            border-collapse:
-                collapse;
-
-        }
-
-
-        th,
-        td {
-
-            padding: 12px;
-
-            text-align: center;
-
-            border-bottom:
-                1px solid #ddd;
-
-        }
-
-
-        th {
-
-            background: #ffffff;
-
-            color: #222;
-
-            font-weight: 600;
-
-        }
-
-
-        .empty-log {
-
-            text-align: center;
-
-            padding: 25px;
-
-            color: #777;
-
-        }
-
-
-        @media(max-width:900px) {
-
-            .dashboard-card {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
-            }
-
-
-            .statistics {
-
-                grid-template-columns:
-                    1fr;
-
-            }
-
-        }
-
-
-        @media(max-width:600px) {
-
-            .dashboard-card {
-
-                grid-template-columns:
-                    1fr;
-
-            }
-
-
-            table {
-
-                font-size: 13px;
-
-            }
-
-
-            th,
-            td {
-
-                padding: 8px;
-
-            }
-
-        }
-
-    </style>
 
 </head>
 
