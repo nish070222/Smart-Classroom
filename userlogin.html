@@ -1,444 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>
-E-Smart Login
-</title>
-
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="cupertino.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Smart - Log Masuk Sistem</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cupertino.css">
 </head>
-
 
 <body class="login-body">
 
-
 <div class="login-card">
+    <img src="kvsp1.jpeg" class="kv-logo" alt="Logo KVSP1">
 
-<img src="kvsp1.jpeg" class="kv-logo" alt="Logo KVSP1">
+    <h1>🏫 E-Smart</h1>
+    <p>Sistem Kawalan Bilik Kuliah Pintar</p>
 
-<h1>
-🏫 E-Smart
-</h1>
+    <h3>📧 Masukkan Email</h3>
+    <input 
+        id="email"
+        type="email"
+        placeholder="Contoh: admin@gmail.com"
+        autocomplete="email"
+    >
 
+    <h3>🔒 Masukkan Password</h3>
+    <input 
+        id="password"
+        type="password"
+        placeholder="Masukkan kata laluan"
+        autocomplete="current-password"
+    >
 
-<p>
-Login Sistem Kawalan Lampu
-</p>
+    <button 
+        class="login-btn"
+        id="loginBtn">
+        LOG MASUK
+    </button>
 
-
-
-<h3>
-📧 Masukkan Email
-</h3>
-
-
-<input 
-id="email"
-type="email"
-placeholder="Contoh: admin@gmail.com">
-
-
-
-
-
-<h3>
-🔒 Masukkan Password
-</h3>
-
-
-<input 
-id="password"
-type="password"
-placeholder="Masukkan password">
-
-
-
-
-
-<button 
-class="login-btn"
-id="loginBtn">
-
-LOGIN
-
-</button>
-
-
-
-<p id="message"></p>
-
-
+    <p id="message"></p>
 </div>
 
-
-
-
-
-
-
-
 <script type="module">
-
-
-
 // ==========================
 // FIREBASE IMPORT
 // ==========================
-
-
 import { initializeApp }
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-
-getAuth,
-
-signInWithEmailAndPassword
-
+    getAuth,
+    signInWithEmailAndPassword
 }
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-
-getFirestore,
-
-collection,
-
-query,
-
-where,
-
-getDocs
-
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs
 }
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
-
-
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ==========================
 // FIREBASE CONFIG
 // ==========================
-
-
 const firebaseConfig = {
-
-
-apiKey: "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
-
-authDomain: "smart-classroom-351a3.firebaseapp.com",
-
-projectId: "smart-classroom-351a3",
-
-storageBucket: "smart-classroom-351a3.firebasestorage.app",
-
-messagingSenderId: "1031651524426",
-
-appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
-
-
+    apiKey: "AIzaSyCc45wk-89MHpHdIj9q8TREUzFHHJWu24Q",
+    authDomain: "smart-classroom-351a3.firebaseapp.com",
+    projectId: "smart-classroom-351a3",
+    storageBucket: "smart-classroom-351a3.firebasestorage.app",
+    messagingSenderId: "1031651524426",
+    appId: "1:1031651524426:web:327b07e9d3f97c8ec78bb3"
 };
 
-
-
-
-
-
-
 // START FIREBASE
-
-
 const app = initializeApp(firebaseConfig);
-
-
 const auth = getAuth(app);
-
-
 const db = getFirestore(app);
 
-
-
-
-
-
-
-
-
-
 // ==========================
-// LOGIN
+// LOGIN FUNCTION
 // ==========================
+const loginBtn = document.getElementById("loginBtn");
+const messageEl = document.getElementById("message");
 
+async function handleLogin() {
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value;
 
-document
+    if (email === "" || password === "") {
+        messageEl.style.color = "var(--danger-red)";
+        messageEl.innerHTML = "⚠️ Sila isi email dan password";
+        return;
+    }
 
-.getElementById("loginBtn")
+    messageEl.style.color = "var(--primary-blue)";
+    messageEl.innerHTML = "⏳ Sedang mengesahkan akaun...";
 
-.addEventListener("click", async ()=>{
+    try {
+        const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
+        const user = userCredential.user;
+        let role = "user";
 
+        const q = query(
+            collection(db, "users"),
+            where("email", "==", user.email)
+        );
 
+        const snapshot = await getDocs(q);
 
+        if (snapshot.empty) {
+            console.log("User tiada dalam Firestore, default role user");
+        } else {
+            snapshot.forEach((doc) => {
+                role = doc.data().role;
+            });
+        }
 
-let email =
-document.getElementById("email").value;
+        localStorage.setItem(
+            "loginUser",
+            JSON.stringify({
+                username: user.email,
+                email: user.email,
+                uid: user.uid,
+                role: role
+            })
+        );
 
+        console.log("ROLE:", role);
 
+        messageEl.style.color = "var(--success-green)";
+        messageEl.innerHTML = "✅ Log Masuk Berjaya! Memuatkan...";
 
-let password =
-document.getElementById("password").value;
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 600);
 
-
-
-
-
-
-
-if(email==="" || password===""){
-
-
-document.getElementById("message").innerHTML =
-
-"⚠️ Sila isi email dan password";
-
-
-return;
-
-
+    } catch (error) {
+        console.log(error);
+        messageEl.style.color = "var(--danger-red)";
+        messageEl.innerHTML = "❌ Email atau Password tidak tepat";
+    }
 }
 
-
-
-
-
-
-
-
-
-try{
-
-
-
-// LOGIN FIREBASE AUTH
-
-
-const userCredential =
-
-await signInWithEmailAndPassword(
-
-auth,
-
-email,
-
-password
-
-);
-
-
-
-
-
-const user = userCredential.user;
-
-
-
-
-
-
-// DEFAULT ROLE
-
-let role = "user";
-
-
-
-
-
-
-
-// CARI ROLE DALAM FIRESTORE GUNA EMAIL
-
-
-const q = query(
-
-collection(db,"users"),
-
-where(
-
-"email",
-
-"==",
-
-user.email
-
-)
-
-);
-
-
-
-
-
-
-
-const snapshot = await getDocs(q);
-
-
-
-
-
-
-
-
-if(snapshot.empty){
-
-
-
-console.log("User tiada dalam Firestore");
-
-
-
-}
-
-else{
-
-
-
-snapshot.forEach((doc)=>{
-
-
-role = doc.data().role;
-
-
+loginBtn.addEventListener("click", handleLogin);
+
+// Enter key support for quick login
+document.getElementById("password").addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        handleLogin();
+    }
 });
-
-
-
-}
-
-
-
-
-
-
-
-
-// SIMPAN LOGIN
-
-
-localStorage.setItem(
-
-"loginUser",
-
-JSON.stringify({
-
-username:user.email,
-
-email:user.email,
-
-uid:user.uid,
-
-role:role
-
-})
-
-);
-
-
-
-
-
-
-
-
-
-console.log("ROLE:",role);
-
-
-
-
-
-
-
-
-document.getElementById("message").innerHTML =
-
-"✅ Login Berjaya";
-
-
-
-
-
-
-
-setTimeout(()=>{
-
-
-window.location.href="index.html";
-
-
-},700);
-
-
-
-
-
-}
-
-
-
-
-
-catch(error){
-
-
-
-console.log(error);
-
-
-
-document.getElementById("message").innerHTML =
-
-"❌ Email atau Password salah";
-
-
-}
-
-
-
+document.getElementById("email").addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        document.getElementById("password").focus();
+    }
 });
-
-
-
-
-
 </script>
 
-
 </body>
-
 </html>

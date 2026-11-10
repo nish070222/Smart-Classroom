@@ -1,30 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>E-Smart Manage User</title>
-
+    <title>E-Smart - Pengurusan Pengguna</title>
     <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="manageusers.css">
-
+    <link rel="stylesheet" href="manageusers.css">
     <link rel="stylesheet" href="cupertino.css">
-
 </head>
-
 <body>
 
 <script src="auth.js"></script>
 
 <!-- SIDEBAR -->
-
 <div class="sidebar">
-
-    <h2>🏫 E-Smart</h2>
+    <h2>
+        🏫 E-Smart
+        <span class="sidebar-brand-badge">USERS</span>
+    </h2>
 
     <a href="index.html">
         💡 Light Control
@@ -45,214 +38,129 @@
     <a href="#" onclick="logout()">
         🚪 Logout
     </a>
-
 </div>
 
-
 <!-- MAIN CONTENT -->
-
 <div class="main manage-main">
 
     <h1>👥 Pengurusan Pengguna</h1>
+    <p>Pengurusan akses dan akaun sistem E-Smart Classroom</p>
 
-    <p>Manage account E-Smart</p>
-
-
-    <!-- STAT CARD -->
-
+    <!-- STATS CARDS -->
     <div class="stats">
-
         <div class="stat-card">
-
-            <h3>👥 Total User</h3>
-
+            <h3>👥 Jumlah Pengguna Berdaftar</h3>
             <h1 id="totalUser">0</h1>
-
         </div>
 
-
         <div class="stat-card">
-
-            <h3>👑 Admin</h3>
-
+            <h3>👑 Pentadbir (Admin)</h3>
             <h1 id="totalAdmin">0</h1>
-
         </div>
-
 
         <div class="stat-card">
-
-            <h3>🙋 User</h3>
-
+            <h3>🙋 Pengguna Biasa (User)</h3>
             <h1 id="totalNormal">0</h1>
-
         </div>
-
     </div>
 
-
-    <!-- ADD USER -->
-
+    <!-- ADD USER CARD -->
     <div class="user-card">
-
-        <h2>➕ Tambah User</h2>
-
+        <h2>➕ Tambah Akaun Pengguna Baharu</h2>
         <div class="form-group">
-
             <input
                 id="email"
                 type="email"
-                placeholder="Masukkan Email User"
+                placeholder="Contoh: guru@kvsp1.edu.my"
                 autocomplete="off"
             >
 
             <input
                 id="password"
                 type="password"
-                placeholder="Masukkan Password User"
+                placeholder="Kata laluan (min. 6 aksara)"
                 autocomplete="new-password"
             >
 
             <select id="role">
-
-                <option value="user">
-                    User
-                </option>
-
-                <option value="admin">
-                    Admin
-                </option>
-
+                <option value="user">🙋 User (Pengguna)</option>
+                <option value="admin">👑 Admin (Pentadbir)</option>
             </select>
 
             <button onclick="addUser()">
-                Tambah
+                ➕ Tambah
             </button>
-
         </div>
-
     </div>
 
-
-    <!-- SEARCH -->
-
+    <!-- SEARCH BOX -->
     <div class="search-box">
-
         <input
             id="search"
-            placeholder="🔍 Cari email pengguna..."
+            placeholder="🔍 Cari akaun pengguna melalui alamat email..."
             onkeyup="searchUser()"
         >
-
     </div>
 
-
-    <!-- TABLE -->
-
+    <!-- USERS TABLE CARD -->
     <div class="user-table-card">
+        <div class="log-header">
+            <h2>📋 Senarai Pengguna Sistem</h2>
+        </div>
 
-        <h2>📋 Senarai Pengguna</h2>
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Email</th>
-
-                    <th>Role</th>
-
-                    <th>Tindakan</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="userList"></tbody>
-
-        </table>
-
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Alamat Email</th>
+                        <th>Peranan (Role)</th>
+                        <th>Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody id="userList">
+                    <tr>
+                        <td colspan="3" class="no-record">
+                            ⏳ Memuatkan senarai pengguna...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
-
 
 <!-- EDIT USER MODAL -->
-
 <div id="editModal" class="edit-modal">
-
     <div class="edit-modal-content">
-
         <div class="edit-header">
-
             <div>
-                <h2>✏️ Edit User</h2>
-                <p>Kemaskini role pengguna</p>
+                <h2>✏️ Kemaskini Peranan</h2>
+                <p>Tukar peranan pengguna dalam sistem</p>
             </div>
-
-            <button
-                class="close-btn"
-                onclick="closeEditModal()">
-                ×
-            </button>
-
+            <button class="close-btn" onclick="closeEditModal()">×</button>
         </div>
-
 
         <div class="edit-body">
+            <label>Alamat Email</label>
+            <input id="editEmail" type="text" disabled>
 
-            <label>Email</label>
-
-            <input
-                id="editEmail"
-                type="text"
-                disabled
-            >
-
-
-            <label>Role</label>
-
+            <label>Peranan Pengguna</label>
             <select id="editRole">
-
-                <option value="user">
-                    🙋 User
-                </option>
-
-                <option value="admin">
-                    👑 Admin
-                </option>
-
+                <option value="user">🙋 User (Pengguna)</option>
+                <option value="admin">👑 Admin (Pentadbir)</option>
             </select>
-
         </div>
-
 
         <div class="edit-footer">
-
-            <button
-                class="cancel-btn"
-                onclick="closeEditModal()">
-                Batal
-            </button>
-
-            <button
-                class="save-btn"
-                onclick="saveEditUser()">
-                💾 Simpan
-            </button>
-
+            <button class="cancel-btn" onclick="closeEditModal()">Batal</button>
+            <button class="save-btn" onclick="saveEditUser()">💾 Simpan Perubahan</button>
         </div>
-
     </div>
-
 </div>
 
-
 <script src="logout.js"></script>
-
 <script type="module" src="manageusers.js"></script>
 
 </body>
-
 </html>

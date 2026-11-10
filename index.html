@@ -1,480 +1,342 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-
-<meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
-
-<title>
-    E-Smart
-</title>
-
-<link
-    rel="stylesheet"
-    href="style.css">
-<link rel="stylesheet" href="cupertino.css">
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Smart - Smart Classroom System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cupertino.css">
 </head>
-
 <body>
 
 <!-- =====================================================
      AUTH
 ===================================================== -->
-
 <script src="auth.js"></script>
 
 <!-- =====================================================
      SIDEBAR
 ===================================================== -->
-
 <div class="sidebar">
+    <h2>
+        🏫 E-Smart
+        <span class="sidebar-brand-badge">SMART</span>
+    </h2>
 
-<h2>
-    🏫 E-Smart
-</h2>
+    <a href="index.html" class="active">
+        💡 Light Control
+    </a>
 
+    <a href="dashboard.html" id="dashboardMenu">
+        📊 Dashboard
+    </a>
 
-<a href="index.html" class="active">
+    <a href="history.html">
+        📅 History
+    </a>
 
-    💡 Light Control
+    <a href="manageusers.html" id="manageMenu">
+        👥 Manage User
+    </a>
 
-</a>
-
-
-<a
-    href="dashboard.html"
-    id="dashboardMenu">
-
-    📊 Dashboard
-
-</a>
-
-
-<a href="history.html">
-
-    📅 History
-
-</a>
-
-
-<a
-    href="manageusers.html"
-    id="manageMenu">
-
-    👥 Manage User
-
-</a>
-
-
-<a
-    href="#"
-    onclick="logout()">
-
-    🚪 Logout
-
-</a>
-
-
+    <a href="#" onclick="logout()">
+        🚪 Logout
+    </a>
 </div>
 
 <!-- =====================================================
      MAIN
 ===================================================== -->
-
 <div class="main">
-
-
-<h1>
-
-    E-Smart
-
-</h1>
-
-
-<p id="welcome">
-
-    Welcome
-
-</p>
-
-
-
-<!-- =================================================
-     CLOCK
-================================================= -->
-
-<div class="clock">
-
-    🕒 Masa Sekarang
-
-    <h2 id="time">
-
-        00:00:00
-
-    </h2>
-
-
-    📅 Tarikh
-
-    <p id="date">
-
-        -
-
-    </p>
-
-</div>
-
-
-
-<!-- =================================================
-     LIGHT CONTROL
-================================================= -->
-
-<div class="card">
-
-
-    <h2>
-
-        💡 Kawalan Lampu Bilik
-
-    </h2>
-
-
+    <h1>💡 Kawalan Peranti Pintar</h1>
+    <p id="welcome">Welcome</p>
 
     <!-- =================================================
-         LOCATION
+         CUPERTINO CLOCK WIDGET
     ================================================= -->
-
-    <p>
-
-        📍 Lokasi Lampu:
-
-        <strong id="currentLocation">
-
-            Bilik Kuliah DB
-
-        </strong>
-
-    </p>
-
-
+    <div class="clock">
+        <div class="clock-meta-left">
+            <span class="clock-label">🕒 Masa Semasa</span>
+            <h2 id="time">00:00:00</h2>
+        </div>
+        <div class="clock-meta-right">
+            <span class="clock-label">📅 Tarikh Sistem</span>
+            <div class="clock-date-badge">
+                <span id="date">-</span>
+            </div>
+        </div>
+    </div>
 
     <!-- =================================================
-         LIGHT STATUS
+         DEVICE CONTROLS GRID (LIGHT & FAN)
     ================================================= -->
+    <div class="device-controls-grid">
 
-    <p>
+        <!-- PRIMARY CARD: LIGHT CONTROL -->
+        <div class="card" id="mainLampCard">
+            <h2>💡 Kawalan Lampu Bilik</h2>
 
-        Status Lampu:
+            <p>
+                📍 Lokasi Lampu:
+                <strong id="currentLocation">Bilik Kuliah DB</strong>
+            </p>
 
-    </p>
+            <!-- STATUS DISPLAY -->
+            <div class="status-display-wrapper">
+                <div class="status-info-left">
+                    <span>Status Lampu</span>
+                    <h1 id="lampStatus">OFF</h1>
+                </div>
+                <div class="device-icon-box" id="lampIconTile">💡</div>
+            </div>
 
+            <!-- iOS MASTER SWITCH -->
+            <div class="ios-switch-wrapper" onclick="toggleLamp()" id="iosLampSwitchTile" title="Sentuh untuk ON/OFF">
+                <div class="ios-switch-text-group">
+                    <div class="ios-switch-title">Suis Sentuh Pintar (iOS Switch)</div>
+                    <div class="ios-switch-label" id="iosLampLabel">Sentuh untuk ON / OFF</div>
+                </div>
+                <div class="ios-switch" id="iosLampSwitch">
+                    <div class="ios-switch-thumb"></div>
+                </div>
+            </div>
 
-    <h1 id="lampStatus">
+            <!-- BUTTONS -->
+            <div class="switch-control-group">
+                <button class="on" id="btnLampOn" onclick="lampOn()">
+                    ⚡ HIDUPKAN (ON)
+                </button>
+                <button class="off" id="btnLampOff" onclick="lampOff()">
+                    ⭕ PADAMKAN (OFF)
+                </button>
+            </div>
 
-        OFF
+            <!-- TIMER -->
+            <div class="timer-box">
+                <h2>⏱ Tempoh Lampu Hidup</h2>
+                <h1 id="timer">00:00:00</h1>
+            </div>
+        </div>
 
-    </h1>
+        <!-- SECONDARY CARD: SMART FAN CONTROL -->
+        <div class="card companion-card" id="mainFanCard">
+            <h2>🌀 Kawalan Kipas Pintar</h2>
 
+            <p>
+                📍 Lokasi Kipas:
+                <strong>Bilik Kuliah DB</strong>
+            </p>
 
+            <!-- STATUS DISPLAY -->
+            <div class="status-display-wrapper">
+                <div class="status-info-left">
+                    <span>Status Kipas Siling</span>
+                    <h1 id="fanStatusText" style="font-size:2.2rem; font-weight:800; color:var(--success-green); margin:0;">AUTO</h1>
+                </div>
+                <div class="device-icon-box" id="fanIconTile" style="background:#EDF4FF; border-color:#B8D4FD;">🌀</div>
+            </div>
 
-    <!-- =================================================
-         BUTTON
-    ================================================= -->
+            <!-- iOS FAN SWITCH -->
+            <div class="ios-switch-wrapper" onclick="toggleFan()" id="iosFanSwitchTile" title="Tukar Mod Kipas">
+                <div class="ios-switch-text-group">
+                    <div class="ios-switch-title">Mod Automasi Kipas (Sensor)</div>
+                    <div class="ios-switch-label" id="fanModeLabel">Sensor Pintar Aktif (Auto Eco)</div>
+                </div>
+                <div class="ios-switch active" id="iosFanSwitch">
+                    <div class="ios-switch-thumb"></div>
+                </div>
+            </div>
 
-    <button
-        class="on"
-        onclick="lampOn()">
+            <!-- SPEED PRESETS -->
+            <div class="fan-speed-pills">
+                <div class="fan-pill" onclick="setFanSpeed(1, this)">Kelajuan 1</div>
+                <div class="fan-pill active" onclick="setFanSpeed(2, this)">Kelajuan 2 (Auto)</div>
+                <div class="fan-pill" onclick="setFanSpeed(3, this)">Kelajuan 3</div>
+            </div>
 
-        ON
-
-    </button>
-
-
-    <button
-        class="off"
-        onclick="lampOff()">
-
-        OFF
-
-    </button>
-
-
-
-    <!-- =================================================
-         TIMER
-    ================================================= -->
-
-    <div class="timer-box">
-
-
-        <h2>
-
-            ⏱ Tempoh Lampu Hidup
-
-        </h2>
-
-
-        <h1 id="timer">
-
-            00:00:00
-
-        </h1>
-
+            <!-- SENSOR METRICS -->
+            <div class="timer-box" style="background:linear-gradient(135deg, #F0FDF4 0%, #EAF7EE 100%) !important;">
+                <h2>🌡️ Suhu & Kelembapan</h2>
+                <h1 style="font-size:1.45rem; font-weight:750; color:var(--success-green); margin:0;">24°C • 58%</h1>
+            </div>
+        </div>
 
     </div>
 
+    <!-- =================================================
+         SYSTEM STATUS
+    ================================================= -->
+    <div class="info">
+        <h2>📌 Status Gateway & Sistem</h2>
 
-</div>
+        <div class="info-row">
+            <span>Peranti Gateway ESP32:</span>
+            <span class="online">🟢 ONLINE</span>
+        </div>
 
+        <div class="info-row">
+            <span>📍 Lokasi Pengendalian Sistem:</span>
+            <strong id="systemLocation">Bilik Kuliah DB</strong>
+        </div>
 
-
-<!-- =================================================
-     SYSTEM STATUS
-================================================= -->
-
-<div class="info">
-
-
-    <h2>
-
-        📌 Status Sistem
-
-    </h2>
-
-
-    <p>
-
-        ESP32:
-
-        <span class="online">
-
-            🟢 ONLINE
-
-        </span>
-
-    </p>
-
-
-
-    <p>
-
-        📍 Lokasi Sistem:
-
-        <strong id="systemLocation">
-
-            Bilik Kuliah DB
-
-        </strong>
-
-    </p>
-
-
-</div>
+        <div class="info-row">
+            <span>Penyegerakan Firebase:</span>
+            <span style="font-weight:600; color:var(--success-green);">🟢 Firestore Realtime Connected</span>
+        </div>
+    </div>
 
 </div>
 
 <!-- =====================================================
      SYSTEM JAVASCRIPT
 ===================================================== -->
-
-<script
-    type="module"
-    src="script.js">
-</script>
-
+<script type="module" src="script.js"></script>
 <script src="logout.js"></script>
 
 <script>
-
-
 // =====================================================
-// GET LOGIN USER
+// GET LOGIN USER & DISPLAY WELCOME
 // =====================================================
-
-const loginUser =
-
-    JSON.parse(
-
-        localStorage.getItem(
-            "loginUser"
-        )
-
-    );
-
-
-
-// =====================================================
-// WELCOME
-// =====================================================
-
-const welcome =
-
-    document.getElementById(
-        "welcome"
-    );
-
-
+const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+const welcome = document.getElementById("welcome");
 if (welcome) {
-
-    welcome.innerHTML =
-
-        "Welcome, " +
-
-        (
-
-            loginUser?.email ||
-
-            "User"
-
-        );
-
+    const userRole = loginUser?.role === "admin" ? "👑 Pentadbir (Admin)" : "👤 Pengguna";
+    welcome.innerHTML = "Selamat datang, <b>" + (loginUser?.username || loginUser?.email || "User") + "</b> • " + userRole;
 }
-
-
 
 // =====================================================
 // CLOCK
 // =====================================================
-
 function updateClock() {
+    const now = new Date();
+    let h = now.getHours();
+    let m = now.getMinutes();
+    let s = now.getSeconds();
 
+    h = h < 10 ? "0" + h : h;
+    m = m < 10 ? "0" + m : m;
+    s = s < 10 ? "0" + s : s;
 
-    const now =
-        new Date();
-
-
-
-    let h =
-        now.getHours();
-
-
-    let m =
-        now.getMinutes();
-
-
-    let s =
-        now.getSeconds();
-
-
-
-    h =
-
-        h < 10
-
-            ? "0" + h
-
-            : h;
-
-
-
-    m =
-
-        m < 10
-
-            ? "0" + m
-
-            : m;
-
-
-
-    s =
-
-        s < 10
-
-            ? "0" + s
-
-            : s;
-
-
-
-    const timeElement =
-
-        document.getElementById(
-            "time"
-        );
-
-
+    const timeElement = document.getElementById("time");
     if (timeElement) {
-
-        timeElement.innerHTML =
-
-            h +
-            ":" +
-            m +
-            ":" +
-            s;
-
+        timeElement.innerHTML = h + ":" + m + ":" + s;
     }
 
+    const d = now.getDate();
+    const mo = now.getMonth() + 1;
+    const y = now.getFullYear();
 
-
-    // =========================================
-    // DATE
-    // =========================================
-
-    const d =
-        now.getDate();
-
-
-    const mo =
-        now.getMonth() + 1;
-
-
-    const y =
-        now.getFullYear();
-
-
-
-    const dateElement =
-
-        document.getElementById(
-            "date"
-        );
-
-
+    const dateElement = document.getElementById("date");
     if (dateElement) {
-
-        dateElement.innerHTML =
-
-            d +
-            "/" +
-            mo +
-            "/" +
-            y;
-
+        dateElement.innerHTML = (d < 10 ? "0" + d : d) + "/" + (mo < 10 ? "0" + mo : mo) + "/" + y;
     }
-
 }
-
-
-
-// =====================================================
-// START CLOCK
-// =====================================================
-
-setInterval(
-
-    updateClock,
-
-    1000
-
-);
-
-
+setInterval(updateClock, 1000);
 updateClock();
 
+// =====================================================
+// SMART TOGGLE LAMP WRAPPER (iOS SWITCH INTEGRATION)
+// =====================================================
+window.toggleLamp = function() {
+    const status = localStorage.getItem("lampStatus") || "OFF";
+    if (status === "ON") {
+        if (typeof window.lampOff === "function") {
+            window.lampOff();
+        }
+    } else {
+        if (typeof window.lampOn === "function") {
+            window.lampOn();
+        }
+    }
+};
 
+// =====================================================
+// SMART FAN CLIENT CONTROLS
+// =====================================================
+let fanIsActive = true;
+window.toggleFan = function() {
+    fanIsActive = !fanIsActive;
+    const fanSwitch = document.getElementById("iosFanSwitch");
+    const fanStatus = document.getElementById("fanStatusText");
+    const fanLabel = document.getElementById("fanModeLabel");
+    const fanIcon = document.getElementById("fanIconTile");
+
+    if (fanIsActive) {
+        if (fanSwitch) fanSwitch.classList.add("active");
+        if (fanStatus) {
+            fanStatus.innerText = "AUTO";
+            fanStatus.style.color = "var(--success-green)";
+        }
+        if (fanLabel) fanLabel.innerText = "Sensor Pintar Aktif (Auto Eco)";
+        if (fanIcon) fanIcon.style.animation = "spin 3s linear infinite";
+    } else {
+        if (fanSwitch) fanSwitch.classList.remove("active");
+        if (fanStatus) {
+            fanStatus.innerText = "OFF";
+            fanStatus.style.color = "var(--neutral-off-text)";
+        }
+        if (fanLabel) fanLabel.innerText = "Kipas Dipadamkan (Manual)";
+        if (fanIcon) fanIcon.style.animation = "none";
+    }
+};
+
+window.setFanSpeed = function(level, el) {
+    document.querySelectorAll(".fan-pill").forEach(p => p.classList.remove("active"));
+    if (el) el.classList.add("active");
+    const fanStatus = document.getElementById("fanStatusText");
+    if (fanIsActive && fanStatus) {
+        fanStatus.innerText = "SPD " + level;
+    }
+};
+
+// =====================================================
+// SYNC CUPERTINO UI WITH LIVE STATUS
+// =====================================================
+function syncCupertinoUI() {
+    const lamp = document.getElementById("lampStatus");
+    const iosSwitch = document.getElementById("iosLampSwitch");
+    const deviceCard = document.getElementById("mainLampCard");
+    const label = document.getElementById("iosLampLabel");
+    const icon = document.getElementById("lampIconTile");
+
+    if (lamp) {
+        const text = lamp.innerText.trim().toUpperCase();
+        const isOn = text === "ON";
+
+        if (iosSwitch) {
+            if (isOn) {
+                iosSwitch.classList.add("active");
+                if (label) label.innerText = "Lampu sedang HIDUP (ON)";
+            } else {
+                iosSwitch.classList.remove("active");
+                if (label) label.innerText = "Lampu sedang PADAM (OFF)";
+            }
+        }
+
+        if (deviceCard) {
+            if (isOn) {
+                deviceCard.classList.add("device-active-glow");
+            } else {
+                deviceCard.classList.remove("device-active-glow");
+            }
+        }
+
+        if (icon) {
+            if (isOn) {
+                icon.style.background = "#FEF3C7";
+                icon.style.borderColor = "#FCD34D";
+                icon.style.boxShadow = "0 0 16px rgba(245, 158, 11, 0.3)";
+            } else {
+                icon.style.background = "var(--bg-card)";
+                icon.style.borderColor = "var(--border-color)";
+                icon.style.boxShadow = "var(--shadow-xs)";
+            }
+        }
+    }
+}
+setInterval(syncCupertinoUI, 400);
+syncCupertinoUI();
 </script>
 
 </body>
-
 </html>

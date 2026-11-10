@@ -1,506 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>
-        E-Smart
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="style.css">
-<link rel="stylesheet" href="cupertino.css">
-
-    <style>
-
-        .history-summary {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
-
-            margin: 25px 0;
-
-        }
-
-
-        .summary-box {
-
-            background: #ffffff;
-
-            padding: 20px;
-
-            border-radius: 15px;
-
-            box-shadow:
-                0 4px 12px
-                rgba(0,0,0,0.08);
-
-        }
-
-
-        .summary-box h3 {
-
-            margin: 0 0 10px;
-
-            color: #555;
-
-        }
-
-
-        .summary-value {
-
-            font-size: 28px;
-
-            font-weight: bold;
-
-        }
-
-
-        .history-table-card {
-
-            background: #ffffff;
-
-            padding: 25px;
-
-            border-radius: 15px;
-
-            box-shadow:
-                0 4px 12px
-                rgba(0,0,0,0.08);
-
-            overflow-x: auto;
-
-        }
-
-
-        .history-table-card h2 {
-
-            margin-top: 0;
-
-            margin-bottom: 20px;
-
-        }
-
-
-        table {
-
-            width: 100%;
-
-            border-collapse:
-                collapse;
-
-        }
-
-
-        th {
-
-            background: #f4f6f8;
-
-            color: #222;
-
-            font-weight: 600;
-
-            border-bottom:
-                2px solid #e5e5e5;
-
-            padding: 13px;
-
-            text-align: center;
-
-        }
-
-
-        td {
-
-            padding: 13px;
-
-            text-align: center;
-
-            border-bottom:
-                1px solid #eeeeee;
-
-        }
-
-
-        tr:hover td {
-
-            background: #fafafa;
-
-        }
-
-
-        .delete-btn {
-
-            border: none;
-
-            background: #e74c3c;
-
-            color: white;
-
-            padding: 8px 12px;
-
-            border-radius: 7px;
-
-            cursor: pointer;
-
-        }
-
-
-        .delete-btn:hover {
-
-            opacity: 0.85;
-
-        }
-
-
-        .no-record {
-
-            text-align: center;
-
-            padding: 30px;
-
-            color: #777;
-
-        }
-
-
-        @media(max-width:800px) {
-
-            .history-summary {
-
-                grid-template-columns:
-                    1fr;
-
-            }
-
-        }
-
-    </style>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Smart - Rekod & Sejarah Penggunaan</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cupertino.css">
 </head>
-
-
 <body>
-
 
 <script src="auth.js"></script>
 
-
 <!-- SIDEBAR -->
-
 <div class="sidebar">
-
     <h2>
         🏫 E-Smart
+        <span class="sidebar-brand-badge">HISTORY</span>
     </h2>
-
 
     <a href="index.html">
         💡 Light Control
     </a>
 
-
-    <a
-        href="dashboard.html"
-        id="dashboardMenu">
-
+    <a href="dashboard.html" id="dashboardMenu">
         📊 Dashboard
-
     </a>
-
 
     <a href="history.html" class="active">
         📅 History
     </a>
 
-
-    <a
-        href="manageusers.html"
-        id="manageMenu">
-
+    <a href="manageusers.html" id="manageMenu">
         👥 Manage User
-
     </a>
 
-
-    <a
-        href="#"
-        onclick="logout()">
-
+    <a href="#" onclick="logout()">
         🚪 Logout
-
     </a>
-
 </div>
 
-
-<!-- MAIN -->
-
+<!-- MAIN CONTENT -->
 <div class="main">
 
+    <h1>📅 Rekod & Sejarah Penggunaan</h1>
+    <p id="welcome">E-Smart</p>
 
-    <h1>
-        📅 Rekod Penggunaan Lampu
-    </h1>
-
-
-    <p id="welcome">
-        E-Smart
-    </p>
-
-
-    <!-- SUMMARY -->
-
+    <!-- SUMMARY CARDS -->
     <div class="history-summary">
 
-
         <div class="summary-box">
-
-            <h3>
-                📊 Jumlah Sesi
-            </h3>
-
-
-            <div
-                class="summary-value"
-                id="totalSessions">
-
-                0
-
-            </div>
-
+            <h3>📊 Jumlah Keseluruhan Sesi</h3>
+            <div class="summary-value" id="totalSessions">0</div>
         </div>
 
-
         <div class="summary-box">
-
-            <h3>
-                ⏱ Jumlah Penggunaan
-            </h3>
-
-
-            <div
-                class="summary-value"
-                id="totalDuration">
-
-                00:00:00
-
-            </div>
-
+            <h3>⏱ Jumlah Masa Penggunaan</h3>
+            <div class="summary-value" id="totalDuration">00:00:00</div>
         </div>
 
-
         <div class="summary-box">
-
-            <h3>
-                📅 Sesi Hari Ini
-            </h3>
-
-
-            <div
-                class="summary-value"
-                id="todaySessions">
-
-                0
-
-            </div>
-
+            <h3>📅 Jumlah Sesi Hari Ini</h3>
+            <div class="summary-value" id="todaySessions">0</div>
         </div>
-
 
     </div>
 
+    <!-- SEARCH & FILTER TOOLBAR -->
+    <div class="history-filter-bar">
+        <input 
+            type="text" 
+            id="historySearch" 
+            placeholder="🔍 Cari rekod mengikut nama pengguna, email, role atau tarikh..." 
+            onkeyup="filterHistory()"
+        >
+    </div>
 
-    <!-- HISTORY -->
-
+    <!-- HISTORY TABLE CARD -->
     <div class="history-table-card">
+        <div class="log-header">
+            <h2>📋 Senarai Sejarah Penggunaan Peranti</h2>
+        </div>
 
-
-        <h2>
-            📋 History Lampu
-        </h2>
-
-
-        <table>
-
-
-            <thead>
-
-                <tr>
-
-                    <th>
-                        Pengguna
-                    </th>
-
-
-                    <th>
-                        Role
-                    </th>
-
-
-                    <th>
-                        Tarikh
-                    </th>
-
-
-                    <th>
-                        Masa Mula
-                    </th>
-
-
-                    <th>
-                        Masa Tamat
-                    </th>
-
-
-                    <th>
-                        Tempoh
-                    </th>
-
-
-                    <th>
-                        Tindakan
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody id="historyTable">
-
-                <tr>
-
-                    <td
-                        colspan="7"
-                        class="no-record">
-
-                        ⏳ Memuatkan rekod...
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-
-        </table>
-
-
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pengguna</th>
+                        <th>Peranan (Role)</th>
+                        <th>Tarikh</th>
+                        <th>Masa Mula</th>
+                        <th>Masa Tamat</th>
+                        <th>Tempoh Penggunaan</th>
+                        <th>Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTable">
+                    <tr>
+                        <td colspan="7" class="no-record">
+                            ⏳ Memuatkan rekod sejarah...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
 
 </div>
 
-
+<!-- SCRIPTS -->
 <script src="logout.js"></script>
-
-
-<script
-    type="module"
-    src="history.js">
-</script>
-
+<script type="module" src="history.js"></script>
 
 <script>
-
-
 // =====================================================
-// CURRENT USER
+// CURRENT USER & AUTH
 // =====================================================
-
-const currentUser =
-
-    JSON.parse(
-        localStorage.getItem(
-            "loginUser"
-        )
-    );
-
-
+const currentUser = JSON.parse(localStorage.getItem("loginUser"));
 if (!currentUser) {
-
-    window.location.href =
-        "userlogin.html";
-
+    window.location.href = "userlogin.html";
 }
 
-
 // =====================================================
-// WELCOME
+// WELCOME MESSAGE
 // =====================================================
-
 if (currentUser) {
-
-    document.getElementById(
-        "welcome"
-    ).innerHTML =
-
-        "Selamat datang, <b>" +
-
-        (
-            currentUser.username ||
-            currentUser.email ||
-            "User"
-        ) +
-
-        "</b> • Smart Classroom Control System";
-
+    const roleBadge = currentUser.role === "admin" ? "👑 Admin" : "👤 Pengguna";
+    document.getElementById("welcome").innerHTML =
+        "Selamat datang, <b>" + (currentUser.username || currentUser.email || "User") + "</b> • " + roleBadge + " • Smart Classroom History Log";
 }
 
-
 // =====================================================
-// ROLE MENU
+// ROLE MENU VISIBILITY
 // =====================================================
+if (currentUser && currentUser.role !== "admin") {
+    const dashboardMenu = document.getElementById("dashboardMenu");
+    const manageMenu = document.getElementById("manageMenu");
 
-if (
-    currentUser &&
-    currentUser.role !== "admin"
-) {
-
-    const dashboardMenu =
-        document.getElementById(
-            "dashboardMenu"
-        );
-
-
-    const manageMenu =
-        document.getElementById(
-            "manageMenu"
-        );
-
-
-    if (dashboardMenu) {
-
-        dashboardMenu.style.display =
-            "none";
-
-    }
-
-
-    if (manageMenu) {
-
-        manageMenu.style.display =
-            "none";
-
-    }
-
+    if (dashboardMenu) dashboardMenu.style.display = "none";
+    if (manageMenu) manageMenu.style.display = "none";
 }
 
+// =====================================================
+// INSTANT TABLE FILTER
+// =====================================================
+function filterHistory() {
+    const query = (document.getElementById("historySearch")?.value || "").toLowerCase().trim();
+    const rows = document.querySelectorAll("#historyTable tr");
+    rows.forEach(function(row) {
+        if (row.cells.length <= 1) return;
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(query) ? "" : "none";
+    });
+}
 </script>
 
-
 </body>
-
 </html>
